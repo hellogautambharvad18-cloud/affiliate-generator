@@ -12,7 +12,7 @@ from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
  is_non_product_image,reviewer_photo_slot)
 
 app=Flask(__name__)
-import auth,niches
+import auth,niches,design15
 auth.init(app)
 
 def _request_hint():
@@ -54,6 +54,7 @@ TEMPLATES={
  '12':{'name':'Design 12 — Terra (Native, Auto-Themed)','source':'design-12.source.md','old':None,'old_domains':[],'native':True},
  '13':{'name':'Design 13 — Verdict (Native, Auto-Themed)','source':'design-13.source.md','old':None,'old_domains':[],'native':True},
  '14':{'name':'Design 14 — Teal Classic (Native, Auto-Themed)','source':'design-14.source.md','old':None,'old_domains':[],'native':True},
+ '15':{'name':'Design 15 — Dynamic Unique (Native, Auto-Themed)','source':'design-15.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -6083,6 +6084,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
  # e.g. bootstrap.bundle.min.js) are already minified and left untouched;
  # JSON-LD <script type="application/ld+json"> blocks are structured data,
  # not JS, so they're skipped rather than run through a JS minifier. ──
+ # Design 15 re-rolls its look per site: apply this site's recipe (fonts,
+ # layout, section order, animations) before minification so it is minified
+ # together with the rest of the page's inline CSS/JS.
+ if design=='15':design15.apply(soup,data.get('_d15'),filename,page_kind)
  for style_tag in soup.find_all('style'):
   if style_tag.string:style_tag.string=minify_css(style_tag.string)
  for script_tag in soup.find_all('script'):
@@ -7395,6 +7400,9 @@ def generate():
    data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint)
   data['brand']=data.get('brand') or product
   data=ensure_core_faqs(data)
+  # Design 15 gets a fresh random look for every site; every page built below
+  # reads it from `data`, so the whole site shares one consistent recipe.
+  if design=='15':data['_d15']=design15.new_recipe()
   data['tracking']={
    'ga_id':request.form.get('ga_id','').strip(),
    'gsc_verify':request.form.get('gsc_verify','').strip(),
