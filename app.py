@@ -14,7 +14,7 @@ from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
 app=Flask(__name__)
 import traceback
 from werkzeug.exceptions import HTTPException
-import auth,niches,design15
+import auth,niches,design15,imgname
 auth.init(app)
 
 def _swap_header_for_banner(soup,banner_html):
@@ -7547,6 +7547,37 @@ def generate_content():
   msg=str(e)
   if 'Traceback' in msg or len(msg)>800:msg='Content generation failed. Check your API keys and try again.'
   return jsonify(error=msg),500
+
+_NAME_CALLS={}   # (user key, day) -> auto-name requests; best effort, resets on restart
+NAME_CALLS_PER_DAY=int(os.getenv('NAME_IMAGES_PER_DAY','15'))
+
+@app.post('/api/name_images')
+def name_images():
+ """Suggest a slot name (hero, bottle-3, badge-fda, reviewer-1 ...) for each
+ uploaded image so the user does not have to rename files by hand. The browser
+ shows the suggestions and the user confirms them; nothing is renamed here."""
+ try:
+  u=auth.current() or {}
+  if u.get('role')=='friend':
+   key=(u.get('uid'),date.today().isoformat())
+   if _NAME_CALLS.get(key,0)>=NAME_CALLS_PER_DAY:
+    return jsonify(error=f'Auto-naming limit reached ({NAME_CALLS_PER_DAY} per day).'),429
+   _NAME_CALLS[key]=_NAME_CALLS.get(key,0)+1
+  files=[]
+  for f in request.files.getlist('images')[:imgname.MAX_IMAGES]:
+   if not f or not f.filename:continue
+   if Path(f.filename).suffix.lower() not in {'.jpg','.jpeg','.png','.webp','.gif'}:continue
+   data=f.read(imgname.MAX_BYTES+1)
+   if len(data)>imgname.MAX_BYTES:continue
+   files.append((f.filename,data))
+  if not files:return jsonify(error='Choose some images first.'),400
+  _serp,openai_key,_ds,anthropic_key=_resolve_keys(_load_cfg())
+  out=imgname.suggest(files,{'anthropic':anthropic_key,'openai':openai_key})
+  out['slots']=imgname.slot_options()
+  return jsonify(out)
+ except Exception as e:
+  _log_failure('name_images',e)
+  return jsonify(error='Could not analyse the images. You can still pick the names manually.'),500
 
 @app.post('/api/generate')
 def generate():

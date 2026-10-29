@@ -36,7 +36,18 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
 .reviewer-slot .rname{font-size:13px;font-weight:800;color:#172033;margin-bottom:8px}
 .reviewer-slot input[type=file]{padding:8px;background:#fff}
 .reviewer-warn{font-size:12px;color:#a36a00;background:#fff8ea;border:1px solid #f3dfa9;border-radius:8px;padding:8px 12px;margin-bottom:12px}
-@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}
+.autoname{margin-top:12px;display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.an-btn{padding:10px 16px;border:1.5px solid #4a7cf7;background:#eef3ff;color:#2d52d4;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+.an-btn:disabled{opacity:.6;cursor:wait}
+.an-row{display:grid;grid-template-columns:64px 1fr 200px;gap:12px;align-items:center;border:1.5px solid #e4e9f3;border-radius:12px;padding:10px 12px;margin-top:10px;background:#fafbfd}
+.an-row.dupe{border-color:#f0b35a;background:#fff8ea}
+.an-row img{width:64px;height:64px;object-fit:cover;border-radius:8px;background:#e9edf5}
+.an-name{font-size:13px;color:#2d3a52;word-break:break-all}
+.an-tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-top:3px}
+.an-tag.ai{background:#e3f6ea;color:#1a6b3a}.an-tag.guess{background:#fff2d6;color:#8a5a00}
+.an-row select{padding:8px 10px;font-size:13px}
+.an-note{font-size:13px;color:#3a4e7a;background:#f5f8ff;border:1px solid #d4dfff;border-radius:10px;padding:10px 14px;margin-top:10px}
+@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}.an-row{grid-template-columns:56px 1fr}.an-row select{grid-column:1/-1}}
 </style></head>
 <body>
 {% include '_nav.html' %}
@@ -149,6 +160,11 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
       <label>Upload Other Images <span style="font-weight:400;color:#8899bb">(optional — reviewer photos are uploaded in Step 3 above)</span></label>
       <input type="file" name="images" multiple accept="image/jpeg,image/png,image/webp,image/gif" style="padding:8px">
       <div class="hint">Hero &amp; bottle images — named as hero.jpg, bottle-2.jpg, bottle-3.jpg, bottle-6.jpg (1-bottles/3-bottles-style names also work). Trust badges &amp; guarantee seal — badge-fda.jpg, badge-gmp.jpg, badge-usa.jpg, badge-natural.jpg, guarantee.jpg, credit-cards.jpg. Extra/theme-specific slots some designs have — checkout.jpg (order/checkout page), supplement-facts.jpg (ingredients/dosage label). Any of these you upload replaces the template's own version; see IMAGE_NAMING_GUIDE.md for the full list.</div>
+      <div class="autoname">
+        <button type="button" class="an-btn" id="autoNameBtn">✨ Auto-name my images</button>
+        <span class="hint" id="autoNameMsg" style="margin:0 0 0 10px">Upload images with any file names, then click this and the tool works out which is the hero, bottles, badges and so on. You can change each one before generating.</span>
+      </div>
+      <div id="namePanel" style="display:none"></div>
     </div>
 
     <div class="card">
@@ -245,6 +261,60 @@ function startProgress(steps){
 }
 function stopProgress(){clearInterval(timer)}
 
+// ── Auto-name images ───────────────────────────────────────────────────
+const imgInput=form.querySelector('input[name=images]');
+const nameBtn=document.getElementById('autoNameBtn');
+const nameMsg=document.getElementById('autoNameMsg');
+const namePanel=document.getElementById('namePanel');
+let nameRows=null;
+imgInput.addEventListener('change',()=>{nameRows=null;namePanel.style.display='none';namePanel.innerHTML='';});
+function markDupes(){
+  const seen={};
+  (nameRows||[]).forEach(r=>{const v=r.sel.value;if(v!=='__skip__'&&v!=='__keep__')seen[v]=(seen[v]||0)+1;});
+  (nameRows||[]).forEach(r=>r.row.classList.toggle('dupe',seen[r.sel.value]>1));
+}
+function renderNameRows(files,j){
+  namePanel.innerHTML='';nameRows=[];
+  const note=document.createElement('div');note.className='an-note';
+  note.textContent=(j.provider==='filename'?'Guesses from file names. ':'Detected by AI vision. ')+(j.note||'')+' Check each one; orange rows use the same slot twice and only one will be used.';
+  namePanel.appendChild(note);
+  j.items.forEach(it=>{
+    const file=files[it.index];
+    const row=document.createElement('div');row.className='an-row';
+    const img=document.createElement('img');img.src=URL.createObjectURL(file);img.alt='';
+    const info=document.createElement('div');
+    info.innerHTML='<div class="an-name"></div><span class="an-tag"></span>';
+    info.querySelector('.an-name').textContent=file.name;
+    const tag=info.querySelector('.an-tag');
+    tag.textContent=it.source==='ai'?(it.confidence==='high'?'AI: confident':'AI: please check'):'guess: please check';
+    tag.classList.add(it.source==='ai'&&it.confidence==='high'?'ai':'guess');
+    const sel=document.createElement('select');
+    const add=(v,t)=>{const o=document.createElement('option');o.value=v;o.textContent=t;sel.appendChild(o);};
+    add('__keep__','Keep my file name');add('__skip__','Do not use this image');
+    j.slots.forEach(s=>add(s,s));
+    sel.value=(it.slot==='unused')?'__skip__':it.slot;
+    sel.addEventListener('change',markDupes);
+    row.append(img,info,sel);namePanel.appendChild(row);
+    nameRows.push({file,sel,row});
+  });
+  namePanel.style.display='block';markDupes();
+}
+nameBtn.addEventListener('click',async()=>{
+  const files=[...imgInput.files];
+  if(!files.length){nameMsg.textContent='Choose some images first.';return;}
+  if(files.length>20){nameMsg.textContent='Please choose 20 images or fewer at a time.';return;}
+  nameBtn.disabled=true;nameMsg.textContent='Looking at your images...';
+  try{
+    const fd=new FormData();files.forEach(f=>fd.append('images',f,f.name));
+    const r=await fetch('/api/name_images',{method:'POST',body:fd});
+    const j=await r.json().catch(()=>({error:'Unexpected response'}));
+    if(!r.ok)throw new Error(j.error||'Failed');
+    renderNameRows(files,j);
+    nameMsg.textContent='Done. Change any name below if needed, then continue.';
+  }catch(e){nameMsg.textContent='❌ '+e.message;}
+  finally{nameBtn.disabled=false;}
+});
+
 function buildReviewerSlots(names){
   reviewerSlots.innerHTML='';
   (names||[]).slice(0,3).forEach((name,i)=>{
@@ -315,6 +385,17 @@ form.addEventListener('submit',async e=>{
   try{
     const fd=new FormData(form);
     fd.append('content_json',JSON.stringify(contentData));
+    // If the images were auto-named, send them under the confirmed names
+    // instead of the original file names.
+    if(nameRows){
+      fd.delete('images');
+      nameRows.forEach(r=>{
+        const v=r.sel.value;
+        if(v==='__skip__')return;
+        const m=r.file.name.match(/\.[^.]+$/);
+        fd.append('images',r.file,v==='__keep__'?r.file.name:v+(m?m[0]:'.jpg'));
+      });
+    }
     reviewerSlots.querySelectorAll('input[type=file]').forEach(inp=>{
       if(inp.files&&inp.files[0]){
         const n=inp.getAttribute('data-reviewer-slot');
