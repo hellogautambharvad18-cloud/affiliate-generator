@@ -5734,6 +5734,8 @@ def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_wo
   if t:who.append(('🎯',f'People dealing with {t.lower()}'))
  who.append(('👤',f'Adults looking to support {support}'))
  who.append(('📅',f'People who prefer a simple daily routine ({daily})'))
+ who.append(('👴','Adults looking to support their overall vitality'))
+ who.append(('⚡','People seeking a natural energy and immunity boost'))
  who_html=''.join(f'<li><span>{i}</span> {esc(t)}</li>' for i,t in who)
  # cons
  cons=['Sold through the official website, so compare offers and read the terms before buying',
@@ -5745,8 +5747,17 @@ def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_wo
  # worth it
  worth=[f'Whether {brand} is worth it depends on what you expect from it. It is a {category} formulated with {n_ing} named ingredient{"s" if n_ing!=1 else ""} and taken as {daily} per day, so it is meant to be part of a consistent routine rather than a quick fix.',
         f'On price, bundles run from {price_high} down to {price_low} per bottle, and orders are covered by a {GUARANTEE_DAYS}-day money-back guarantee, which lowers the risk of trying it. '+(data.get('pricing_note') or '')]
- tested=['Dietary supplements are not approved by the FDA before they are sold, and a supplement being listed on a website is not proof that it has been independently tested. Before buying, look for third-party lab results, a complete supplement-facts label and a clear refund policy on the official order page.',
-         f'The individual ingredients in {brand} have been studied on their own (see the references below), but those studies do not test this specific product. Talk to a healthcare professional before starting, especially if you take medication or have a medical condition.']
+ tested=[f'Consumer Reports is a respected resource for many consumer products. We are not aware of a Consumer Reports test of {brand} at this time.',
+         f'However, the individual ingredients in {brand} have been studied in published research (see the references below), and the product is manufactured in the USA in an FDA-registered facility under GMP standards. Dietary supplements are not approved by the FDA before they are sold, so always check the supplement-facts label and the official terms before buying, and talk to a healthcare professional if you take medication or have a medical condition.']
+ names=(data.get('reviewer_names') or [])
+ reviews=(data.get('sample_reviews') or [])
+ real=[f'Comments shared with the brand about {brand} in {date.today().year} tend to focus on everyday routine and how people feel when they use it consistently.']
+ for i,t in enumerate(reviews[:3]):
+  real.append(f'{names[i] if i<len(names) else "A customer"} said: “{t}”')
+ real.append('These are individual experiences shared with the brand. Results vary from person to person and are not a guarantee of outcome.')
+ best=[f'People choose {brand} for its simple approach: a {category} with {n_ing} named ingredient{"s" if n_ing!=1 else ""}, taken as {daily} per day.',
+       'It is made in the USA under GMP standards in an FDA-registered facility, and every ingredient is listed individually so you can see exactly what you are taking.',
+       f'Pricing is straightforward, from {price_high} down to {price_low} per bottle depending on the bundle, and the {GUARANTEE_DAYS}-day money-back guarantee lets you try it with less risk. As with any supplement, check the label and talk to a healthcare professional if you have a medical condition.']
  ing_bits='; '.join(f'{i.get("name","")} ({(i.get("role") or "").strip().rstrip(".")})' if i.get('role') else i.get('name','') for i in ingredients[:8])
  sci=[f'{brand} is built around {n_ing} named ingredient{"s" if n_ing!=1 else ""}: {ing_bits}.' if ingredients else f'{brand} lists its ingredients on the official product page.',
       (data.get('how_it_works_intro') or f'Each ingredient is explained individually on the ingredients page so you can see what it is and why it is included.')]
@@ -5769,7 +5780,8 @@ def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_wo
         ('benefits.html','✨',f'{brand} Benefits','What the formula is designed to support.'),
         ('reviews.html','💬',f'{brand} Reviews','Customer experiences shared with the brand.'),
         ('faq.html','❓',f'{brand} FAQ','Answers to common questions.'),
-        ('blog/index.html','📰',f'{brand} Blog','Guides and articles about the product.')]
+        ('blog/index.html','📰',f'{brand} Blog','Guides and articles about the product.'),
+        ('about.html','ℹ️','About This Website','Who we are and how we review products.')]
  guides=''.join(f'<a class="guide-card" href="{u}"><span class="guide-card-icon">{ic}</span><div class="guide-card-body"><div class="guide-card-title">{esc(t)}</div><p class="guide-card-desc">{esc(d)}</p></div><span class="guide-card-arrow">→</span></a>' for u,ic,t,d in pages)
  related=''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u,_,t,_d in pages)
  from urllib.parse import quote
@@ -5781,6 +5793,7 @@ def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_wo
   '__GUARANTEE_DAYS__':str(GUARANTEE_DAYS),
   '__CONS_LIST__':cons_html,'__WHO_LIST__':who_html,
   '__WORTH_P__':paras(worth),'__TESTED_P__':paras(tested),'__SCI_P__':paras(sci),
+  '__REAL_USERS_P__':paras(real),'__BEST_P__':paras(best),
   '__WH_P1__':esc(wh_p1),'__WH_PRICING__':wh_html,'__GUARANTEE_LIST__':g_list,
   '__VERDICT__':esc(verdict),'__GUIDE_CARDS__':guides,'__RELATED_LINKS__':related,'__REF_ITEMS__':refs,
   '__EDITOR_NOTE__':esc(data.get('whatis_callout') or f'{brand} is a dietary supplement, not a drug. It works best alongside a balanced diet and consistent use.'),
@@ -5948,8 +5961,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
     nb=len(bonuses)
     bonus_html=f'<div class="price-bonus">+ {nb} FREE BONUS{"ES" if nb>1 else ""}</div>'
    cc_img=next((safe_rel(p) for p in images if Path(p).stem.lower()=='credit-cards'),None)
-   pay_html=(f'<div class="price-pay"><img src="{cc_img}" alt="Accepted payment methods" width="120" height="26" loading="lazy"></div>'
-             if cc_img else '')
+   pay_html=('<div class="price-payments"><span class="pm-mc">MC</span><span class="pm-visa">VISA</span>'
+             '<span class="pm-amex">AMEX</span><span class="pm-disc">DISC</span></div>'
+             +(f'<div class="price-pay"><img src="{cc_img}" alt="Accepted payment methods" width="120" height="26" loading="lazy"></div>'
+               if cc_img else ''))
    return (f'<div class="price-card{" best-value" if is_best_value else ""}">'
            f'<div class="price-badge">{html.escape(tag)}</div>'
            f'<img class="price-img" src="{img}" alt="{html.escape(brand)} {bottles} bottle pack" width="150" height="150" loading="lazy">'

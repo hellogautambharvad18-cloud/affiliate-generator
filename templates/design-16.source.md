@@ -155,6 +155,9 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .price-btn{display:block;text-align:center;background:var(--yellow);color:#000;font-weight:900;font-size:20px;padding:16px;margin:0 20px 15px;border-radius:10px;letter-spacing:.05em;transition:.2s;text-decoration:none;}
 .price-btn:hover{background:#FFC700;transform:translateY(-1px);}
 .price-guarantee{text-align:center;font-size:15px;color:var(--primary-dark);font-weight:700;margin-bottom:15px;}
+.price-payments{display:flex;justify-content:center;gap:6px;margin-bottom:15px;}
+.price-payments span{display:inline-block;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:900;color:#fff;}
+.pm-mc{background:#EB001B;}.pm-visa{background:#1A1F71;}.pm-amex{background:#2E77BC;}.pm-disc{background:#F47216;}
 .price-pay{margin:0 auto 12px;}
 .price-pay img{max-height:26px;width:auto;margin:0 auto;}
 .price-total{text-align:center;font-size:16px;color:var(--text-secondary);padding:15px 20px 5px;border-top:1px dashed var(--border);margin:0 20px;}
@@ -410,7 +413,7 @@ __WORTH_P__
 </section>
 
 <section class="section bg-soft">
-  <div class="purple-heading-bar"><h2>Has __BRAND__ Been Independently Tested?</h2></div>
+  <div class="purple-heading-bar"><h2>Has Consumer Reports Tested __BRAND__?</h2></div>
   <div class="container" style="max-width:1200px;">
     <div class="split-text">
 __TESTED_P__
@@ -429,6 +432,20 @@ __SCI_P__
   <div class="purple-heading-bar"><h2>How Does __BRAND__ Work?</h2></div>
   <div class="container" style="max-width:1200px;">
 __HIW_CARD_TEMPLATE__
+  </div>
+</section>
+
+<section class="section">
+  <div class="purple-heading-bar"><h2>What Real Users Say in __YEAR__</h2></div>
+  <div class="container" style="max-width:1200px;">
+__REAL_USERS_P__
+  </div>
+</section>
+
+<section class="section bg-soft">
+  <div class="purple-heading-bar"><h2>Why __BRAND__ Is the Best Choice</h2></div>
+  <div class="container" style="max-width:1200px;">
+__BEST_P__
   </div>
 </section>
 
