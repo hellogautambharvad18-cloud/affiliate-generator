@@ -12,8 +12,14 @@ from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
  is_non_product_image,reviewer_photo_slot)
 
 app=Flask(__name__)
-import auth
+import auth,niches
 auth.init(app)
+
+def _request_hint():
+ """The publisher description with the chosen niche folded in."""
+ nid=request.form.get('niche',niches.DEFAULT_NICHE)
+ if not niches.valid_niche(nid):nid=niches.DEFAULT_NICHE
+ return niches.build_hint(nid,request.form.get('subniche',''),request.form.get('product_hint',''))
 app.config['MAX_CONTENT_LENGTH']=150*1024*1024
 BASE=Path(__file__).resolve().parent
 TEMPLATE_DIR=BASE/'templates'
@@ -7292,7 +7298,10 @@ auth.TEMPLATES=TEMPLATES
 def index():
  _allowed=auth.allowed_designs()
  _visible={k:v for k,v in TEMPLATES.items() if not _allowed or k in _allowed}
+ _allowed_n=auth.allowed_niches()
+ _niches={k:v for k,v in niches.NICHES.items() if not _allowed_n or k in _allowed_n}
  return render_template('index.html',templates=_visible,cfg=_load_cfg(),
+                        niche_list=_niches,default_niche=(niches.DEFAULT_NICHE if niches.DEFAULT_NICHE in _niches else next(iter(_niches))),
                         is_admin=auth.is_admin(),user=auth.current(),auth_on=auth.ENABLED)
 
 def _resolve_keys(_cfg):
@@ -7333,7 +7342,7 @@ def generate_content():
   if not product or not affiliate or not domain:return jsonify(error='Product Name, Affiliate Link and Domain are required.'),400
   _cfg=_load_cfg()
   _serp_key,openai_key,deepseek_key,anthropic_key=_resolve_keys(_cfg)
-  product_hint=request.form.get('product_hint','').strip()
+  product_hint=_request_hint()
   data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint)
   data['brand']=data.get('brand') or product
   return jsonify(data)
@@ -7369,7 +7378,7 @@ def generate():
    except Exception:pass
   if not product or not affiliate or not domain:return jsonify(error='Product Name, Affiliate Link and Domain are required.'),400
   if design not in TEMPLATES:design='1'
-  product_hint=request.form.get('product_hint','').strip()
+  product_hint=_request_hint()
   # If the browser already ran phase 1 (/api/generate_content), reuse that
   # exact result instead of calling the AI again — a second call could
   # return different prices/ingredients/etc than what the user was just

@@ -51,6 +51,7 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
     Password: <strong>{{created.password}}</strong> <span class="hint">(shown only now, save it)</span><br>
     Valid until <strong>{{created.expires}}</strong>{% if created.cap %}, max <strong>{{created.cap}}</strong> websites per day{% endif %}.
     Designs: <strong>{% if created.designs %}{{created.designs|join(', ')}}{% else %}all{% endif %}</strong>.
+    Niches: <strong>{% if created.niches %}{{created.niches|join(', ')}}{% else %}all{% endif %}</strong>.
   </div>
   {% endif %}
   {% if error %}<div class="err">{{error}}</div>{% endif %}
@@ -75,6 +76,13 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
       {% endfor %}
     </div>
     <div class="hint">Tick the designs to allow. Tick none = all designs.</div>
+    <label>Niches this friend can use</label>
+    <div class="designs">
+      {% for k,v in niche_list.items() %}
+      <label class="chk"><input type="checkbox" name="niches" value="{{k}}"> {{v.name}}</label>
+      {% endfor %}
+    </div>
+    <div class="hint">Tick the niches to allow. Tick none = all niches.</div>
     <button class="big" type="submit">Create account</button>
   </form>
   <div class="card">
@@ -84,7 +92,7 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
     <div class="person">
       <div><span class="pname">{{p.name}}</span>
         {% if not p.active %}<span class="tag t-bad">Disabled</span>{% elif p.expired %}<span class="tag t-bad">Expired</span>{% else %}<span class="tag t-ok">Active</span>{% endif %}</div>
-      <div class="meta">{{p.email}} &bull; until {{p.expires}} &bull; today {{p.used}}{% if p.cap %}/{{p.cap}}{% endif %} websites &bull; designs: {{p.designs|join(', ')}}</div>
+      <div class="meta">{{p.email}} &bull; until {{p.expires}} &bull; today {{p.used}}{% if p.cap %}/{{p.cap}}{% endif %} websites &bull; designs: {{p.designs|join(', ')}} &bull; niches: {{p.niches|join(', ')}}</div>
       <div class="acts">
         <form method="post" action="/admin/user/{{p.id}}/toggle"><button class="sm">{{ 'Enable' if not p.active else 'Disable' }}</button></form>
         <form method="post" action="/admin/user/{{p.id}}/extend"><input name="days" type="number" min="1" value="7" title="days"><button class="sm">+ days</button></form>

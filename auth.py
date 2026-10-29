@@ -18,7 +18,8 @@ from flask import (Blueprint,request,session,redirect,render_template,
                    jsonify,url_for,g)
 from werkzeug.security import generate_password_hash,check_password_hash
 from sqlalchemy import (create_engine,MetaData,Table,Column,Integer,BigInteger,
-                        String,Boolean,select,insert,update,delete)
+                        String,Boolean,select,insert,update,delete,inspect,text)
+import niches as nx
 
 ADMIN_PASSWORD=os.getenv('ADMIN_PASSWORD','').strip()
 ADMIN_EMAIL=os.getenv('ADMIN_EMAIL','admin').strip().lower()
@@ -47,6 +48,7 @@ users=Table('users',meta,
     Column('expires_at',BigInteger,nullable=False),
     Column('daily_cap',Integer,default=0),
     Column('designs',String(255),default=''),
+    Column('niches',String(1000),default=''),
     Column('active',Boolean,default=True),
     Column('created_at',BigInteger))
 usage=Table('usage',meta,
@@ -73,6 +75,11 @@ def _db():
             url='sqlite:///'+os.path.join(tempfile.gettempdir(),'affgen_users.db')
         _engine=create_engine(url,pool_pre_ping=True,pool_recycle=240)
         meta.create_all(_engine)
+        # create_all never adds columns to a table that already exists, so
+        # databases created before niches existed get the column here.
+        if 'niches' not in {c['name'] for c in inspect(_engine).get_columns('users')}:
+            with _engine.begin() as c:
+                c.execute(text("ALTER TABLE users ADD COLUMN niches VARCHAR(1000) DEFAULT ''"))
     return _engine
 
 
@@ -114,7 +121,8 @@ def init(app):
 def _user_dict(r):
     return {'role':'friend','name':r.name or r.email,'email':r.email,'uid':r.id,
             'e':r.expires_at,'c':r.daily_cap or 0,
-            'd':[x for x in (r.designs or '').split(',') if x]}
+            'd':[x for x in (r.designs or '').split(',') if x],
+            'n':[x for x in (r.niches or '').split(',') if x]}
 
 
 def current():
@@ -150,6 +158,14 @@ def allowed_designs():
     if not ENABLED or not u or u['role']=='admin':
         return None
     return u.get('d') or None
+
+
+def allowed_niches():
+    """Niche ids the current user may use, or None for no restriction."""
+    u=current()
+    if not ENABLED or not u or u['role']=='admin':
+        return None
+    return u.get('n') or None
 
 
 def _client_ip():
@@ -198,6 +214,11 @@ def _gate():
     if (request.endpoint or '').startswith('auth.admin') and u['role']!='admin':
         return redirect(url_for('index'))
     if u['role']=='friend' and request.method=='POST':
+        if request.endpoint in ('generate','generate_content'):
+            allowed_n=u.get('n')
+            chosen=request.form.get('niche',nx.DEFAULT_NICHE)
+            if allowed_n and chosen not in allowed_n:
+                return jsonify(error='This niche is not included in your access. Pick one of your allowed niches.'),403
         if request.endpoint=='generate':
             allowed=u.get('d')
             if allowed and request.form.get('design','1') not in allowed:
@@ -286,10 +307,11 @@ def _admin_page(created=None,error=''):
     people=[{'id':r.id,'name':r.name,'email':r.email,'active':bool(r.active),
              'expired':r.expires_at<now,'expires':datetime.fromtimestamp(r.expires_at,timezone.utc).strftime('%d %b %Y'),
              'cap':r.daily_cap or 0,'used':today.get(r.id,0),
-             'designs':[TEMPLATES[k]['name'] for k in (r.designs or '').split(',') if k in TEMPLATES] or ['All']}
+             'designs':[TEMPLATES[k]['name'] for k in (r.designs or '').split(',') if k in TEMPLATES] or ['All'],
+             'niches':[nx.NICHES[k]['name'] for k in (r.niches or '').split(',') if k in nx.NICHES] or ['All']}
             for r in rows]
     return render_template('admin.html',created=created,error=error,people=people,
-                           templates=TEMPLATES,persistent=persistent_db(),admin_email=ADMIN_EMAIL)
+                           templates=TEMPLATES,niche_list=nx.NICHES,persistent=persistent_db(),admin_email=ADMIN_EMAIL)
 
 
 @bp.get('/admin')
@@ -311,15 +333,18 @@ def admin_create():
     try:cap=max(0,min(int(request.form.get('cap','3')),100))
     except ValueError:cap=3
     picked=[k for k in request.form.getlist('designs') if k in TEMPLATES]
+    picked_n=[k for k in request.form.getlist('niches') if k in nx.NICHES]
     exp=int(time.time())+days*86400
     try:
         with _db().begin() as c:
             c.execute(insert(users).values(email=email,name=name,pw_hash=generate_password_hash(pw),
-                      expires_at=exp,daily_cap=cap,designs=','.join(picked),active=True,created_at=int(time.time())))
+                      expires_at=exp,daily_cap=cap,designs=','.join(picked),niches=','.join(picked_n),
+                      active=True,created_at=int(time.time())))
     except Exception:
         return _admin_page(error='That email already has an account.')
     return _admin_page(created={'name':name,'email':email,'password':pw,'days':days,'cap':cap,
                        'designs':[TEMPLATES[k]['name'] for k in picked],
+                       'niches':[nx.NICHES[k]['name'] for k in picked_n],
                        'expires':datetime.fromtimestamp(exp,timezone.utc).strftime('%d %b %Y'),
                        'link':request.url_root.rstrip('/')+url_for('auth.login')})
 

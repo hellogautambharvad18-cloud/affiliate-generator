@@ -49,6 +49,22 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
 
   <div class="card">
     <div class="badge">Step 1 — Product</div>
+    <div class="grid2">
+      <div>
+        <label>Niche</label>
+        <select name="niche" id="niche">
+          {% for k,v in niche_list.items() %}
+          <option value="{{k}}" {% if k==default_niche %}selected{% endif %}>{{v.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label>Sub-niche <span style="font-weight:400;color:#8899bb">(optional)</span></label>
+        <input name="subniche" id="subniche" list="subnicheList" maxlength="80" placeholder="e.g. weight loss, Spanish, dropshipping" autocomplete="off">
+        <datalist id="subnicheList"></datalist>
+      </div>
+    </div>
+    <div id="nicheWarn" class="reviewer-warn" style="display:none;margin:12px 0 0"></div>
     <label>Product Name</label>
     <input name="product_name" required placeholder="e.g. NerveCalm, ProDentim">
     <label>Product Description <span style="font-weight:400;color:#8899bb">(optional but recommended)</span></label>
@@ -194,8 +210,23 @@ const phase2=document.getElementById('phase2');
 const reviewerSlots=document.getElementById('reviewerSlots');
 const editLinkWrap=document.getElementById('editLinkWrap');
 const editLink=document.getElementById('editLink');
-const step1Fields=form.querySelectorAll('input[name=product_name],input[name=product_hint],input[name=affiliate_link],input[name=domain]');
+const step1Fields=form.querySelectorAll('input[name=product_name],input[name=product_hint],input[name=affiliate_link],input[name=domain],input[name=subniche]');
 let contentData=null,w=0,timer=null;
+const NICHES={{ niche_list|tojson }};
+const nicheSel=document.getElementById('niche');
+function onNicheChange(){
+  const n=NICHES[nicheSel.value]||{};
+  const dl=document.getElementById('subnicheList');
+  dl.innerHTML='';
+  (n.subs||[]).forEach(s=>{const o=document.createElement('option');o.value=s;dl.appendChild(o);});
+  const warn=document.getElementById('nicheWarn');
+  warn.textContent=n.warn?('⚠ '+n.warn):'';
+  warn.style.display=n.warn?'block':'none';
+}
+// Changing niche after content was generated would leave stale content behind,
+// so it clears the generated content exactly like "Edit product info" does.
+nicheSel.addEventListener('change',()=>{onNicheChange();if(contentData)editLink.click();});
+onNicheChange();
 // Step 2 (provider/keys) is deliberately left editable in phase 2 — those
 // fields are only used to save config and pick a key for the (now-skipped)
 // AI call, and FormData omits `disabled` fields entirely, which would have
@@ -248,6 +279,8 @@ form.addEventListener('submit',async e=>{
       const fd=new FormData();
       fd.append('product_name',form.product_name.value);
       fd.append('product_hint',form.product_hint.value);
+      fd.append('niche',form.niche.value);
+      fd.append('subniche',form.subniche.value);
       fd.append('affiliate_link',form.affiliate_link.value);
       fd.append('domain',form.domain.value);
       fd.append('ai_provider',form.ai_provider.value);
