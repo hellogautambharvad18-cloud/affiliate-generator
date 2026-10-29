@@ -62,10 +62,21 @@ def _revoked():
     return {x.strip() for x in os.getenv('REVOKED_CODES','').split(',') if x.strip()}
 
 
-def make_code(name,days,daily_cap):
+TEMPLATES={}   # set by app.py; {design id: {'name':...}}
+
+
+def make_code(name,days,daily_cap,designs=()):
     exp=int((datetime.now(timezone.utc)+timedelta(days=days)).timestamp())
     cid=secrets.token_hex(3)
-    return _signer().dumps({'i':cid,'n':name,'e':exp,'c':daily_cap}),cid,exp
+    return _signer().dumps({'i':cid,'n':name,'e':exp,'c':daily_cap,'d':list(designs)}),cid,exp
+
+
+def allowed_designs():
+    """Design ids the current user may use, or None for no restriction."""
+    u=current()
+    if not ENABLED or not u or u['role']=='admin':
+        return None
+    return u.get('d') or None
 
 
 def current():
@@ -113,6 +124,10 @@ def _gate():
     if request.endpoint=='admin' or (request.endpoint or '').startswith('auth.admin'):
         if u['role']!='admin':
             return redirect(url_for('index'))
+    if u['role']=='friend' and request.method=='POST' and request.endpoint=='generate':
+        allowed=u.get('d')
+        if allowed and request.form.get('design','1') not in allowed:
+            return jsonify(error='This design is not included in your access. Pick one of your allowed designs.'),403
     if u['role']=='friend' and request.method=='POST' and request.endpoint in METERED_ENDPOINTS:
         cap=u.get('c') or 0
         if cap:
@@ -161,7 +176,7 @@ def login():
                     error='This access code has been revoked.'
                 else:
                     session.clear()
-                    session['u']={'role':'friend','name':d['n'],'i':d['i'],'e':d['e'],'c':d.get('c',0)}
+                    session['u']={'role':'friend','name':d['n'],'i':d['i'],'e':d['e'],'c':d.get('c',0),'d':d.get('d',[])}
                     session.permanent=True
                     return redirect(url_for('index'))
             except (BadSignature,KeyError,TypeError):
@@ -186,8 +201,10 @@ def admin():
         except ValueError:days=7
         try:cap=max(0,min(int(request.form.get('cap','3')),100))
         except ValueError:cap=3
-        code,cid,exp=make_code(name,days,cap)
+        picked=[k for k in request.form.getlist('designs') if k in TEMPLATES]
+        code,cid,exp=make_code(name,days,cap,picked)
         created={'name':name,'code':code,'id':cid,'days':days,'cap':cap,
+                 'designs':[TEMPLATES[k]['name'] for k in picked],
                  'expires':datetime.fromtimestamp(exp,timezone.utc).strftime('%d %b %Y'),
                  'link':request.url_root.rstrip('/')+url_for('auth.login')}
-    return render_template('admin.html',created=created,revoked=sorted(_revoked()))
+    return render_template('admin.html',created=created,revoked=sorted(_revoked()),templates=TEMPLATES)

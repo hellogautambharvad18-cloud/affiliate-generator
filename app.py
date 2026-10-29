@@ -7286,9 +7286,13 @@ def _load_cfg():
  except Exception:pass
  return {}
 
+auth.TEMPLATES=TEMPLATES
+
 @app.get('/app')
 def index():
- return render_template('index.html',templates=TEMPLATES,cfg=_load_cfg(),
+ _allowed=auth.allowed_designs()
+ _visible={k:v for k,v in TEMPLATES.items() if not _allowed or k in _allowed}
+ return render_template('index.html',templates=_visible,cfg=_load_cfg(),
                         is_admin=auth.is_admin(),user=auth.current(),auth_on=auth.ENABLED)
 
 def _resolve_keys(_cfg):
