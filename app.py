@@ -7698,7 +7698,8 @@ def index():
  _visible={k:v for k,v in TEMPLATES.items() if not _allowed or k in _allowed}
  _allowed_n=auth.allowed_niches()
  _niches={k:v for k,v in niches.NICHES.items() if not _allowed_n or k in _allowed_n}
- return render_template('index.html',templates=_visible,cfg=_load_cfg(),
+ _server_keys={p:bool(os.getenv(v,'').strip()) for p,v in (('anthropic','ANTHROPIC_API_KEY'),('openai','OPENAI_API_KEY'),('deepseek','DEEPSEEK_API_KEY'))}
+ return render_template('index.html',templates=_visible,cfg=_load_cfg(),server_keys=_server_keys,
                         niche_list=_niches,default_niche=(niches.DEFAULT_NICHE if niches.DEFAULT_NICHE in _niches else next(iter(_niches))),
                         is_admin=auth.is_admin(),user=auth.current(),auth_on=auth.ENABLED)
 

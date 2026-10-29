@@ -102,19 +102,28 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
       <option value="openai">OpenAI</option>
       <option value="deepseek">DeepSeek</option>
     </select>
+    {% if auth_on %}
+    <div class="hint" style="margin:10px 0 4px;font-size:13px;line-height:1.7">
+      Server keys (from Render):
+      {% for p,label in (('anthropic','Anthropic'),('openai','OpenAI'),('deepseek','DeepSeek')) %}
+        <strong style="color:{{ '#166534' if server_keys[p] else '#a32020' }}">{{label}} {{ '✓ set' if server_keys[p] else '✗ not set' }}</strong>{% if not loop.last %} &bull; {% endif %}
+      {% endfor %}
+      <br>{% if server_keys.anthropic or server_keys.openai or server_keys.deepseek %}No key needed here: the server keys above are used automatically. Fill a box below only to use a different key for this run.{% else %}No server key is set. Add <code>DEEPSEEK_API_KEY</code> (or another) in Render &rarr; Environment, or paste a key below.{% endif %}
+    </div>
+    {% endif %}
     <div class="grid3" {% if not is_admin %}style="display:none"{% endif %}>
       <div>
-        <label>Anthropic Key</label>
+        <label>Anthropic Key (optional)</label>
         <input type="password" autocomplete="new-password" data-lpignore="true" name="anthropic_api_key"placeholder="sk-ant-..." value="{{cfg.get('anthropic_key','')}}">
         <div class="hint">console.anthropic.com</div>
       </div>
       <div>
-        <label>OpenAI Key</label>
+        <label>OpenAI Key (optional)</label>
         <input type="password" autocomplete="new-password" data-lpignore="true" name="openai_api_key"placeholder="sk-..." value="{{cfg.get('openai_key','')}}">
         <div class="hint">platform.openai.com</div>
       </div>
       <div>
-        <label>DeepSeek Key</label>
+        <label>DeepSeek Key (optional)</label>
         <input type="password" autocomplete="new-password" data-lpignore="true" name="deepseek_api_key"placeholder="sk-..." value="{{cfg.get('deepseek_key','')}}">
         <div class="hint">platform.deepseek.com</div>
       </div>
