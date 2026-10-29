@@ -17,6 +17,22 @@ from werkzeug.exceptions import HTTPException
 import auth,niches,design15
 auth.init(app)
 
+def _swap_header_for_banner(soup,banner_html):
+ """Replace the page's <header> (hero) with a title banner and return the new
+ banner tag, so callers can place the page body directly below it. Returns
+ None when the page has no <header>."""
+ hdr=soup.find('header')
+ if hdr is None:return None
+ tag=BeautifulSoup(banner_html,'html.parser').find()
+ hdr.replace_with(tag)
+ return tag
+
+def _faq_question_text(el):
+ """A FAQ question's text for structured data, ignoring decorative toggle icons
+ such as the "+" inside <span class="faq-icon">."""
+ parts=[t for t in el.find_all(string=True) if t.find_parent(class_=re.compile(r'faq.?icon|toggle.?icon',re.I)) is None]
+ return re.sub(r'\s+',' ',''.join(parts)).strip()
+
 def _log_failure(endpoint,exc):
  """Send a failure to the server log (so it shows in Render's Logs tab) and to
  the admin error log (/admin/errors). Never raises: reporting must not hide
@@ -5563,7 +5579,7 @@ def add_jsonld(soup,data,domain,canonical,affiliate,image_paths,include_product=
    for row in rows:
     q_el=row.find('button') or row.find(class_=re.compile('faq.btn|question|toggle|faq-q',re.I))
     a_el=row.find(['div','section','span','p'],class_=re.compile(r'faq.body|answer|collapse|\bfaq-a\b',re.I))
-    q=q_el.get_text(strip=True) if q_el else ''
+    q=_faq_question_text(q_el) if q_el else ''
     a=''
     if a_el:
      p=a_el.find('p')
@@ -5573,7 +5589,7 @@ def add_jsonld(soup,data,domain,canonical,affiliate,image_paths,include_product=
    q_els=faq_visible.find_all('button') or faq_visible.find_all(class_=re.compile('faq.btn|question|toggle|faq-q',re.I))
    a_els=faq_visible.find_all(['div','section','span','p'],class_=re.compile(r'faq.body|answer|collapse|\bfaq-a\b',re.I))
    for q_el,a_el in zip(q_els,a_els):
-    q=q_el.get_text(strip=True)
+    q=_faq_question_text(q_el)
     p=a_el.find('p')
     a=(p.get_text(strip=True) if p else a_el.get_text(strip=True))
     if q and a:visible_faqs.append({'q':q,'a':a})
@@ -7538,17 +7554,16 @@ def generate():
                       ('og:description',a['meta_desc']),('twitter:description',a['meta_desc'])):
      tag=_find_meta(asoup,prop)
      if tag:tag['content']=val
-    hdr=asoup.find('header')
-    if hdr:
-     banner=BeautifulSoup(f'<div style="background:{palette_blog["primary_dark"]};padding:50px 0;text-align:center">'
-                           f'<h1 style="color:#fff;margin:0;font-size:1.8rem">{html.escape(a["h1"])}</h1></div>','html.parser')
-     hdr.replace_with(banner)
+    banner_tag=_swap_header_for_banner(asoup,f'<div style="background:{palette_blog["primary_dark"]};padding:50px 0;text-align:center">'
+                           f'<h1 style="color:#fff;margin:0;font-size:1.8rem">{html.escape(a["h1"])}</h1></div>')
     breadcrumb,internal_links,related=_blog_article_extras(data['brand'],a['slug'],a['h1'],blog_articles)
     body_content=BeautifulSoup(
      f'<section><div class="wrap" style="max-width:760px;margin:0 auto;padding:40px 24px;line-height:1.75">'
      f'{breadcrumb}{internal_links}{a["body_html"]}{related}</div></section>','html.parser')
-    nav_tag=asoup.find('nav')
-    if nav_tag:nav_tag.insert_after(body_content)
+    # The article goes BELOW its title banner (it used to be inserted right
+    # after <nav>, which put the body above the banner).
+    anchor=banner_tag if banner_tag is not None else asoup.find('nav')
+    if anchor is not None:anchor.insert_after(body_content)
     rebase_relative_assets(asoup,'../')
     article_canonical=current_domain_url(domain,fn)
     add_jsonld(asoup,data,domain,article_canonical,affiliate,images,include_product=False)
@@ -7570,14 +7585,11 @@ def generate():
                      ('og:description',blog_meta_desc),('twitter:description',blog_meta_desc)):
     tag=_find_meta(bsoup,prop)
     if tag:tag['content']=val
-   hdr=bsoup.find('header')
-   if hdr:
-    banner=BeautifulSoup(f'<div style="background:{palette_blog["primary_dark"]};padding:50px 0;text-align:center">'
-                          f'<h1 style="color:#fff;margin:0">{html.escape(data["brand"])} Blog</h1></div>','html.parser')
-    hdr.replace_with(banner)
+   banner_tag=_swap_header_for_banner(bsoup,f'<div style="background:{palette_blog["primary_dark"]};padding:50px 0;text-align:center">'
+                          f'<h1 style="color:#fff;margin:0">{html.escape(data["brand"])} Blog</h1></div>')
    body_content=BeautifulSoup(f'<section><div class="wrap"><div class="grid g3" style="margin:40px 0">{blog_cards}</div></div></section>','html.parser')
-   nav_tag=bsoup.find('nav')
-   if nav_tag:nav_tag.insert_after(body_content)
+   anchor=banner_tag if banner_tag is not None else bsoup.find('nav')
+   if anchor is not None:anchor.insert_after(body_content)
    rebase_relative_assets(bsoup,'../')
    add_jsonld(bsoup,data,domain,current_domain_url(domain,'blog/index.html'),affiliate,images,include_product=False)
    (site/'blog/index.html').write_text(str(bsoup),encoding='utf-8')
@@ -7695,6 +7707,7 @@ def generate():
    nf_meta_tag=nfsoup.find('meta',attrs={'name':'description'})
    if nf_meta_tag:nf_meta_tag['content']=f'This page could not be found on {data["brand"]}.'
    header=nfsoup.find('header')
+   nf_banner_tag=None
    if header:
     nf_hero_rel=next((p for p in images if Path(p).stem.lower()=='hero'),images[0]) if images else None
     nf_hero_disk=None
@@ -7704,12 +7717,12 @@ def generate():
      elif (site/nf_hero_rel).exists():nf_hero_disk=site/nf_hero_rel
      elif nf_cand.exists():nf_hero_disk=nf_cand
     nf_palette=build_theme_palette(extract_brand_color(nf_hero_disk) if nf_hero_disk else None)
-    nf_banner=BeautifulSoup(f'<div style="background:{nf_palette["primary_dark"]};padding:60px 0;text-align:center">'
-                             f'<h1 style="color:#fff;margin:0">404 — Page Not Found</h1></div>','html.parser')
-    header.replace_with(nf_banner)
+    nf_banner_tag=BeautifulSoup(f'<div style="background:{nf_palette["primary_dark"]};padding:60px 0;text-align:center">'
+                             f'<h1 style="color:#fff;margin:0">404 — Page Not Found</h1></div>','html.parser').find()
+    header.replace_with(nf_banner_tag)
    nf_body=BeautifulSoup(f'<div class="wrap" style="padding:50px 24px;max-width:600px;margin:0 auto;text-align:center">{notfound_body}</div>','html.parser')
-   nf_nav=nfsoup.find('nav')
-   if nf_nav:nf_nav.insert_after(nf_body)
+   nf_anchor=nf_banner_tag if nf_banner_tag is not None else nfsoup.find('nav')
+   if nf_anchor is not None:nf_anchor.insert_after(nf_body)
    nf_robots=nfsoup.new_tag('meta');nf_robots['name']='robots';nf_robots['content']='noindex,follow'
    if nfsoup.head:nfsoup.head.append(nf_robots)
    (site/'404.html').write_text(str(nfsoup),encoding='utf-8')
