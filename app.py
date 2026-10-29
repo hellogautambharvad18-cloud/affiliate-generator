@@ -766,15 +766,17 @@ _NON_PRODUCT_STEMS=('badge','guarantee','credit','stars','how-it-works','how_it_
 
 def _pick_hero(images):
  """The page's main product shot: an image named hero, otherwise the first image
- that isn't a badge/seal/stars/reviewer/etc. (preferring a 3-bottle pack), and
+ that isn't a badge/seal/stars/reviewer/etc. (preferring a 3-, then 2-, then
+ 6-bottle pack, in either "3-bottle" or "bottle-3" naming), and
  only as a last resort the first image of any kind."""
  if not images:return None
  stem=lambda p:Path(p).stem.lower()
  for p in images:
   if stem(p)=='hero':return p
  good=[p for p in images if not any(k in stem(p) for k in _NON_PRODUCT_STEMS)]
- for p in good:
-  if re.search(r'(^|[^0-9])3[-_ ]?(bottle|pack|box)',stem(p)):return p
+ for n in ('3','2','6'):   # a multi-bottle pack makes a fine hero: 3, then 2, then 6
+  for p in good:
+   if re.search(rf'(^|[^0-9]){n}[-_ ]?(bottle|pack|box|jar)|(bottle|pack|box|jar)[-_ ]?{n}($|[^0-9])',stem(p)):return p
  return good[0] if good else images[0]
 
 def generate_how_it_works_image(path,steps,brand,primary_hex='#2563EB'):
