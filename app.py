@@ -733,7 +733,11 @@ def generate_favicon_files(site,images,brand,primary_hex='#2563EB'):
   d.text(((size-tw)/2-bbox[0],(size-th)/2-bbox[1]),letter,font=font,fill=(255,255,255,255))
  base.resize((192,192),Image.LANCZOS).save(site/'icon-192.png')
  base.resize((512,512),Image.LANCZOS).save(site/'icon-512.png')
- base.resize((180,180),Image.LANCZOS).convert('RGB').save(site/'apple-touch-icon.png')
+ # apple-touch-icon must be opaque. Converting a transparent icon straight to
+ # RGB turns its transparent pixels BLACK (a round logo ended up on a black
+ # square), so flatten it onto white first — the other sizes keep transparency.
+ _flat=Image.new('RGBA',base.size,(255,255,255,255));_flat.alpha_composite(base)
+ _flat.resize((180,180),Image.LANCZOS).convert('RGB').save(site/'apple-touch-icon.png')
  base.resize((32,32),Image.LANCZOS).save(site/'favicon-32.png')
  base.resize((16,16),Image.LANCZOS).save(site/'favicon-16.png')
  base.save(site/'favicon.ico',format='ICO',sizes=[(16,16),(32,32),(48,48)])
