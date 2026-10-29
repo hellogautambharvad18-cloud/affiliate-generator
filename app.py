@@ -6892,6 +6892,49 @@ if __name__=='__main__':
 '''
  (site/'indexnow-submit.py').write_text(script,encoding='utf-8')
 
+def apply_order_redirect(site,domain,affiliate):
+ """Show every buy button as <your-domain>/order/ and send that address on to the
+ real affiliate link. Works on any static host through a plain page that redirects
+ (meta refresh + JS); Apache gets a real 302 via .htaccess and Netlify via _redirects.
+ Returns the public order URL, or '' when there is nothing to redirect."""
+ aff=(affiliate or '').strip()
+ if not aff or not domain:return ''
+ base=domain.rstrip('/')
+ if not re.match(r'https?://',base):base='https://'+base
+ order_url=base+'/order/'
+ variants={aff,html.escape(aff),html.escape(aff,quote=False),aff.replace('&','&amp;')}
+ for p in site.rglob('*.html'):
+  try:txt=p.read_text(encoding='utf-8')
+  except Exception:continue
+  new=txt
+  for v in sorted(variants,key=len,reverse=True):
+   new=new.replace(v,order_url)
+  if new!=txt:p.write_text(new,encoding='utf-8')
+ safe=html.escape(aff,quote=True)
+ js_target=json.dumps(aff).replace('</','<\\/')
+ (site/'order').mkdir(exist_ok=True)
+ (site/'order'/'index.html').write_text(f'''<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Redirecting to the official store…</title>
+<meta name="robots" content="noindex,nofollow"><meta http-equiv="refresh" content="0;url={safe}">
+<link rel="canonical" href="{order_url}">
+<style>body{{font-family:system-ui,Arial,sans-serif;display:flex;min-height:100vh;align-items:center;justify-content:center;margin:0;background:#fff;color:#334}}a{{color:#2563eb}}</style>
+<script>window.location.replace({js_target});</script></head>
+<body><p>Taking you to the official store… <a href="{safe}" rel="nofollow sponsored">Click here if nothing happens</a>.</p></body></html>''',encoding='utf-8')
+ ht=site/'.htaccess'
+ rule=f'\n# Short link: /order/ -> official store (302 so the destination can change)\nRewriteRule ^order/?$ {aff} [R=302,L,NE]\n'
+ ht.write_text((ht.read_text(encoding='utf-8') if ht.exists() else 'RewriteEngine On\n')+rule,encoding='utf-8')
+ (site/'_redirects').write_text(f'/order    {aff}  302\n/order/   {aff}  302\n',encoding='utf-8')
+ rb=site/'robots.txt'
+ if rb.exists():
+  r=rb.read_text(encoding='utf-8')
+  if '/order/' not in r:
+   lines=r.splitlines()
+   i=next((k for k,l in enumerate(lines) if l.lower().startswith('allow:')),None)
+   lines.insert(i+1 if i is not None else len(lines),'Disallow: /order/')
+   rb.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+ return order_url
+
 def write_htaccess(site,domain):
  """Force HTTPS and the exact canonical host (www vs non-www, whichever the
  user configured as `domain`) — without this, Bing/Google can index both
@@ -8064,6 +8107,7 @@ def generate():
   generate_favicon_files(site,images,data['brand'],_fav_palette['primary'])
   apply_favicon_links(site,_fav_palette['primary'])
   seo_rename_images(site,data['brand'])
+  apply_order_redirect(site,domain,affiliate)
   out=build_zip(site,domain,product)
   return send_file(out,as_attachment=True,download_name=out.name,mimetype='application/zip')
  except Exception as e:
