@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Terms of Service — AffiliateGen</title>
+<meta name="description" content="The terms that apply when you use AffiliateGen.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b6cf6'/%3E%3Cpath d='M17 5 8 18h7l-1 9 9-13h-7z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/site.css">
+</head><body>
+{% include '_nav.html' %}
+<div class="page-head"><div class="container"><h1>Terms of Service</h1><p>Last updated: 29 October 2026</p></div></div>
+<main class="container page-body"><article class="card legal">
+<p>These terms govern your use of AffiliateGen (the "Service"). By logging in or using the Service you agree to them. If you do not agree, do not use the Service.</p>
+
+<h2>1. The Service</h2>
+<p>AffiliateGen generates static affiliate websites from information you provide (product name, affiliate link, domain, optional images). It uses third-party AI providers to draft text, and delivers the result to you as a downloadable ZIP file.</p>
+
+<h2>2. Accounts and access</h2>
+<ul>
+<li>Access is by invitation. Accounts are created by the owner and may have an expiry date, a daily usage limit and a limited set of designs.</li>
+<li>An account is for one person. You must not share, sell or rent your login to anyone else.</li>
+<li>Keep your password secret. You are responsible for activity under your account.</li>
+<li>We may suspend or delete any account at any time, including for breaking these terms or for usage that creates unreasonable cost.</li>
+</ul>
+
+<h2>3. Acceptable use</h2>
+<p>You agree not to:</p>
+<ul>
+<li>copy, scrape, decompile, reverse-engineer or otherwise try to discover the source code, prompts, templates or internal workings of the Service, or build a competing product from them;</li>
+<li>resell, sublicense or provide access to the Service to third parties;</li>
+<li>use automated tools to bypass usage limits or overload the Service;</li>
+<li>use the Service for anything unlawful, deceptive or harmful, or to publish content that infringes the rights of others.</li>
+</ul>
+
+<h2>4. Your responsibility for the websites you publish</h2>
+<p>Generated content is a draft produced by AI. It may be inaccurate, incomplete or unsuitable for your product, market or regulator. You are solely responsible for what you publish, and before publishing you must:</p>
+<ul>
+<li>verify every product claim, ingredient, price, guarantee and certification against reliable sources and the product owner's own materials;</li>
+<li>replace or remove any sample reviewer names, testimonials, ratings or badges unless they are real, genuine and you are entitled to use them. Presenting invented testimonials or unsupported health or earnings claims as real can be unlawful;</li>
+<li>make sure you have the right to use every image you upload or download, and follow the rules of the affiliate programme, advertising platforms and consumer, health and advertising laws that apply to you, including required affiliate and advertising disclosures.</li>
+</ul>
+<p>We do not review the websites you create and are not responsible for them or for how you use them.</p>
+
+<h2>5. Ownership</h2>
+<p>You own the website files you generate and the information you provide, subject to the rights of any third parties in the material you supply. We and our licensors own the Service, including its software, designs, templates and generation logic. Nothing in these terms transfers any ownership of the Service to you.</p>
+
+<h2>6. Availability and changes</h2>
+<p>The Service is provided on an "as is" and "as available" basis. We may change, limit or discontinue any part of it, including designs, limits and features, at any time. The Service may be unavailable from time to time.</p>
+
+<h2>7. No warranty</h2>
+<p>To the fullest extent allowed by law, we give no warranties of any kind, express or implied, including about accuracy of generated content, fitness for a particular purpose, search-engine ranking, earnings or uninterrupted operation.</p>
+
+<h2>8. Limitation of liability</h2>
+<p>To the fullest extent allowed by law, we are not liable for indirect, incidental or consequential loss, lost profits or revenue, lost data, account or affiliate-programme suspensions, or claims arising from websites you publish. Our total liability for any claim relating to the Service is limited to the amount you paid us for the Service in the three months before the claim arose, or zero if you paid nothing.</p>
+
+<h2>9. Indemnity</h2>
+<p>You agree to defend and hold us harmless against claims, losses and costs arising from the websites you publish, your content, or your breach of these terms.</p>
+
+<h2>10. Termination</h2>
+<p>You may stop using the Service at any time. We may end or suspend your access at any time. Sections that by their nature should survive termination (including 3, 4, 5, 7, 8 and 9) will survive.</p>
+
+<h2>11. Changes to these terms</h2>
+<p>We may update these terms. The date at the top shows the latest version. Continuing to use the Service after a change means you accept the updated terms.</p>
+
+<h2>12. Contact</h2>
+<p>{% if support_email %}Questions about these terms: <a href="mailto:{{support_email}}">{{support_email}}</a>.{% else %}For questions about these terms, contact the person who gave you access to the Service.{% endif %}</p>
+<p class="legal-note">See also our <a href="/privacy">Privacy Policy</a>.</p>
+</article></main>
+{% include '_footer.html' %}
+</body></html>

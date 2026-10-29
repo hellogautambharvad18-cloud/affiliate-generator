@@ -28,7 +28,7 @@ DATABASE_URL=os.getenv('DATABASE_URL','').strip()
 
 bp=Blueprint('auth',__name__)
 
-PUBLIC_ENDPOINTS={'auth.landing','auth.login','auth.logout','auth.healthz','static'}
+PUBLIC_ENDPOINTS={'auth.landing','auth.login','auth.logout','auth.healthz','auth.terms','auth.privacy','static'}
 # Endpoints that spend the owner's AI credit and count toward a friend's daily
 # limit. Phase 2 (/api/generate) reuses phase 1's content, so counting phase 1
 # is the accurate measure of "one website".
@@ -97,7 +97,8 @@ def init(app):
     @app.context_processor
     def _chrome():
         return {'nav_user':current() if ENABLED else None,'nav_auth':ENABLED,
-                'now_year':datetime.now(timezone.utc).year}
+                'now_year':datetime.now(timezone.utc).year,
+                'support_email':os.getenv('SUPPORT_EMAIL','').strip()}
     @app.after_request
     def _headers(resp):
         resp.headers.setdefault('X-Content-Type-Options','nosniff')
@@ -221,6 +222,16 @@ def landing():
 @bp.get('/healthz')
 def healthz():
     return 'ok'
+
+
+@bp.get('/terms')
+def terms():
+    return render_template('terms.html')
+
+
+@bp.get('/privacy')
+def privacy():
+    return render_template('privacy.html')
 
 
 @bp.route('/login',methods=['GET','POST'])
