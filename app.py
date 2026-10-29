@@ -55,6 +55,7 @@ TEMPLATES={
  '13':{'name':'Design 13 — Verdict (Native, Auto-Themed)','source':'design-13.source.md','old':None,'old_domains':[],'native':True},
  '14':{'name':'Design 14 — Teal Classic (Native, Auto-Themed)','source':'design-14.source.md','old':None,'old_domains':[],'native':True},
  '15':{'name':'Design 15 — Dynamic Unique (Native, Auto-Themed)','source':'design-15.source.md','old':None,'old_domains':[],'native':True},
+ '16':{'name':'Design 16 — Editorial (Native, Auto-Themed)','source':'design-16.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -5709,6 +5710,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
 
  # ── Card builders (design-aware: Design 10 uses distinct structural markup) ──
  def ing_card(ing,i):
+  if design=='16':
+   return (f'<div class="ing-card"><div class="ing-num-circle">{i+1}</div><div class="ing-content">'
+           f'<h3 class="ing-name">{html.escape(ing.get("name",""))}</h3>'
+           f'<div class="ing-desc"><p>{html.escape(ing.get("description",""))}</p></div></div></div>')
   if design=='10':
    return (f'<div class="ing-row"><div class="ing-badge">{i+1}</div><div>'
            f'<h4>{html.escape(ing.get("name",""))}</h4>'
@@ -5723,6 +5728,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
           f'<h4>{html.escape(ing.get("name",""))}</h4>'
           f'<p>{html.escape(ing.get("description",""))}</p></div></div>')
  def hiw_card(step,i):
+  if design=='16':
+   return (f'<div class="step16"><div class="step16-num">{i+1}</div>'
+           f'<h3>{html.escape(step.get("title",""))}</h3>'
+           f'<p>{html.escape(step.get("text",""))}</p></div>')
   if design=='10':
    return (f'<div class="tl-item"><div class="tl-num">{i+1}</div><div>'
            f'<h4>{html.escape(step.get("title",""))}</h4>'
@@ -5738,6 +5747,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   parts=b.split(' — ',1) if ' — ' in b else [b,'']
   desc=parts[1] if len(parts)>1 else "Supports your daily "+category+" routine."
   desc=desc[:1].upper()+desc[1:] if desc else desc
+  if design=='16':
+   icon=['🌿','💪','🛡️','⚡','🧠','❤️','✨','🌱'][i%8]
+   return (f'<div class="benefit-card"><div class="benefit-icon">{icon}</div>'
+           f'<h3>{html.escape(parts[0])}</h3><p>{html.escape(desc)}</p></div>')
   if design=='10':
    return (f'<div class="benefit-item"><div class="benefit-dot">✓</div><div>'
            f'<h4>{html.escape(parts[0])}</h4><p>{html.escape(desc)}</p></div></div>')
@@ -5757,6 +5770,12 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   text=sample_reviews[i] if i<len(sample_reviews) else 'Great product, easy to use daily.'
   img=_get_reviewer_img(images,i)
   img_tag=f'<img src="{img}" alt="{html.escape(name)}">' if img else _avatar_tag(name)
+  if design=='16':
+   photo=(f'<img class="testi-photo" src="{img}" alt="{html.escape(name)}" width="92" height="92" loading="lazy">'
+          if img else f'<div class="testi-initial">{html.escape((name.strip()[:1] or "?").upper())}</div>')
+   return (f'<div class="testimonial">{photo}<div class="stars">★★★★★</div>'
+           f'<div class="verified">Verified Purchase <span>✔</span></div>'
+           f'<p>&ldquo;{html.escape(text)}&rdquo;</p><div class="name">{html.escape(name)}</div></div>')
   if design=='10':
    if i==0:
     return (f'<div class="rev-spotlight"><div class="rev-stars">★★★★★</div>'
@@ -5796,6 +5815,34 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
            f'<div class="price-val">{html.escape(str(pkg.get("price_per_bottle","")))}<small>per bottle</small></div>'
            f'<div class="price-val">{html.escape(_clean_total_value(pkg.get("total","")))}<small>{html.escape(str(pkg.get("shipping","Free Shipping")))}</small></div>'
            f'<div class="price-buy"><a class="btn" href="{affiliate}">{html.escape(buy_text)}</a></div></div>')
+  if design=='16':
+   total_num=_price_num(pkg.get('total',''))
+   regular_rate=max((p for _,p in prices),default=0)
+   was_total=regular_rate*bottles
+   savings=was_total-total_num
+   pp=str(pkg.get('price_per_bottle',''))
+   _m=re.match(r'^(\D*?)(\d[\d.,]*)',pp.strip())
+   amount=(f'<span>{html.escape(_m.group(1) or "")}</span>{html.escape(_m.group(2))}' if _m else html.escape(pp))
+   tag=f'{bottles} Bottles'+(' · Best Value' if is_best_value else (' · Most Popular' if is_middle else ''))
+   was_html=f'<s>${was_total:.0f}</s> ' if was_total>total_num else ''
+   save_html=f'<div class="price-savings">SAVE ${savings:.0f}</div>' if savings>0 else ''
+   bonus_html=''
+   if is_best_value and bonuses:
+    nb=len(bonuses)
+    bonus_html=f'<div class="price-bonus">+ {nb} FREE BONUS{"ES" if nb>1 else ""}</div>'
+   cc_img=next((safe_rel(p) for p in images if Path(p).stem.lower()=='credit-cards'),None)
+   pay_html=(f'<div class="price-pay"><img src="{cc_img}" alt="Accepted payment methods" width="120" height="26" loading="lazy"></div>'
+             if cc_img else '')
+   return (f'<div class="price-card{" best-value" if is_best_value else ""}">'
+           f'<div class="price-badge">{html.escape(tag)}</div>'
+           f'<img class="price-img" src="{img}" alt="{html.escape(brand)} {bottles} bottle pack" width="150" height="150" loading="lazy">'
+           f'<div class="price-amount">{amount}</div>'
+           f'<div class="price-per">per bottle · {bottles*30}-day supply</div>'
+           f'{save_html}{bonus_html}'
+           f'<a class="price-btn" href="{affiliate}">{html.escape(buy_text)}</a>'
+           f'<div class="price-guarantee">60-Day Money Back Guarantee</div>{pay_html}'
+           f'<div class="price-total">TOTAL: {was_html}<strong>${total_num:.0f}</strong></div>'
+           f'<div class="price-ship">{html.escape(str(pkg.get("shipping","Free Shipping")))}</div></div>')
   badge='<div class="plan-badge">Best Value</div>' if is_best_value else ('<div class="plan-badge" style="background:'+palette["accent"]+'">Most Popular</div>' if is_middle else '')
   cls='plan top' if is_best_value else 'plan'
   if design=='13':
@@ -5842,9 +5889,15 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
           f'<li>60-day money-back guarantee</li><li>Secure checkout</li></ul>'
           f'<a class="btn" href="{affiliate}">{html.escape(buy_text)}</a>{cta_trust_line_html()}</div>')
  def faq_row(f):
+  if design=='16':
+   return (f'<div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">'
+           f'<span>{html.escape(f.get("q",""))}</span><span class="faq-icon">+</span></button>'
+           f'<div class="faq-a"><p>{html.escape(f.get("a",""))}</p></div></div>')
   return (f'<div class="faq-row"><button class="faq-btn" type="button">{html.escape(f.get("q",""))}</button>'
           f'<div class="faq-body"><p>{html.escape(f.get("a",""))}</p></div></div>')
  def symptom_card(s,i):
+  if design=='16':
+   return f'<li>{html.escape(s.get("title",""))}</li>'
   if design=='13':
    ic='bi-lightning-charge' if i%2==0 else 'bi-exclamation-circle'
    ic_cls='ic dark' if i%2==0 else 'ic'
