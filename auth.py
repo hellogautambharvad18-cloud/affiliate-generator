@@ -94,6 +94,10 @@ def init(app):
         from werkzeug.middleware.proxy_fix import ProxyFix
         app.wsgi_app=ProxyFix(app.wsgi_app,x_for=1,x_proto=1,x_host=1)
     app.jinja_env.filters['datetimeformat']=lambda ts:datetime.fromtimestamp(ts,timezone.utc).strftime('%d %b %Y')
+    @app.context_processor
+    def _chrome():
+        return {'nav_user':current() if ENABLED else None,'nav_auth':ENABLED,
+                'now_year':datetime.now(timezone.utc).year}
     app.register_blueprint(bp)
     app.before_request(_gate)
 
@@ -198,7 +202,12 @@ def _gate():
 def landing():
     if not ENABLED or current():
         return redirect(url_for('index'))
-    return render_template('landing.html')
+    designs=[]
+    for k,v in TEMPLATES.items():
+        part=v['name'].split('—',1)[-1].strip()
+        label='Auto-themed' if 'Auto-Themed' in part else part.split()[-1]
+        designs.append((k,label))
+    return render_template('landing.html',designs=designs)
 
 
 @bp.get('/healthz')

@@ -1,65 +1,100 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Affiliate Website Generator — Launch a product site in minutes</title>
-<meta name="description" content="Generate a complete, SEO-ready affiliate website for any product: 16+ pages, reviews, FAQs, blog and schema markup, delivered as a ready-to-upload ZIP.">
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,system-ui,Arial,sans-serif;color:#172033;background:#f0f4fb;line-height:1.55}
-a{color:inherit;text-decoration:none}
-.nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:18px 20px}
-.logo{font-weight:800;font-size:18px;letter-spacing:-.3px}
-.logo span{color:#4a7cf7}
-.btn{display:inline-block;padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;background:linear-gradient(135deg,#2d52d4,#4a7cf7);color:#fff;box-shadow:0 6px 18px rgba(45,82,212,.28)}
-.btn.ghost{background:#fff;color:#2d52d4;box-shadow:none;border:1.5px solid #d0d8ea}
-.hero{background:#172033;color:#fff;text-align:center;padding:84px 20px 96px}
-.hero .pill{display:inline-block;background:rgba(74,124,247,.18);color:#9db8ff;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
-.hero h1{font-size:clamp(32px,5vw,54px);line-height:1.1;letter-spacing:-1px;max-width:780px;margin:0 auto 18px}
-.hero p{color:#aab8d6;font-size:18px;max-width:600px;margin:0 auto 32px}
-.hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:-48px}
-.card{background:#fff;border:1px solid #dde3ec;border-radius:16px;padding:24px;box-shadow:0 4px 20px rgba(20,30,50,.06)}
-.card .ico{font-size:26px;margin-bottom:10px}
-.card h3{font-size:17px;margin-bottom:6px}
-.card p{font-size:14px;color:#55627d}
-h2{font-size:28px;text-align:center;letter-spacing:-.4px;margin:72px 0 28px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.step{text-align:center;padding:8px}
-.step b{display:grid;place-items:center;width:42px;height:42px;margin:0 auto 12px;border-radius:50%;background:#e8f0ff;color:#2d52d4}
-.step p{font-size:14px;color:#55627d}
-.band{background:#fff;border-top:1px solid #dde3ec;border-bottom:1px solid #dde3ec;margin-top:72px;padding:48px 20px;text-align:center}
-.band h2{margin:0 0 10px}
-.band p{color:#55627d;margin-bottom:22px}
-footer{text-align:center;color:#8899bb;font-size:13px;padding:30px 20px}
-@media(max-width:800px){.grid,.steps{grid-template-columns:1fr}.grid{margin-top:-36px}}
-</style></head><body>
-<header style="background:#172033;color:#fff"><div class="nav">
-  <a class="logo" href="/">Affiliate<span>Gen</span></a>
-  <a class="btn ghost" href="/login">Log in</a>
-</div></header>
-<section class="hero">
-  <div class="pill">Private beta &bull; Invite only</div>
-  <h1>Turn any product into a complete affiliate website</h1>
-  <p>Enter a product, an affiliate link and your domain. Get a polished, SEO-ready multi-page site as a ZIP, ready to upload.</p>
-  <div class="cta"><a class="btn" href="/login">Start generating</a><a class="btn ghost" href="#how">See how it works</a></div>
-</section>
-<div class="wrap">
-  <div class="grid">
-    <div class="card"><div class="ico">⚡</div><h3>Full site in minutes</h3><p>Home, ingredients, benefits, reviews, FAQ, blog articles, legal pages and a 404, all linked together.</p></div>
-    <div class="card"><div class="ico">🔎</div><h3>SEO built in</h3><p>Unique titles and meta tags, JSON-LD schema, sitemap, robots.txt, llms.txt and IndexNow.</p></div>
-    <div class="card"><div class="ico">🎨</div><h3>Multiple designs</h3><p>Pick from a library of conversion-focused templates. Your images, colours and favicon are applied automatically.</p></div>
+<title>AffiliateGen — Build a complete affiliate website in minutes</title>
+<meta name="description" content="Generate a complete, SEO-ready affiliate website for any product: reviews, FAQs, blog, legal pages and schema markup, delivered as a ready-to-upload ZIP.">
+<meta property="og:title" content="AffiliateGen — Build a complete affiliate website in minutes">
+<meta property="og:description" content="Enter a product, an affiliate link and your domain. Get a polished, SEO-ready multi-page site as a ZIP.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b6cf6'/%3E%3Cpath d='M17 5 8 18h7l-1 9 9-13h-7z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/site.css">
+</head><body>
+{% include '_nav.html' %}
+
+<section class="hero"><div class="container hero-grid">
+  <div>
+    <div class="eyebrow"><i></i> Private beta &middot; invite only</div>
+    <h1>Build a complete affiliate website <span>in minutes</span></h1>
+    <p class="lead">Enter a product, an affiliate link and your domain. AffiliateGen writes the content, applies a design and hands you a polished, SEO-ready multi-page site as a ZIP.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="/login">Log in to start</a>
+      <a class="btn btn-ghost" href="#how">See how it works</a>
+    </div>
+    <p class="hero-note">Access is by invitation. Ask the owner for your login.</p>
   </div>
-  <h2 id="how">How it works</h2>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-bar"><i></i><i></i><i></i><span class="mock-url">yourdomain.com</span></div>
+    <div class="mock-body">
+      <div class="mock-hero"><b>Your product site</b><s></s><u></u></div>
+      <div class="mock-row"><div></div><div></div><div></div></div>
+      <div class="mock-lines"><div></div><div></div><div></div></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="container stats"><div class="stats-card">
+  <div class="stat"><b>{{ designs|length }}</b><span>Ready-made designs</span></div>
+  <div class="stat"><b>16+</b><span>Pages per website</span></div>
+  <div class="stat"><b>SEO</b><span>Schema, sitemap, meta</span></div>
+  <div class="stat"><b>ZIP</b><span>Upload anywhere</span></div>
+</div></div>
+
+<section class="block" id="features"><div class="container">
+  <div class="sec-head"><div class="kicker">Features</div><h2>Everything a product site needs, generated for you</h2><p>Skip the template hunting and copywriting. Each site ships complete and linked together.</p></div>
+  <div class="grid3">
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/></svg></div><h3>Complete multi-page sites</h3><p>Home, ingredients, benefits, reviews, FAQ, blog articles, legal pages and a 404, all wired together.</p></div>
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><h3>SEO built in</h3><p>Unique titles and meta tags, JSON-LD schema, sitemap, robots.txt, llms.txt and IndexNow support.</p></div>
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1 3.7c.6.4 1 1 1 1.6 0 .4-.3.7-.7.7z"/></svg></div><h3>A library of designs</h3><p>Pick from conversion-focused layouts. Colours, favicon and imagery adapt to your product automatically.</p></div>
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg></div><h3>Smart image handling</h3><p>Upload your own product photos. Images are placed, optimised to WebP and renamed for SEO.</p></div>
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3m0 12v3M3 12h3m12 0h3m-2.6-6.4-2.1 2.1M7.7 16.3l-2.1 2.1m0-12.8 2.1 2.1m8.6 8.6 2.1 2.1"/><circle cx="12" cy="12" r="3"/></svg></div><h3>AI-written content</h3><p>Product copy, FAQs, benefits and blog posts are drafted for you to review before you publish.</p></div>
+    <div class="card feature"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div><h3>One-click ZIP export</h3><p>Download static HTML you fully own. Upload it to any host and point your domain at it.</p></div>
+  </div>
+</div></section>
+
+<section class="block alt" id="how"><div class="container">
+  <div class="sec-head"><div class="kicker">How it works</div><h2>From product name to finished website</h2><p>Four simple steps, no coding required.</p></div>
   <div class="steps">
-    <div class="step"><b>1</b><p>Enter product name, affiliate link and domain</p></div>
-    <div class="step"><b>2</b><p>AI writes the content for you to review</p></div>
-    <div class="step"><b>3</b><p>Add photos and choose a design</p></div>
-    <div class="step"><b>4</b><p>Download the ZIP and upload to your host</p></div>
+    <div class="step"><h3>Add your product</h3><p>Enter the product name, your affiliate link and the domain you will publish on.</p></div>
+    <div class="step"><h3>Review the content</h3><p>AI drafts the copy. You see it, along with the reviewer names, before anything is built.</p></div>
+    <div class="step"><h3>Choose a design</h3><p>Select a template and upload your product, badge and reviewer photos.</p></div>
+    <div class="step"><h3>Download &amp; publish</h3><p>Get a ZIP with every page, then upload it to your hosting. That is it.</p></div>
   </div>
-</div>
-<section class="band">
-  <h2>Already have an account?</h2>
-  <p>Access is by invitation. Ask the owner for your email and password, then log in.</p>
-  <a class="btn" href="/login">Log in</a>
-</section>
-<footer>&copy; Affiliate Website Generator. Always verify product claims before publishing.</footer>
+</div></section>
+
+<section class="block" id="designs"><div class="container">
+  <div class="sec-head"><div class="kicker">Designs</div><h2>Pick the look that fits your product</h2><p>Every design is fully responsive and ready for mobile, tablet and desktop.</p></div>
+  {% set swatches=['#2447c9,#6a5cff','#0f766e,#34d399','#be185d,#fb7185','#b45309,#fbbf24','#1d4ed8,#38bdf8','#4c1d95,#a78bfa','#065f46,#6ee7b7','#9f1239,#f97316'] %}
+  <div class="designs">
+    {% for k,label in designs %}
+    <div class="design"><div class="sw" style="background:linear-gradient(135deg,{{ swatches[loop.index0 % swatches|length] }})"></div><div class="t"><b>Design {{k}}</b><span>{{label}}</span></div></div>
+    {% endfor %}
+  </div>
+</div></section>
+
+<section class="block alt"><div class="container">
+  <div class="sec-head"><div class="kicker">What you get</div><h2>A finished site, not a rough draft</h2></div>
+  <ul class="includes">
+    {% for item in ['Home page with product, pricing and guarantee sections','What it is, how it works, ingredients and benefits pages','Reviews and FAQ pages with structured data','Blog index plus several product-specific articles','Terms, Privacy, Disclaimer, Refund, About and Contact pages','Branded favicon and a custom 404 page','sitemap.xml, robots.txt, llms.txt and IndexNow key','Optimised WebP images with SEO filenames'] %}
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg><span>{{item}}</span></li>
+    {% endfor %}
+  </ul>
+</div></section>
+
+<section class="block" id="faq"><div class="container">
+  <div class="sec-head"><div class="kicker">FAQ</div><h2>Common questions</h2></div>
+  <div class="faq">
+    <details><summary>How do I get access?</summary><p>AffiliateGen is invite only. The owner creates an account for you with an email and password, and sets how long your access lasts.</p></details>
+    <details><summary>Do I need my own AI or API keys?</summary><p>No. Content generation runs on the owner's keys, so you only need to log in and fill in the product details.</p></details>
+    <details><summary>What do I receive at the end?</summary><p>A ZIP file with a complete static website. Unzip it and upload it to any web host, then point your domain at it.</p></details>
+    <details><summary>Can I edit the generated site?</summary><p>Yes. The output is plain HTML, CSS and JavaScript, so you can change any text, image or link after downloading.</p></details>
+    <details><summary>Is the content ready to publish as is?</summary><p>Treat it as a strong first draft. Always verify product claims, pricing, guarantees, testimonials, certifications and image usage rights before going live.</p></details>
+  </div>
+</div></section>
+
+<div class="container" style="padding-bottom:92px"><div class="cta">
+  <h2>Ready to build your next affiliate site?</h2>
+  <p>Log in with the email and password you were given.</p>
+  <a class="btn btn-light" href="/login">Log in</a>
+</div></div>
+
+{% include '_footer.html' %}
 </body></html>

@@ -1,0 +1,21 @@
+<header class="nav"><div class="container">
+  <a class="brand" href="/">
+    <span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+    <span>Affiliate<em>Gen</em></span>
+  </a>
+  {% if nav_user %}
+  <div class="nav-right">
+    <a class="nav-link" href="/app">Generator</a>
+    {% if nav_user.role=='admin' and nav_auth %}<a class="nav-link" href="/admin">Admin</a>{% endif %}
+    {% if nav_auth %}
+    <span class="chip">Signed in as <b>{{nav_user.name}}</b>{% if nav_user.role=='friend' %} &middot; until {{ nav_user.e | int | datetimeformat }}{% endif %}</span>
+    <form method="post" action="/logout"><button class="linkbtn">Log out</button></form>
+    {% endif %}
+  </div>
+  {% elif nav_auth %}
+  <nav class="nav-links">
+    <a href="/#features">Features</a><a href="/#how">How it works</a><a href="/#designs">Designs</a><a href="/#faq">FAQ</a>
+  </nav>
+  <div class="nav-right"><a class="btn btn-primary btn-sm" href="/login">Log in</a></div>
+  {% endif %}
+</div></header>

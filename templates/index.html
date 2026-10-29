@@ -1,4 +1,8 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Affiliate Website Generator V9.4</title><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Generator — AffiliateGen</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233b6cf6'/%3E%3Cpath d='M17 5 8 18h7l-1 9 9-13h-7z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/site.css"><style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Inter,system-ui,Arial,sans-serif;background:#f0f4fb;color:#172033;min-height:100vh}
 .header{background:#172033;color:#fff;padding:20px 0;text-align:center}
@@ -35,17 +39,12 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
 @media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}
 </style></head>
 <body>
-<div class="header">
-  <h1>Affiliate Website Generator</h1>
-  <p>V9.4 — Gender-matched reviewer photos &bull; Anthropic + OpenAI + DeepSeek &bull; SEO-ready</p>
-  {% if auth_on and user %}
-  <p style="margin-top:10px">Signed in as <strong style="color:#fff">{{user.name}}</strong>
-    {% if user.role=='friend' %}&bull; access until {{ user.e | int | datetimeformat }}{% endif %}
-    {% if is_admin %}&bull; <a href="/admin" style="color:#9db8ff">Admin</a>{% endif %}
-    &bull; <form method="post" action="/logout" style="display:inline"><button style="background:none;border:0;color:#9db8ff;cursor:pointer;font:inherit;font-size:13px;text-decoration:underline;padding:0">Log out</button></form></p>
-  {% endif %}
-</div>
-<div class="wrap">
+{% include '_nav.html' %}
+<div class="page-head"><div class="container">
+  <h1>Website generator</h1>
+  <p>Enter your product details, review the AI content, pick a design and download the finished site.</p>
+</div></div>
+<div class="wrap" style="margin-top:-44px;position:relative;padding-bottom:20px">
 <form id="form">
 
   <div class="card">
@@ -182,6 +181,7 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
 
 </form>
 </div>
+{% include '_footer.html' %}
 
 <script>
 const form=document.getElementById('form');
