@@ -762,6 +762,21 @@ def apply_favicon_links(site,theme_color='#2563EB'):
   soup.head.append(new_tags)
   p.write_text(str(soup),encoding='utf-8')
 
+_NON_PRODUCT_STEMS=('badge','guarantee','credit','stars','how-it-works','how_it_works','howitworks','reviewer','bonus','favicon','checkout','supplement','facts','logo','icon')
+
+def _pick_hero(images):
+ """The page's main product shot: an image named hero, otherwise the first image
+ that isn't a badge/seal/stars/reviewer/etc. (preferring a 3-bottle pack), and
+ only as a last resort the first image of any kind."""
+ if not images:return None
+ stem=lambda p:Path(p).stem.lower()
+ for p in images:
+  if stem(p)=='hero':return p
+ good=[p for p in images if not any(k in stem(p) for k in _NON_PRODUCT_STEMS)]
+ for p in good:
+  if re.search(r'(^|[^0-9])3[-_ ]?(bottle|pack|box)',stem(p)):return p
+ return good[0] if good else images[0]
+
 def generate_how_it_works_image(path,steps,brand,primary_hex='#2563EB'):
  """A clean, numbered-steps infographic built from this product's own real
  how_it_works data (title+text per step) — used only as a fallback when the
@@ -1129,7 +1144,7 @@ def apply_dynamic_accent_theme(soup,design,images,site_root):
  if not cfg:return
  seed_rgb=None
  if images and site_root:
-  seed_path=next((p for p in images if Path(p).stem.lower()=='hero'),None) or images[0]
+  seed_path=_pick_hero(images)
   try:
    seed_rgb=extract_brand_color(Path(site_root)/seed_path)
   except Exception:
@@ -2158,7 +2173,7 @@ def localize_reference_assets(soup,site_root,design,old_domains,brand='',images=
  token=_build_token(site_root)
  target_rgb=None
  if images and site_root:
-  seed_path=next((p for p in images if Path(p).stem.lower()=='hero'),None) or images[0]
+  seed_path=_pick_hero(images)
   try:target_rgb=extract_brand_color(Path(site_root)/seed_path)
   except Exception:target_rgb=None
  base_css_text=None
@@ -4366,7 +4381,7 @@ def populate(soup,data,design='1',domain='',affiliate=''):
      break
   # Hero image
   if images:
-   hero_img=next((p for p in images if Path(p).stem.lower()=='hero'),None) or images[0]
+   hero_img=_pick_hero(images)
    for img in hero.find_all('img'):
     stem=(img.get('data-orig-stem') or Path(img.get('src','') or '').stem).lower()
     if not _is_keep(stem,design):
@@ -5966,7 +5981,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
  hero_img_path=None
  for p in images:
   if Path(p).stem.lower()=='hero':hero_img_path=p;break
- if not hero_img_path and images:hero_img_path=images[0]
+ if not hero_img_path and images:hero_img_path=_pick_hero(images)
  # Resolve to an actual openable disk path — the `images` list holds paths
  # relative to the output site (e.g. "assets/images/hero.png"), so without
  # site_root, PIL can't find the file and color extraction silently fails.
@@ -7786,7 +7801,7 @@ def generate():
   # leaving the section without an image (or, as before the wrong-brand-leak
   # fix, silently showing a different product's own mechanism graphic).
   if not any(Path(p).stem.lower() in ('how-it-works','how_it_works','howitworks','how-it-work') for p in images):
-   _hiw_hero_rel=next((p for p in images if Path(p).stem.lower()=='hero'),images[0]) if images else None
+   _hiw_hero_rel=_pick_hero(images) if images else None
    _hiw_hero_disk=None
    if _hiw_hero_rel:
     _hiw_cand=Path(_hiw_hero_rel)
@@ -7814,7 +7829,7 @@ def generate():
    # article pages behind them.
    (site/'blog').mkdir(exist_ok=True)
    palette_blog=build_theme_palette(extract_brand_color(
-     (site/next((p for p in images if Path(p).stem.lower()=='hero'),images[0])) if images else None))
+     (site/_pick_hero(images)) if images else None))
    for a in blog_articles:
     fn=f'blog/{a["slug"]}.html'
     article_html=build_native_page(data,domain,affiliate,images,fn,'index',design,site)
@@ -7935,7 +7950,7 @@ def generate():
     header=lsoup.find('header')
     banner=None
     if header:
-     hero_rel=next((p for p in images if Path(p).stem.lower()=='hero'),images[0]) if images else None
+     hero_rel=_pick_hero(images) if images else None
      hero_disk=None
      if hero_rel:
       cand=Path(hero_rel)
@@ -7982,7 +7997,7 @@ def generate():
    header=nfsoup.find('header')
    nf_banner_tag=None
    if header:
-    nf_hero_rel=next((p for p in images if Path(p).stem.lower()=='hero'),images[0]) if images else None
+    nf_hero_rel=_pick_hero(images) if images else None
     nf_hero_disk=None
     if nf_hero_rel:
      nf_cand=Path(nf_hero_rel)
@@ -8036,7 +8051,7 @@ def generate():
    for p in list((site/'assets/images').glob('bonus*')):
     if re.fullmatch(r'bonus-?\d+',p.stem.lower()):
      p.unlink()
-  _fav_hero_rel=next((p for p in images if Path(p).stem.lower()=='hero'),images[0]) if images else None
+  _fav_hero_rel=_pick_hero(images) if images else None
   _fav_hero_disk=None
   if _fav_hero_rel:
    _cand=Path(_fav_hero_rel)
