@@ -98,6 +98,14 @@ def init(app):
     def _chrome():
         return {'nav_user':current() if ENABLED else None,'nav_auth':ENABLED,
                 'now_year':datetime.now(timezone.utc).year}
+    @app.after_request
+    def _headers(resp):
+        resp.headers.setdefault('X-Content-Type-Options','nosniff')
+        resp.headers.setdefault('X-Frame-Options','DENY')
+        resp.headers.setdefault('Referrer-Policy','same-origin')
+        if request.path.startswith(('/app','/admin','/api','/login')):
+            resp.headers['X-Robots-Tag']='noindex, nofollow'
+        return resp
     app.register_blueprint(bp)
     app.before_request(_gate)
 
