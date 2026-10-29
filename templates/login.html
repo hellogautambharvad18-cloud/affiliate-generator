@@ -6,19 +6,21 @@ body{font-family:Inter,system-ui,Arial,sans-serif;background:#172033;min-height:
 .box{background:#fff;border-radius:18px;padding:34px 30px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
 h1{font-size:22px;letter-spacing:-.3px;margin-bottom:6px}
 p.sub{font-size:14px;color:#6b7994;margin-bottom:22px}
-label{display:block;font-size:13px;font-weight:600;color:#2d3a52;margin-bottom:6px}
+label{display:block;font-size:13px;font-weight:600;color:#2d3a52;margin:14px 0 6px}
 input{width:100%;padding:12px 14px;border:1.5px solid #d0d8ea;border-radius:10px;font-size:15px;background:#fafbfd}
 input:focus{outline:none;border-color:#4a7cf7;background:#fff}
-button{width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#2d52d4,#4a7cf7);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
-.err{background:#fff0f0;border:1px solid #f5c0c0;color:#a32020;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:14px}
+button{width:100%;margin-top:20px;padding:14px;border:0;border-radius:12px;background:linear-gradient(135deg,#2d52d4,#4a7cf7);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+.err{background:#fff0f0;border:1px solid #f5c0c0;color:#a32020;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:6px}
 a.back{display:block;text-align:center;margin-top:18px;font-size:13px;color:#6b7994;text-decoration:none}
 </style></head><body>
 <form class="box" method="post">
   <h1>Welcome back</h1>
-  <p class="sub">Enter your access code to continue.</p>
+  <p class="sub">Log in with your email and password.</p>
   {% if error %}<div class="err">{{error}}</div>{% endif %}
-  <label for="code">Access code</label>
-  <input id="code" name="code" type="password" autocomplete="current-password" required autofocus>
+  <label for="email">Email</label>
+  <input id="email" name="email" type="text" autocomplete="username" required autofocus>
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password" autocomplete="current-password" required>
   <button type="submit">Log in</button>
   <a class="back" href="/">&larr; Back to home</a>
 </form>
