@@ -5713,6 +5713,80 @@ def _bonus_section_html(bonuses,images,design=None):
   f'Get {count_word} Free!</div>'
   '<div style="border-radius:0 0 10px 10px;overflow:hidden;">'+''.join(rows)+'</div></section>')
 
+def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_works,pricing,serving,bonuses,price_low,price_high):
+ """Text blocks for Design 16's extra sections (pros & cons, who should buy,
+ worth-it, independent testing, scientific background, buy-now walkthrough,
+ verdict, guides, references). Everything is derived from this product's own
+ data and written as plain, non-promissory statements: no invented people,
+ customer counts, scarcity or certifications beyond what the other designs
+ already state."""
+ esc=html.escape
+ n_ing=len(ingredients)
+ support=_support_phrase(category)
+ titles=[(b.split(' — ',1)[0] if ' — ' in b else b).strip() for b in benefits if b]
+ pills=(titles+['Everyday wellness','Daily support','Simple routine','Consistent use'])[:4]
+ daily=(serving or {}).get('daily_serving') or 'the suggested serving'
+ def paras(items):return ''.join(f'<p>{esc(x)}</p>' for x in items if x)
+ # who it's for
+ who=[]
+ for s in symptoms[:4]:
+  t=(s.get('title') or '').strip()
+  if t:who.append(('🎯',f'People dealing with {t.lower()}'))
+ who.append(('👤',f'Adults looking to support {support}'))
+ who.append(('📅',f'People who prefer a simple daily routine ({daily})'))
+ who_html=''.join(f'<li><span>{i}</span> {esc(t)}</li>' for i,t in who)
+ # cons
+ cons=['Sold through the official website, so compare offers and read the terms before buying',
+       'Results vary from person to person and usually need consistent daily use',
+       'A dietary supplement, not a replacement for medical care or a balanced diet',
+       'Check the supplement-facts label on the official page for exact amounts']
+ if pricing:cons.append('Larger bundles lower the price per bottle but mean a bigger upfront payment')
+ cons_html=''.join(f'<li>{esc(c)}</li>' for c in cons)
+ # worth it
+ worth=[f'Whether {brand} is worth it depends on what you expect from it. It is a {category} formulated with {n_ing} named ingredient{"s" if n_ing!=1 else ""} and taken as {daily} per day, so it is meant to be part of a consistent routine rather than a quick fix.',
+        f'On price, bundles run from {price_high} down to {price_low} per bottle, and orders are covered by a {GUARANTEE_DAYS}-day money-back guarantee, which lowers the risk of trying it. '+(data.get('pricing_note') or '')]
+ tested=['Dietary supplements are not approved by the FDA before they are sold, and a supplement being listed on a website is not proof that it has been independently tested. Before buying, look for third-party lab results, a complete supplement-facts label and a clear refund policy on the official order page.',
+         f'The individual ingredients in {brand} have been studied on their own (see the references below), but those studies do not test this specific product. Talk to a healthcare professional before starting, especially if you take medication or have a medical condition.']
+ ing_bits='; '.join(f'{i.get("name","")} ({(i.get("role") or "").strip().rstrip(".")})' if i.get('role') else i.get('name','') for i in ingredients[:8])
+ sci=[f'{brand} is built around {n_ing} named ingredient{"s" if n_ing!=1 else ""}: {ing_bits}.' if ingredients else f'{brand} lists its ingredients on the official product page.',
+      (data.get('how_it_works_intro') or f'Each ingredient is explained individually on the ingredients page so you can see what it is and why it is included.')]
+ how=''.join(f'<p><strong>{i+1}. {esc(s.get("title",""))}.</strong> {esc(s.get("text",""))}</p>' for i,s in enumerate(how_it_works[:4]))
+ # buy-now walkthrough
+ wh_p1=f'By clicking the “Buy Now” button for {brand} you will be taken to the official secure checkout page, where you enter your details and complete the order.'
+ wh_rows=[]
+ for p in pricing:
+  b=p.get('bottles',1)
+  wh_rows.append(f'<li>{b} Bottle{"s" if b!=1 else ""}: {esc(str(p.get("price_per_bottle","")))} per bottle (total {esc(_clean_total_value(p.get("total","")))}) — shipping: {esc(str(p.get("shipping","")))}</li>')
+ wh_html=''.join(wh_rows) or '<li>See the official order page for current pricing.</li>'
+ g_list=''.join(f'<li>✅ {esc(t)}</li>' for t in (f'Covered by a {GUARANTEE_DAYS}-day money-back guarantee',
+   'Request a refund by contacting official support within the window','Always confirm the current terms on the official order page','Secure checkout on the official store'))
+ verdict=(f'In conclusion, {brand} is a {category} with {n_ing} named ingredient{"s" if n_ing!=1 else ""}'
+          +(f', positioned around {", ".join(t.lower() for t in titles[:3])}' if titles else '')+'. '
+          +(data.get('final_cta_text') or '')+' As with any supplement, results vary, so read the label and the official terms, and speak with a healthcare professional if you have a medical condition.')
+ pages=[('what-is-product.html','🔍',f'What Is {brand}?','A plain-language overview of the product.'),
+        ('how-it-works.html','⚙️',f'How {brand} Works','The approach behind the formula, step by step.'),
+        ('ingredients.html','🌿',f'{brand} Ingredients','Every ingredient explained individually.'),
+        ('benefits.html','✨',f'{brand} Benefits','What the formula is designed to support.'),
+        ('reviews.html','💬',f'{brand} Reviews','Customer experiences shared with the brand.'),
+        ('faq.html','❓',f'{brand} FAQ','Answers to common questions.'),
+        ('blog/index.html','📰',f'{brand} Blog','Guides and articles about the product.')]
+ guides=''.join(f'<a class="guide-card" href="{u}"><span class="guide-card-icon">{ic}</span><div class="guide-card-body"><div class="guide-card-title">{esc(t)}</div><p class="guide-card-desc">{esc(d)}</p></div><span class="guide-card-arrow">→</span></a>' for u,ic,t,d in pages)
+ related=''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u,_,t,_d in pages)
+ from urllib.parse import quote
+ refs=''.join(f'<div class="sci-ref-item"><a href="https://pubmed.ncbi.nlm.nih.gov/?term={quote(str(i.get("name","")))}" target="_blank" rel="noopener noreferrer nofollow" class="ref-badge">PubMed</a> <strong>{esc(str(i.get("name","")))}</strong> — search published research on this ingredient.</div>' for i in ingredients[:8] if i.get('name'))
+ return {
+  '__TICKER__':f'Independent Review &amp; Reality Check — {esc(brand)} Analysis {date.today().year}',
+  '__N_ING__':str(n_ing),
+  '__PILL1__':esc(pills[0]),'__PILL2__':esc(pills[1]),'__PILL3__':esc(pills[2]),'__PILL4__':esc(pills[3]),
+  '__GUARANTEE_DAYS__':str(GUARANTEE_DAYS),
+  '__CONS_LIST__':cons_html,'__WHO_LIST__':who_html,
+  '__WORTH_P__':paras(worth),'__TESTED_P__':paras(tested),'__SCI_P__':paras(sci),
+  '__WH_P1__':esc(wh_p1),'__WH_PRICING__':wh_html,'__GUARANTEE_LIST__':g_list,
+  '__VERDICT__':esc(verdict),'__GUIDE_CARDS__':guides,'__RELATED_LINKS__':related,'__REF_ITEMS__':refs,
+  '__EDITOR_NOTE__':esc(data.get('whatis_callout') or f'{brand} is a dietary supplement, not a drug. It works best alongside a balanced diet and consistent use.'),
+  '__HIW_PARAS__':how,
+ }
+
 def build_native_page(data,domain,affiliate,images,filename,page_kind='index',design='8',site_root=None):
  """Build native (auto-themed, own template) pages via reliable string-template
  replacement. page_kind: 'index' (full page) or a subpage kind. design: which
@@ -5774,9 +5848,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
           f'<p>{html.escape(ing.get("description",""))}</p></div></div>')
  def hiw_card(step,i):
   if design=='16':
-   return (f'<div class="step16"><div class="step16-num">{i+1}</div>'
-           f'<h3>{html.escape(step.get("title",""))}</h3>'
-           f'<p>{html.escape(step.get("text",""))}</p></div>')
+   return f'<p><strong>{i+1}. {html.escape(step.get("title",""))}.</strong> {html.escape(step.get("text",""))}</p>'
   if design=='10':
    return (f'<div class="tl-item"><div class="tl-num">{i+1}</div><div>'
            f'<h4>{html.escape(step.get("title",""))}</h4>'
@@ -5816,10 +5888,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   img=_get_reviewer_img(images,i)
   img_tag=f'<img src="{img}" alt="{html.escape(name)}">' if img else _avatar_tag(name)
   if design=='16':
-   photo=(f'<img class="testi-photo" src="{img}" alt="{html.escape(name)}" width="92" height="92" loading="lazy">'
-          if img else f'<div class="testi-initial">{html.escape((name.strip()[:1] or "?").upper())}</div>')
+   photo=(f'<img class="testi-photo" src="{img}" alt="{html.escape(name)}" width="100" height="100" loading="lazy">'
+          if img else f'<div class="testi-photo-placeholder">{html.escape((name.strip()[:1] or "?").upper())}</div>')
    return (f'<div class="testimonial">{photo}<div class="stars">★★★★★</div>'
-           f'<div class="verified">Verified Purchase <span>✔</span></div>'
+           f'<div class="verified-badge">Verified Purchase <span>✔</span></div>'
            f'<p>&ldquo;{html.escape(text)}&rdquo;</p><div class="name">{html.escape(name)}</div></div>')
   if design=='10':
    if i==0:
@@ -5973,7 +6045,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   try:return float(re.sub(r'[^0-9.]','',str(s)) or 0)
   except Exception:return 0
  sorted_pricing_asc=sorted(pricing[:3],key=lambda p:p.get('bottles',0))
- plan_html=''.join(plan_card(p,i,sorted_pricing_asc) for i,p in enumerate(sorted_pricing_asc))
+ _plan_order=sorted_pricing_asc
+ if design=='16' and len(_plan_order)==3:
+  _plan_order=[sorted_pricing_asc[0],sorted_pricing_asc[2],sorted_pricing_asc[1]]  # best value in the middle
+ plan_html=''.join(plan_card(p,i,sorted_pricing_asc) for i,p in enumerate(_plan_order))
  faq_html=''.join(faq_row(f) for f in faqs)
  symptom_html=''.join(symptom_card(s,i) for i,s in enumerate(symptoms[:3]))
  bal_pros_html=''.join(pro_row(b) for b in benefits[:6])
@@ -6050,6 +6125,9 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   '__CTA_CLOSING__':_native_cta['closing'],'__CTA_AFTERFAQ__':_native_cta['afterFaq'],
   '__CTA_STICKY__':f'Get {brand} – {GUARANTEE_DAYS}-Day Guarantee →',
  }
+ if design=='16':
+  replacements.update(_design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_works,pricing,serving,bonuses,price_low_val,price_high))
+  replacements['__HIW_CARD_TEMPLATE__']=hiw_html
  html_out=tpl
  for k,v in replacements.items():
   html_out=html_out.replace(k,str(v))
