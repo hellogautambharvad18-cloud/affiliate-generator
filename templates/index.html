@@ -42,7 +42,7 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
   <p style="margin-top:10px">Signed in as <strong style="color:#fff">{{user.name}}</strong>
     {% if user.role=='friend' %}&bull; access until {{ user.e | int | datetimeformat }}{% endif %}
     {% if is_admin %}&bull; <a href="/admin" style="color:#9db8ff">Admin</a>{% endif %}
-    &bull; <form method="post" action="/logout" style="display:inline"><button style="background:none;border:0;color:#9db8ff;cursor:pointer;font:inherit;padding:0">Log out</button></form></p>
+    &bull; <form method="post" action="/logout" style="display:inline"><button style="background:none;border:0;color:#9db8ff;cursor:pointer;font:inherit;font-size:13px;text-decoration:underline;padding:0">Log out</button></form></p>
   {% endif %}
 </div>
 <div class="wrap">
@@ -79,17 +79,17 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
     <div class="grid3" {% if not is_admin %}style="display:none"{% endif %}>
       <div>
         <label>Anthropic Key</label>
-        <input type="password" name="anthropic_api_key" placeholder="sk-ant-..." value="{{cfg.get('anthropic_key','')}}">
+        <input type="password" autocomplete="new-password" data-lpignore="true" name="anthropic_api_key"placeholder="sk-ant-..." value="{{cfg.get('anthropic_key','')}}">
         <div class="hint">console.anthropic.com</div>
       </div>
       <div>
         <label>OpenAI Key</label>
-        <input type="password" name="openai_api_key" placeholder="sk-..." value="{{cfg.get('openai_key','')}}">
+        <input type="password" autocomplete="new-password" data-lpignore="true" name="openai_api_key"placeholder="sk-..." value="{{cfg.get('openai_key','')}}">
         <div class="hint">platform.openai.com</div>
       </div>
       <div>
         <label>DeepSeek Key</label>
-        <input type="password" name="deepseek_api_key" placeholder="sk-..." value="{{cfg.get('deepseek_key','')}}">
+        <input type="password" autocomplete="new-password" data-lpignore="true" name="deepseek_api_key"placeholder="sk-..." value="{{cfg.get('deepseek_key','')}}">
         <div class="hint">platform.deepseek.com</div>
       </div>
     </div>
@@ -127,7 +127,7 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
         </div>
         <div {% if not is_admin %}style="display:none"{% endif %}>
           <label>SERP API Key</label>
-          <input type="password" name="serp_api_key" placeholder="serpapi.com key" value="{{cfg.get('serpapi_key','')}}">
+          <input type="password" autocomplete="new-password" data-lpignore="true" name="serp_api_key"placeholder="serpapi.com key" value="{{cfg.get('serpapi_key','')}}">
           <div class="hint">serpapi.com — exact product image matching</div>
         </div>
       </div>
