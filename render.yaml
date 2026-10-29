@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: affiliate-website-generator
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # One worker (the generator keeps some per-request module state), several
+    # threads so the login page and a running generation don't block each other.
+    startCommand: gunicorn app:app --workers 1 --threads 4 --timeout 600 --bind 0.0.0.0:$PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: DEEPSEEK_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: SERPAPI_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true

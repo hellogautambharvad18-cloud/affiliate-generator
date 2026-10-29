@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Synogut — Your Gut Has A Rhythm</title>
+<meta name="description" content="Synogut is a ten-ingredient digestive support formula built around fiber, soothing botanicals and gut-supportive amino acids. Made in an FDA-registered, GMP-certified USA facility.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+ --ink:#141d18;
+ --ink2:#1d2b23;
+ --paper:#f7f1e2;
+ --paper2:#efe4c8;
+ --card:#fffdf7;
+ --amber:#c9791e;
+ --amber-dark:#9e5d10;
+ --teal:#2f6f5c;
+ --teal-dark:#1e4a3d;
+ --text:#1d241d;
+ --muted:#666d5d;
+ --border:#e3d9ba;
+ --radius:20px;
+ --shadow:0 10px 30px -12px rgba(20,29,24,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Work Sans',system-ui,sans-serif;color:var(--text);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.12;letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+img,svg{max-width:100%;display:block}
+ul{list-style:none}
+section{padding:96px 0}
+@media(max-width:640px){section{padding:64px 0}}
+
+/* ticker */
+.ticker-wrap{background:var(--ink);overflow:hidden;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.ticker{display:flex;gap:48px;white-space:nowrap;animation:scroll 26s linear infinite;width:max-content}
+.ticker span{color:var(--paper2);font-size:.78rem;font-weight:600;letter-spacing:.03em;display:flex;align-items:center;gap:8px}
+.ticker span b{color:var(--amber);font-weight:700}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:80;background:rgba(247,241,226,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 24px}
+.logo{display:flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-weight:700;font-size:1.35rem;color:var(--ink)}
+.logo svg{width:26px;height:26px;flex:none}
+.navlinks{display:flex;align-items:center;gap:30px;flex-wrap:wrap}
+.navlinks a{font-size:.88rem;font-weight:600;color:var(--ink);opacity:.8}
+.navlinks a:hover{opacity:1;color:var(--teal)}
+.nav-cta{background:var(--ink)!important;color:var(--paper)!important;padding:11px 22px;border-radius:999px;opacity:1!important;font-weight:700!important}
+.nav-cta:hover{background:var(--teal-dark)!important}
+.navburger{display:none}
+@media(max-width:900px){.navlinks{display:none}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#fff;padding:17px 32px;border-radius:999px;font-weight:700;font-size:1rem;cursor:pointer;border:none;box-shadow:0 10px 24px -8px rgba(201,121,30,.55);transition:.15s ease}
+.btn:hover{background:var(--amber-dark);transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--paper);padding:16px 28px;border-radius:999px;font-weight:600;font-size:.96rem;border:1.5px solid rgba(247,241,226,.35)}
+.btn-ghost:hover{border-color:var(--paper)}
+.btn-dark{display:inline-flex;align-items:center;gap:10px;background:var(--ink);color:var(--paper);padding:17px 32px;border-radius:999px;font-weight:700;font-size:1rem}
+.btn-dark:hover{background:var(--teal-dark)}
+.btn-sub{display:block;font-size:.72rem;font-weight:500;opacity:.85;margin-top:2px}
+.btn-wide{width:100%;justify-content:center}
+
+/* hero */
+.hero{background:radial-gradient(1200px 600px at 15% -10%,#233c30 0%,var(--ink) 55%);position:relative;overflow:hidden;padding:88px 0 110px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+.eyebrow:before{content:'';width:22px;height:1.5px;background:var(--amber)}
+.hero h1{font-size:3.1rem;color:var(--paper);font-weight:600;margin-bottom:20px}
+.hero h1 em{font-style:italic;color:var(--amber);font-weight:500}
+.hero .lede{font-size:1.08rem;color:rgba(247,241,226,.72);max-width:520px;margin-bottom:28px;font-weight:400}
+.rating-row{display:flex;align-items:center;gap:12px;margin-bottom:30px}
+.stars{color:var(--amber);letter-spacing:2px;font-size:1.05rem}
+.rating-row span{font-size:.86rem;color:rgba(247,241,226,.65);font-weight:600}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+.hero-checks{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;max-width:520px}
+.hero-checks li{position:relative;padding-left:26px;font-size:.86rem;color:rgba(247,241,226,.78);font-weight:500}
+.hero-checks li:before{content:'✓';position:absolute;left:0;top:0;color:var(--amber);font-weight:800}
+
+/* orbit graphic */
+.orbit{position:relative;width:100%;max-width:400px;aspect-ratio:1/1;margin:0 auto}
+.orbit-ring{position:absolute;inset:0;border:1.5px dashed rgba(247,241,226,.16);border-radius:50%}
+.orbit-ring.r2{inset:36px;border-color:rgba(247,241,226,.1)}
+.bottle{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:150px;text-align:center}
+.bottle-cap{width:46px;height:20px;background:var(--amber-dark);border-radius:6px 6px 2px 2px;margin:0 auto -2px;position:relative;z-index:2}
+.bottle-body{width:150px;height:200px;border-radius:34px 34px 46px 46px;background:linear-gradient(155deg,var(--teal) 0%,var(--teal-dark) 100%);box-shadow:0 30px 50px -18px rgba(0,0,0,.6),inset 0 2px 0 rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center}
+.bottle-label{background:var(--paper);width:106px;height:96px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.bottle-label b{font-family:'Fraunces',serif;font-size:1rem;color:var(--ink);font-weight:700}
+.bottle-label span{font-size:.58rem;color:var(--teal-dark);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.bottle-label i{font-size:.52rem;color:var(--muted);font-style:normal;margin-top:3px}
+.chip{position:absolute;background:rgba(247,241,226,.08);border:1px solid rgba(247,241,226,.18);color:var(--paper);font-size:.72rem;font-weight:600;padding:8px 14px;border-radius:999px;backdrop-filter:blur(4px);white-space:nowrap}
+.chip.c1{top:2%;left:52%}
+.chip.c2{top:20%;left:-4%}
+.chip.c3{top:66%;left:-8%}
+.chip.c4{top:82%;left:58%}
+.chip.c5{top:20%;left:82%}
+.chip.c6{top:60%;left:88%}
+@media(max-width:1050px){.hero-grid{grid-template-columns:1fr}.orbit{max-width:320px;margin-top:20px}.hero h1{font-size:2.4rem}.hero-checks{grid-template-columns:1fr}}
+@media(max-width:640px){.chip{display:none}}
+
+/* section heads */
+.head{text-align:center;max-width:640px;margin:0 auto 52px}
+.head .eyebrow{justify-content:center}
+.head .eyebrow:before{display:none}
+.head h2{font-size:2.15rem;font-weight:600;margin-bottom:14px}
+.head p{color:var(--muted);font-size:1.02rem}
+.head.left{text-align:left;margin:0 0 40px}
+.head.left .eyebrow{justify-content:flex-start}
+
+/* trust badges */
+.trust{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 0}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.tcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:10px}
+.tcard .ic{width:52px;height:52px;border-radius:50%;background:var(--paper2);display:flex;align-items:center;justify-content:center;color:var(--teal-dark)}
+.tcard b{font-size:.86rem;font-weight:700}
+.tcard span{font-size:.78rem;color:var(--muted)}
+@media(max-width:760px){.trust .wrap{grid-template-columns:1fr 1fr}}
+
+/* problem cards */
+.grid{display:grid;gap:24px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g5{grid-template-columns:repeat(5,1fr)}
+@media(max-width:900px){.g3,.g4,.g5{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.g3,.g4,.g5{grid-template-columns:1fr}}
+
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:30px 26px}
+.pcard .num{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--amber);font-weight:600;margin-bottom:14px}
+.pcard h4{font-size:1.08rem;margin-bottom:10px;font-weight:600}
+.pcard p{color:var(--muted);font-size:.93rem}
+
+/* split */
+.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:64px;align-items:center}
+@media(max-width:900px){.split{grid-template-columns:1fr}}
+.statcard{background:var(--ink);border-radius:28px;padding:44px 36px;color:var(--paper)}
+.statcard .big{font-family:'Fraunces',serif;font-size:3.4rem;font-weight:600;color:var(--amber);line-height:1}
+.statcard .lbl{font-size:.86rem;color:rgba(247,241,226,.65);margin:6px 0 26px;font-weight:600}
+.statcard hr{border:none;border-top:1px solid rgba(247,241,226,.15);margin:22px 0}
+.statrow{display:flex;justify-content:space-between;font-size:.88rem;color:rgba(247,241,226,.85);margin-bottom:10px;font-weight:500}
+.statrow b{color:var(--paper)}
+.callout{background:var(--paper2);border-left:4px solid var(--amber);border-radius:0 12px 12px 0;padding:18px 22px;margin:22px 0;font-size:.95rem;font-weight:500;color:var(--text)}
+.chiprow{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.chiprow span{background:var(--card);border:1px solid var(--border);border-radius:999px;padding:8px 16px;font-size:.8rem;font-weight:600;color:var(--teal-dark)}
+
+/* dark section (how it works) */
+.dark{background:var(--ink);color:var(--paper)}
+.dark .head h2,.dark h3,.dark h4{color:var(--paper)}
+.dark .head p{color:rgba(247,241,226,.6)}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.timeline:before{content:'';position:absolute;top:26px;left:6%;right:6%;height:1px;background:rgba(247,241,226,.15)}
+@media(max-width:900px){.timeline{grid-template-columns:1fr 1fr}.timeline:before{display:none}}
+@media(max-width:560px){.timeline{grid-template-columns:1fr}}
+.tl-step{position:relative}
+.tl-num{width:52px;height:52px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin-bottom:18px;position:relative;z-index:2}
+.tl-step h4{font-size:1.02rem;margin-bottom:8px;font-weight:600}
+.tl-step p{font-size:.88rem;color:rgba(247,241,226,.6)}
+
+/* ingredients */
+.ing-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:10px}
+.ing-top{display:flex;align-items:center;gap:12px}
+.ing-num{width:36px;height:36px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex:none}
+.ing-card h4{font-size:1rem;font-weight:700}
+.ing-role{font-size:.74rem;color:var(--amber-dark);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+.ing-card p{font-size:.87rem;color:var(--muted)}
+
+/* benefits */
+.bcard{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px;text-align:center}
+.bcard .ic{width:48px;height:48px;border-radius:14px;background:var(--paper2);color:var(--teal-dark);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.bcard h4{font-size:.96rem;margin-bottom:8px;font-weight:700}
+.bcard p{font-size:.84rem;color:var(--muted)}
+
+/* comparison table */
+.tblwrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table.cmp{width:100%;border-collapse:collapse;min-width:640px;background:var(--card)}
+table.cmp th{text-align:left;padding:18px 22px;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;font-weight:700;background:var(--ink);color:var(--paper)}
+table.cmp th:first-child{color:rgba(247,241,226,.55);font-weight:600}
+table.cmp th.hl{background:var(--amber-dark)}
+table.cmp td{padding:18px 22px;font-size:.92rem;border-top:1px solid var(--border);vertical-align:top}
+table.cmp td:first-child{color:var(--muted);font-weight:600;white-space:nowrap}
+table.cmp td.bad{color:#8a5a3f}
+table.cmp td.bad:before{content:'✕ ';color:#b4401f;font-weight:800}
+table.cmp td.good{color:var(--teal-dark);font-weight:600;background:rgba(47,111,92,.06)}
+table.cmp td.good:before{content:'✓ ';color:var(--teal);font-weight:800}
+
+/* reviews */
+.rev-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.rev-stars{color:var(--amber);font-size:.95rem;margin-bottom:12px}
+.rev-card p{font-size:.93rem;color:var(--text);margin-bottom:18px}
+.rev-head{display:flex;align-items:center;gap:12px}
+.rev-avatar{width:42px;height:42px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;font-size:.95rem;flex:none}
+.rev-name{font-weight:700;font-size:.88rem}
+.rev-sub{font-size:.76rem;color:var(--muted)}
+.rev-board{display:flex;justify-content:center;gap:64px;margin-top:52px;flex-wrap:wrap;text-align:center}
+.rev-board b{display:block;font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600;color:var(--amber)}
+.rev-board span{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:stretch}
+@media(max-width:900px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--card);border:1.5px solid var(--border);border-radius:24px;padding:32px 26px;text-align:center;display:flex;flex-direction:column;position:relative}
+.plan.top{border-color:var(--amber);box-shadow:0 18px 40px -16px rgba(201,121,30,.35);transform:translateY(-8px)}
+@media(max-width:900px){.plan.top{transform:none}}
+.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--amber);color:#fff;font-size:.72rem;font-weight:800;padding:7px 18px;border-radius:999px;white-space:nowrap}
+.plan-ttl{font-family:'Fraunces',serif;font-weight:600;font-size:1.2rem;margin-bottom:4px}
+.plan-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px;font-weight:500}
+.plan-price{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:600;color:var(--ink)}
+.plan-price small{font-size:.85rem;font-weight:500;color:var(--muted);font-family:'Work Sans',sans-serif}
+.plan-tot{font-size:.84rem;color:var(--muted);margin:6px 0 4px}
+.plan-ship{font-size:.8rem;color:var(--teal);font-weight:700;margin-bottom:22px}
+.plan ul{text-align:left;margin-bottom:24px;flex:1}
+.plan ul li{font-size:.85rem;padding:7px 0 7px 26px;position:relative;font-weight:500;color:var(--text)}
+.plan ul li:before{content:'✓';position:absolute;left:0;color:var(--teal);font-weight:800}
+.plan-note{text-align:center;margin-top:34px;font-size:.85rem;color:var(--muted)}
+
+/* guarantee */
+.guar{background:linear-gradient(120deg,var(--teal-dark),var(--ink));border-radius:32px;padding:56px 48px;display:flex;align-items:center;gap:48px;color:var(--paper)}
+.guar .seal{width:120px;height:120px;border-radius:50%;border:2px dashed rgba(247,241,226,.4);display:flex;align-items:center;justify-content:center;flex:none;font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:var(--amber);text-align:center;line-height:1.1}
+.guar h3{color:var(--paper);font-size:1.7rem;margin-bottom:12px;font-weight:600}
+.guar p{color:rgba(247,241,226,.72);font-size:.96rem}
+@media(max-width:760px){.guar{flex-direction:column;text-align:center;padding:40px 26px}}
+
+/* faq */
+.faq{max-width:800px;margin:0 auto}
+.faq-row{border:1px solid var(--border);border-radius:16px;margin-bottom:14px;background:var(--card);overflow:hidden}
+.faq-btn{width:100%;text-align:left;background:transparent;border:none;padding:22px 24px;font-size:1rem;font-weight:700;font-family:'Work Sans',sans-serif;cursor:pointer;color:var(--ink);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-btn:after{content:'+';font-size:1.5rem;color:var(--amber);font-weight:400;flex:none}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.faq-body p{padding:0 24px 22px;color:var(--muted);font-size:.92rem}
+.faq-row.open .faq-btn:after{content:'−'}
+
+/* final cta */
+.final{background:linear-gradient(135deg,var(--amber) 0%,var(--amber-dark) 55%,var(--teal-dark) 100%);border-radius:36px;padding:64px 40px;text-align:center;color:#fff}
+.final h2{color:#fff;font-size:2.3rem;margin-bottom:14px;font-weight:600}
+.final p{color:rgba(255,255,255,.85);margin-bottom:30px;font-size:1rem;max-width:540px;margin-left:auto;margin-right:auto}
+.final .price-row{margin-bottom:26px}
+.final .old{text-decoration:line-through;opacity:.7;font-size:1rem}
+.final .new{font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600}
+
+/* footer */
+footer{background:var(--ink);color:rgba(247,241,226,.7);padding:64px 0 30px;font-size:.86rem}
+.foot-top{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px;margin-bottom:36px}
+@media(max-width:760px){.foot-top{grid-template-columns:1fr}}
+.foot-top h5{color:var(--paper);font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;font-weight:700}
+.foot-top ul li{margin-bottom:10px}
+.foot-top a{color:rgba(247,241,226,.68);font-weight:500}
+.foot-top a:hover{color:var(--amber)}
+footer hr{border:none;border-top:1px solid rgba(247,241,226,.12);margin:26px 0}
+footer p{margin-bottom:12px;color:rgba(247,241,226,.5);font-size:.78rem;line-height:1.7}
+.cr{margin-top:16px;font-size:.78rem;color:rgba(247,241,226,.4);font-weight:500}
+
+/* sticky bar */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);padding:14px 20px;display:none;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -8px 24px rgba(0,0,0,.1);z-index:70}
+.sticky-bar b{font-weight:700;font-size:1.02rem;font-family:'Fraunces',serif}
+.sticky-bar small{display:block;color:var(--muted);font-size:.73rem;font-weight:600}
+@media(max-width:760px){.sticky-bar{display:flex}body{padding-bottom:82px}}
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap"><div class="ticker" id="ticker">
+<span>✓ Made In The USA</span><span>✓ <b>10</b> Named Ingredients — No Proprietary Blends</span><span>✓ FDA-Registered, GMP-Certified Facility</span><span>✓ 60-Day Money-Back Guarantee</span><span>★★★★★ <b>4.8/5</b> — 2,500+ Verified Reviews</span>
+<span>✓ Made In The USA</span><span>✓ <b>10</b> Named Ingredients — No Proprietary Blends</span><span>✓ FDA-Registered, GMP-Certified Facility</span><span>✓ 60-Day Money-Back Guarantee</span><span>★★★★★ <b>4.8/5</b> — 2,500+ Verified Reviews</span>
+</div></div>
+
+<nav><div class="wrap">
+<a class="logo" href="#top"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8 6 4 9 4 14a8 8 0 0016 0c0-5-4-8-8-12z" fill="#2f6f5c"/><path d="M12 6c-2 3-4 5-4 8a4 4 0 008 0c0-3-2-5-4-8z" fill="#c9791e"/></svg>Synogut</a>
+<ul class="navlinks">
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#ingredients">Ingredients</a></li>
+<li><a href="#benefits">Benefits</a></li>
+<li><a href="#reviews">Reviews</a></li>
+<li><a href="#faq">FAQ</a></li>
+<li><a class="nav-cta" href="#pricing">Shop Now</a></li>
+</ul>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap hero-grid">
+<div>
+<span class="eyebrow">Gut Health, Reconsidered</span>
+<h1>Your gut has a rhythm. Most diets break it. <em>Synogut helps restore it.</em></h1>
+<p class="lede">A ten-ingredient digestive blend built around fiber, soothing botanicals and gut-supportive amino acids — formulated for people tired of guessing what's actually wrong with their digestion.</p>
+<div class="rating-row"><span class="stars">★★★★★</span><span>4.8 / 5 average — 2,500+ verified reviews</span></div>
+<div class="hero-actions">
+<a class="btn" href="#pricing">Shop Synogut — From $49/Bottle<span class="btn-sub">Official Site · Secure Checkout</span></a>
+<a class="btn-ghost" href="#how-it-works">See How It Works ↓</a>
+</div>
+<ul class="hero-checks">
+<li>Made in an FDA-registered, GMP-certified facility</li>
+<li>10 named ingredients, fully disclosed</li>
+<li>60-day money-back guarantee</li>
+<li>Non-GMO, vegetarian-friendly capsules</li>
+</ul>
+</div>
+<div class="orbit">
+<div class="orbit-ring"></div>
+<div class="orbit-ring r2"></div>
+<div class="chip c1">Psyllium Husk</div>
+<div class="chip c2">Turmeric</div>
+<div class="chip c3">Aloe Vera</div>
+<div class="chip c4">Ginger</div>
+<div class="chip c5">L-Glutamine</div>
+<div class="chip c6">Licorice Root</div>
+<div class="bottle">
+<div class="bottle-cap"></div>
+<div class="bottle-body"><div class="bottle-label"><b>Synogut</b><span>Digestive Support</span><i>10 Ingredients</i></div></div>
+</div>
+</div>
+</div></header>
+
+<section class="trust"><div class="wrap">
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg></div><b>Made In The USA</b><span>Manufactured under strict quality control</span></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 4v16M3 9h5"/></svg></div><b>FDA-Registered Facility</b><span>Produced under registered oversight</span></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg></div><b>GMP Certified</b><span>Good Manufacturing Practice standards</span></div>
+<div class="tcard"><div class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8 6 4 9 4 14a8 8 0 0016 0c0-5-4-8-8-12z"/></svg></div><b>Non-GMO &amp; Vegetarian</b><span>Thoughtfully sourced, capsule-based</span></div>
+</div></section>
+
+<section><div class="wrap">
+<div class="head"><span class="eyebrow">The Real Issue</span><h2>Occasional bloating usually comes down to one of three things</h2><p>Not a mystery — just three overlapping gaps most daily diets don't cover.</p></div>
+<div class="grid g3">
+<div class="pcard"><div class="num">01</div><h4>Low fiber intake</h4><p>Most adults fall well short of daily fiber recommendations, which can slow digestion and make regularity inconsistent.</p></div>
+<div class="pcard"><div class="num">02</div><h4>Slow transit time</h4><p>When food moves too slowly through the digestive tract, it can lead to that heavy, backed-up feeling by the end of the day.</p></div>
+<div class="pcard"><div class="num">03</div><h4>Gut lining irritation</h4><p>Processed food, stress and inconsistent eating patterns can leave the gut lining under-supported over time.</p></div>
+</div>
+</div></section>
+
+<section class="trust" id="what-is"><div class="wrap split">
+<div class="statcard">
+<div class="big">10</div>
+<div class="lbl">Named ingredients — zero proprietary blends</div>
+<hr>
+<div class="statrow"><span>Daily serving</span><b>2 capsules</b></div>
+<div class="statrow"><span>Capsules per bottle</span><b>60</b></div>
+<div class="statrow"><span>Manufacturing</span><b>USA · GMP-Certified</b></div>
+<div class="statrow"><span>Guarantee</span><b>60 days</b></div>
+</div>
+<div>
+<span class="eyebrow">What This Actually Is</span>
+<h2>What is Synogut, honestly?</h2>
+<p>Synogut is a daily digestive-support capsule that combines soluble fiber, gut-soothing botanicals and a gut-supportive amino acid into one formula — designed for people who want a straightforward way to support regularity without piecing together five different supplements.</p>
+<div class="callout"><b>Straight talk:</b> Synogut is not a laxative and it will not work overnight. It's a daily-use formula meant to support digestion over weeks of consistent use, alongside reasonable diet and hydration habits.</div>
+<div class="chiprow"><span>Fiber-forward</span><span>Botanical blend</span><span>Capsule form</span><span>Daily use</span></div>
+</div>
+</div></section>
+
+<section class="dark" id="how-it-works"><div class="wrap">
+<div class="head"><span class="eyebrow">The Mechanism</span><h2>How Synogut is designed to work</h2><p>Four ingredient roles working together, not one single "magic" compound.</p></div>
+<div class="timeline">
+<div class="tl-step"><div class="tl-num">01</div><h4>Fiber bulks &amp; softens</h4><p>Psyllium husk and oat bran add soluble fiber that helps bulk and soften stool for easier passage.</p></div>
+<div class="tl-step"><div class="tl-num">02</div><h4>Botanicals soothe</h4><p>Ginger, turmeric and peppermint are included for their traditional use in supporting digestive comfort.</p></div>
+<div class="tl-step"><div class="tl-num">03</div><h4>The gut lining is supported</h4><p>Aloe vera and L-glutamine are included specifically to support the gut lining rather than just symptoms.</p></div>
+<div class="tl-step"><div class="tl-num">04</div><h4>Consistency builds regularity</h4><p>Daily use over several weeks is how a fiber-and-botanical formula like this is meant to be evaluated.</p></div>
+</div>
+</div></section>
+
+<section id="ingredients"><div class="wrap">
+<div class="head"><span class="eyebrow">Inside Every Serving</span><h2>All 10 Synogut ingredients, explained</h2><p>Every ingredient named, with the role it plays — no proprietary blend hiding amounts.</p></div>
+<div class="grid g5" id="ing-grid">
+<div class="ing-card"><div class="ing-top"><div class="ing-num">1</div><h4>Psyllium Husk</h4></div><div class="ing-role">Soluble Fiber</div><p>Absorbs water to help bulk and soften stool, supporting regularity.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">2</div><h4>Oat Bran</h4></div><div class="ing-role">Fiber Source</div><p>Adds additional soluble fiber to support healthy digestion.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">3</div><h4>Aloe Vera</h4></div><div class="ing-role">Gut Lining Support</div><p>Traditionally used to help soothe and support the digestive lining.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">4</div><h4>Apple Pectin</h4></div><div class="ing-role">Fiber &amp; Gut Motility</div><p>A gentle fiber that supports healthy gut motility.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">5</div><h4>Ginger</h4></div><div class="ing-role">Digestive Comfort</div><p>Traditionally used to help ease occasional digestive discomfort.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">6</div><h4>Turmeric</h4></div><div class="ing-role">Botanical Support</div><p>Included for its traditional role in digestive wellness formulas.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">7</div><h4>Peppermint</h4></div><div class="ing-role">Soothing Botanical</div><p>Commonly used to support a calm, comfortable digestive feeling.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">8</div><h4>L-Glutamine</h4></div><div class="ing-role">Amino Acid</div><p>An amino acid included specifically to support the gut lining.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">9</div><h4>Licorice Root</h4></div><div class="ing-role">Traditional Botanical</div><p>Used traditionally to support digestive comfort.</p></div>
+<div class="ing-card"><div class="ing-top"><div class="ing-num">10</div><h4>Bromelain</h4></div><div class="ing-role">Enzyme</div><p>An enzyme included to support the healthy breakdown of food.</p></div>
+</div>
+</div></section>
+
+<section class="trust" id="benefits"><div class="wrap">
+<div class="head"><span class="eyebrow">Key Benefits</span><h2>What Synogut is formulated to support</h2><p>Supportive wellness benefits — not promised medical outcomes.</p></div>
+<div class="grid g4">
+<div class="bcard"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12h16M4 6h16M4 18h10"/></svg></div><h4>Supports Regularity</h4><p>Fiber-forward formula for consistent, healthy digestion.</p></div>
+<div class="bcard"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div><h4>Eases Occasional Bloating</h4><p>Botanicals traditionally used for digestive comfort.</p></div>
+<div class="bcard"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2C8 6 4 9 4 14a8 8 0 0016 0c0-5-4-8-8-12z"/></svg></div><h4>Supports The Gut Lining</h4><p>Aloe vera and L-glutamine included specifically for this role.</p></div>
+<div class="bcard"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M2 12h20"/></svg></div><h4>Supports A Balanced Gut</h4><p>A fiber-and-botanical approach to everyday gut wellness.</p></div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<div class="head"><span class="eyebrow">The Difference</span><h2>The typical approach vs. the Synogut approach</h2><p>Most gut supplements hide what's inside. Here's what's different.</p></div>
+<div class="tblwrap">
+<table class="cmp">
+<tr><th>&nbsp;</th><th>Typical Formula</th><th class="hl">Synogut</th></tr>
+<tr><td>Ingredient transparency</td><td class="bad">Hides amounts behind a "proprietary blend"</td><td class="good">All 10 ingredients named, with amounts and roles explained</td></tr>
+<tr><td>Fiber source</td><td class="bad">Cheap synthetic fillers</td><td class="good">Psyllium husk + oat bran + apple pectin</td></tr>
+<tr><td>Gut lining support</td><td class="bad">Usually not addressed at all</td><td class="good">Aloe vera + L-glutamine included specifically for this</td></tr>
+<tr><td>Manufacturing</td><td class="bad">Unclear or unverified origin</td><td class="good">FDA-registered, GMP-certified USA facility</td></tr>
+<tr><td>Guarantee</td><td class="bad">Often none, or under 30 days</td><td class="good">Full 60-day money-back guarantee</td></tr>
+</table>
+</div>
+</div></section>
+
+<section id="reviews"><div class="wrap">
+<div class="head"><span class="eyebrow">Real Reviews</span><h2>What Synogut customers report</h2><p>Individual experiences vary. These reflect personal opinions, not guaranteed outcomes.</p></div>
+<div class="grid g3">
+<div class="rev-card"><div class="rev-stars">★★★★★</div><p>"I started taking Synogut about six weeks ago and my digestion feels a lot more consistent day to day. Nothing dramatic — just steady."</p><div class="rev-head"><div class="rev-avatar">E</div><div><div class="rev-name">Emily R.</div><div class="rev-sub">Verified Buyer</div></div></div></div>
+<div class="rev-card"><div class="rev-stars">★★★★★</div><p>"Liked that every ingredient is actually listed instead of a vague blend. Took about a month to notice a real difference for me."</p><div class="rev-head"><div class="rev-avatar">D</div><div><div class="rev-name">David K.</div><div class="rev-sub">Verified Buyer</div></div></div></div>
+<div class="rev-card"><div class="rev-stars">★★★★★</div><p>"Easy to take, no weird aftertaste, and the 60-day guarantee made it a low-risk try for me. Glad I stuck with it."</p><div class="rev-head"><div class="rev-avatar">S</div><div><div class="rev-name">Sarah M.</div><div class="rev-sub">Verified Buyer</div></div></div></div>
+</div>
+<div class="rev-board">
+<div><b>4.8</b><span>Average Rating</span></div>
+<div><b>2,500+</b><span>Verified Reviews</span></div>
+<div><b>60-Day</b><span>Money-Back Guarantee</span></div>
+</div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+<div class="head"><span class="eyebrow">Pick Your Pack</span><h2>Choose your Synogut package</h2><p>Larger bundles reduce the cost per bottle — and every bottle ships free.</p></div>
+<div class="plans">
+<div class="plan">
+<div class="plan-ttl">2 Bottles</div><div class="plan-sub">60-Day Supply</div>
+<div class="plan-price">$79<small>/bottle</small></div>
+<div class="plan-tot">Total: $158</div>
+<div class="plan-ship">Free Shipping</div>
+<ul><li>10 named ingredients</li><li>60-day guarantee</li><li>Free US shipping</li></ul>
+<a class="btn-dark btn-wide" href="#">Select This Package</a>
+</div>
+<div class="plan top">
+<div class="plan-badge">Most Popular</div>
+<div class="plan-ttl">3 Bottles</div><div class="plan-sub">90-Day Supply</div>
+<div class="plan-price">$69<small>/bottle</small></div>
+<div class="plan-tot">Total: $207</div>
+<div class="plan-ship">Free Shipping</div>
+<ul><li>10 named ingredients</li><li>60-day guarantee</li><li>Free US shipping</li><li>Best for building a routine</li></ul>
+<a class="btn btn-wide" href="#">Select This Package</a>
+</div>
+<div class="plan">
+<div class="plan-ttl">6 Bottles</div><div class="plan-sub">180-Day Supply</div>
+<div class="plan-price">$49<small>/bottle</small></div>
+<div class="plan-tot">Total: $294</div>
+<div class="plan-ship">Free Shipping</div>
+<ul><li>10 named ingredients</li><li>60-day guarantee</li><li>Free US shipping</li><li>Lowest cost per bottle</li></ul>
+<a class="btn-dark btn-wide" href="#">Select This Package</a>
+</div>
+</div>
+<p class="plan-note">All orders are backed by a full 60-day money-back guarantee. Prices shown are per-bottle at time of purchase.</p>
+</div></section>
+
+<section class="trust"><div class="wrap">
+<div class="guar">
+<div class="seal">60<br>Days</div>
+<div><span class="eyebrow">Zero Risk</span><h3>A real 60-day guarantee</h3><p>Try Synogut for up to 60 days. If you're not satisfied for any reason, contact us for a full refund on your purchase — no complicated conditions.</p></div>
+</div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+<div class="head"><span class="eyebrow">Common Questions</span><h2>Synogut FAQ, answered honestly</h2></div>
+<div class="faq" id="faq-list">
+<div class="faq-row"><button class="faq-btn">What is Synogut made of?<span></span></button><div class="faq-body"><p>Synogut contains 10 named ingredients: psyllium husk, oat bran, aloe vera, apple pectin, ginger, turmeric, peppermint, L-glutamine, licorice root and bromelain. Every ingredient is disclosed — there is no proprietary blend hiding amounts.</p></div></div>
+<div class="faq-row"><button class="faq-btn">How do I take it?<span></span></button><div class="faq-body"><p>The suggested use is 2 capsules daily with water, ideally with a meal. Each bottle contains a 30-day supply at that serving size.</p></div></div>
+<div class="faq-row"><button class="faq-btn">How long until I notice a difference?<span></span></button><div class="faq-body"><p>This varies by person. Because Synogut is a fiber-and-botanical formula rather than a laxative, most people are advised to use it consistently for several weeks before evaluating results.</p></div></div>
+<div class="faq-row"><button class="faq-btn">Is it safe? Are there side effects?<span></span></button><div class="faq-body"><p>Synogut is formulated with commonly used dietary ingredients and manufactured in an FDA-registered, GMP-certified facility. As with any supplement, consult your doctor first if you're pregnant, nursing, taking medication, or managing a medical condition.</p></div></div>
+<div class="faq-row"><button class="faq-btn">What if it doesn't work for me?</button><button class="faq-btn" style="display:none"></button><div class="faq-body"><p>Every order is covered by a 60-day money-back guarantee. If you're not satisfied, contact support within that window for a full refund.</p></div></div>
+<div class="faq-row"><button class="faq-btn">Is shipping included?<span></span></button><div class="faq-body"><p>Yes — all package sizes shown on this page include free shipping within the US.</p></div></div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<div class="final">
+<h2>Ready to try Synogut?</h2>
+<p>Start with the package that fits your routine — every order is backed by a full 60-day money-back guarantee.</p>
+<div class="price-row"><span class="old">Regular: $79 / bottle</span><br><span class="new">Today from $49 / bottle</span></div>
+<a class="btn-dark" href="#pricing">Choose Your Package</a>
+</div>
+</div></section>
+
+<footer><div class="wrap">
+<div class="foot-top">
+<div>
+<a class="logo" href="#top" style="color:var(--paper);margin-bottom:14px"><svg viewBox="0 0 24 24" fill="none" width="24" height="24"><path d="M12 2C8 6 4 9 4 14a8 8 0 0016 0c0-5-4-8-8-12z" fill="#2f6f5c"/><path d="M12 6c-2 3-4 5-4 8a4 4 0 008 0c0-3-2-5-4-8z" fill="#c9791e"/></svg>Synogut</a>
+<p>A daily digestive-support formula built around transparent, named ingredients.</p>
+</div>
+<div><h5>Explore</h5><ul>
+<li><a href="#how-it-works">How It Works</a></li>
+<li><a href="#ingredients">Ingredients</a></li>
+<li><a href="#benefits">Benefits</a></li>
+<li><a href="#reviews">Reviews</a></li>
+<li><a href="#pricing">Pricing</a></li>
+</ul></div>
+<div><h5>Legal</h5><ul>
+<li><a href="terms.html">Terms of Use</a></li>
+<li><a href="privacy-policy.html">Privacy Policy</a></li>
+<li><a href="disclaimer.html">Disclaimer</a></li>
+<li><a href="refund-policy.html">Refund Policy</a></li>
+<li><a href="contact.html">Contact Us</a></li>
+</ul></div>
+</div>
+<hr>
+<p><b>Who this is for:</b> Synogut is a dietary supplement for adults aged 18 and over interested in general nutritional support. It is not a substitute for medical treatment.</p>
+<p><b>FDA Compliance:</b> These statements have not been evaluated by the U.S. Food &amp; Drug Administration. Synogut is a dietary supplement, not a drug, and is not intended to diagnose, treat, cure or prevent any disease.</p>
+<p><b>Affiliate Disclosure:</b> This website may earn a commission on purchases made through links to the official Synogut store, at no additional cost to you.</p>
+<div class="cr">© 2026 Synogut — All Rights Reserved</div>
+</div></footer>
+
+<div class="sticky-bar"><div><b>$49 / bottle</b><small>Best value pack</small></div><a class="btn" href="#pricing">Order Now</a></div>
+
+<script>
+document.querySelectorAll('.faq-btn').forEach(function(btn){
+ btn.addEventListener('click',function(){
+  var row=btn.closest('.faq-row');
+  var body=row.querySelector('.faq-body');
+  var wasOpen=row.classList.contains('open');
+  document.querySelectorAll('.faq-row.open').forEach(function(r){
+   r.classList.remove('open');
+   r.querySelector('.faq-body').style.maxHeight=null;
+  });
+  if(!wasOpen){
+   row.classList.add('open');
+   body.style.maxHeight=body.scrollHeight+'px';
+  }
+ });
+});
+</script>
+</body></html>

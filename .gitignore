@@ -1,0 +1,10 @@
+# Secrets and local state: never commit
+.aff_config.json
+.env
+
+# Not needed on the server
+Image ALL/
+output/
+__pycache__/
+*.pyc
+.claude/

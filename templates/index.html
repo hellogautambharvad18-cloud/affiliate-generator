@@ -1,0 +1,319 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Affiliate Website Generator V9.4</title><style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,Arial,sans-serif;background:#f0f4fb;color:#172033;min-height:100vh}
+.header{background:#172033;color:#fff;padding:20px 0;text-align:center}
+.header h1{font-size:22px;font-weight:800;letter-spacing:-.3px}
+.header p{font-size:13px;color:#8899bb;margin-top:4px}
+.wrap{max-width:900px;margin:32px auto;padding:0 18px}
+.card{background:#fff;border:1px solid #dde3ec;border-radius:16px;padding:24px 28px;margin-bottom:18px;box-shadow:0 4px 20px rgba(20,30,50,.05)}
+.section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#7b8db0;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #eef1f7}
+label{display:block;font-size:13px;font-weight:600;color:#2d3a52;margin:14px 0 5px}
+label:first-child{margin-top:0}
+input,select{width:100%;padding:11px 14px;border:1.5px solid #d0d8ea;border-radius:10px;font-size:14px;color:#172033;background:#fafbfd;transition:border .15s}
+input:focus,select:focus{outline:none;border-color:#4a7cf7;background:#fff}
+input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.hint{font-size:11px;color:#8899bb;margin-top:4px}
+.btn{display:block;width:100%;padding:15px;background:linear-gradient(135deg,#2d52d4,#4a7cf7);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;letter-spacing:.2px;transition:opacity .2s;margin-top:6px}
+.btn:hover{opacity:.92}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.notice{background:#f5f8ff;border:1px solid #d4dfff;border-radius:10px;padding:12px 16px;font-size:13px;color:#3a4e7a;line-height:1.6;margin-top:14px}
+.badge{display:inline-block;background:#e8f0ff;color:#2d52d4;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:14px}
+.status{background:#f0faf4;border:1px solid #b8e8cc;border-radius:10px;padding:10px 14px;font-size:13px;color:#1a6b3a;margin-top:12px}
+#progress{display:none;margin-top:14px}
+.bar-wrap{background:#e8edf5;border-radius:6px;height:6px;overflow:hidden}
+.bar{width:0%;height:100%;background:linear-gradient(90deg,#2d52d4,#4a7cf7);border-radius:6px;transition:width .3s}
+#msg{font-size:13px;color:#4a7cf7;margin-top:8px;text-align:center}
+#err{display:none;background:#fff0f0;border:1px solid #f5c0c0;border-radius:10px;padding:12px 16px;font-size:13px;color:#a32020;margin-top:12px}
+#phase2{display:none}
+.edit-link{display:inline-block;font-size:12px;font-weight:700;color:#4a7cf7;cursor:pointer;margin-bottom:2px}
+.reviewer-slot{border:1.5px solid #e4e9f3;border-radius:12px;padding:14px 16px;margin-bottom:12px;background:#fafbfd}
+.reviewer-slot .rname{font-size:13px;font-weight:800;color:#172033;margin-bottom:8px}
+.reviewer-slot input[type=file]{padding:8px;background:#fff}
+.reviewer-warn{font-size:12px;color:#a36a00;background:#fff8ea;border:1px solid #f3dfa9;border-radius:8px;padding:8px 12px;margin-bottom:12px}
+@media(max-width:650px){.grid2,.grid3{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div class="header">
+  <h1>Affiliate Website Generator</h1>
+  <p>V9.4 — Gender-matched reviewer photos &bull; Anthropic + OpenAI + DeepSeek &bull; SEO-ready</p>
+  {% if auth_on and user %}
+  <p style="margin-top:10px">Signed in as <strong style="color:#fff">{{user.name}}</strong>
+    {% if user.role=='friend' %}&bull; access until {{ user.e | int | datetimeformat }}{% endif %}
+    {% if is_admin %}&bull; <a href="/admin" style="color:#9db8ff">Admin</a>{% endif %}
+    &bull; <form method="post" action="/logout" style="display:inline"><button style="background:none;border:0;color:#9db8ff;cursor:pointer;font:inherit;padding:0">Log out</button></form></p>
+  {% endif %}
+</div>
+<div class="wrap">
+<form id="form">
+
+  <div class="card">
+    <div class="badge">Step 1 — Product</div>
+    <label>Product Name</label>
+    <input name="product_name" required placeholder="e.g. NerveCalm, ProDentim">
+    <label>Product Description <span style="font-weight:400;color:#8899bb">(optional but recommended)</span></label>
+    <input name="product_hint" placeholder="e.g. Male vitality & stamina supplement with 7 botanical ingredients">
+    <div class="hint">Helps AI understand ambiguous product names correctly (e.g. a name that doesn't obviously indicate the category)</div>
+    <div class="grid2">
+      <div>
+        <label>Affiliate Link</label>
+        <input name="affiliate_link" required placeholder="https://...">
+      </div>
+      <div>
+        <label>Your Domain</label>
+        <input name="domain" required placeholder="https://yoursite.com">
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="badge">Step 2 — AI Provider</div>
+    <label>Provider</label>
+    <select name="ai_provider">
+      <option value="auto">Auto — Anthropic first, then OpenAI, then DeepSeek</option>
+      <option value="anthropic">Anthropic (Claude)</option>
+      <option value="openai">OpenAI</option>
+      <option value="deepseek">DeepSeek</option>
+    </select>
+    <div class="grid3" {% if not is_admin %}style="display:none"{% endif %}>
+      <div>
+        <label>Anthropic Key</label>
+        <input type="password" name="anthropic_api_key" placeholder="sk-ant-..." value="{{cfg.get('anthropic_key','')}}">
+        <div class="hint">console.anthropic.com</div>
+      </div>
+      <div>
+        <label>OpenAI Key</label>
+        <input type="password" name="openai_api_key" placeholder="sk-..." value="{{cfg.get('openai_key','')}}">
+        <div class="hint">platform.openai.com</div>
+      </div>
+      <div>
+        <label>DeepSeek Key</label>
+        <input type="password" name="deepseek_api_key" placeholder="sk-..." value="{{cfg.get('deepseek_key','')}}">
+        <div class="hint">platform.deepseek.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="editLinkWrap" style="display:none;text-align:right;margin:-6px 4px 10px">
+    <span class="edit-link" id="editLink">✎ Edit product info (this clears the generated content below)</span>
+  </div>
+
+  <div id="phase2">
+
+    <div class="card">
+      <div class="badge">Step 3 — Reviewer Photos</div>
+      <div class="reviewer-warn">⚠ Upload a photo for each name below that actually matches — a man's name paired with a woman's photo (or vice versa) is an easy, avoidable mistake. Skip a slot to leave that reviewer as a plain initial avatar instead of a mismatched photo.</div>
+      <div id="reviewerSlots"></div>
+    </div>
+
+    <div class="card">
+      <div class="badge">Step 4 — Design & Other Images</div>
+      <label>Design Template</label>
+      <select name="design">
+        {% for k,v in templates.items() %}
+        <option value="{{k}}">{{k}} — {{v.name}}</option>
+        {% endfor %}
+      </select>
+      <div class="grid2">
+        <div>
+          <label>Image Source</label>
+          <select name="image_source">
+            <option value="both">Manual + SERP API (recommended)</option>
+            <option value="manual">Manual Upload Only</option>
+            <option value="serp">SERP API Only</option>
+            <option value="none">No Images</option>
+          </select>
+        </div>
+        <div {% if not is_admin %}style="display:none"{% endif %}>
+          <label>SERP API Key</label>
+          <input type="password" name="serp_api_key" placeholder="serpapi.com key" value="{{cfg.get('serpapi_key','')}}">
+          <div class="hint">serpapi.com — exact product image matching</div>
+        </div>
+      </div>
+      <label>Upload Other Images <span style="font-weight:400;color:#8899bb">(optional — reviewer photos are uploaded in Step 3 above)</span></label>
+      <input type="file" name="images" multiple accept="image/jpeg,image/png,image/webp,image/gif" style="padding:8px">
+      <div class="hint">Hero &amp; bottle images — named as hero.jpg, bottle-2.jpg, bottle-3.jpg, bottle-6.jpg (1-bottles/3-bottles-style names also work). Trust badges &amp; guarantee seal — badge-fda.jpg, badge-gmp.jpg, badge-usa.jpg, badge-natural.jpg, guarantee.jpg, credit-cards.jpg. Extra/theme-specific slots some designs have — checkout.jpg (order/checkout page), supplement-facts.jpg (ingredients/dosage label). Any of these you upload replaces the template's own version; see IMAGE_NAMING_GUIDE.md for the full list.</div>
+    </div>
+
+    <div class="card">
+      <div class="badge">Step 5 — SEO Verification &amp; Analytics (optional)</div>
+      <div class="grid3">
+        <div>
+          <label>Google Analytics ID</label>
+          <input name="ga_id" placeholder="G-XXXXXXXXXX">
+          <div class="hint">GA4 Measurement ID</div>
+        </div>
+        <div>
+          <label>Google Search Console</label>
+          <input name="gsc_verify" placeholder="verification code">
+          <div class="hint">google-site-verification content value</div>
+        </div>
+        <div>
+          <label>Bing Webmaster</label>
+          <input name="bing_verify" placeholder="verification code">
+          <div class="hint">msvalidate.01 content value</div>
+        </div>
+      </div>
+      <div class="hint">Leave blank to skip. The original template's own verification/tracking codes are always removed either way.</div>
+    </div>
+
+    <div class="notice">
+      <strong>Before publishing:</strong> verify product claims, pricing, guarantee terms, testimonials, certifications and image rights.
+      SERP images may have copyright restrictions — use only images you have rights to use.
+    </div>
+
+  </div>
+
+  <div style="margin-top:18px">
+    <button type="submit" class="btn" id="genbtn">Continue → Generate Content</button>
+  </div>
+
+  <div id="progress">
+    <div class="bar-wrap"><div class="bar" id="bar"></div></div>
+    <div id="msg">Generating content with AI...</div>
+  </div>
+  <div id="err"></div>
+  <div class="status" style="margin-top:14px;display:none" id="ok">
+    ✅ V9.4 — Reviewer photos are now matched to the AI-generated names before upload, so a
+    man's name can no longer end up with a woman's photo (or vice versa). Smart image placement
+    for hero/pricing/badges continues to work as before.
+  </div>
+
+</form>
+</div>
+
+<script>
+const form=document.getElementById('form');
+const btn=document.getElementById('genbtn');
+const prog=document.getElementById('progress');
+const bar=document.getElementById('bar');
+const msg=document.getElementById('msg');
+const err=document.getElementById('err');
+const phase2=document.getElementById('phase2');
+const reviewerSlots=document.getElementById('reviewerSlots');
+const editLinkWrap=document.getElementById('editLinkWrap');
+const editLink=document.getElementById('editLink');
+const step1Fields=form.querySelectorAll('input[name=product_name],input[name=product_hint],input[name=affiliate_link],input[name=domain]');
+let contentData=null,w=0,timer=null;
+// Step 2 (provider/keys) is deliberately left editable in phase 2 — those
+// fields are only used to save config and pick a key for the (now-skipped)
+// AI call, and FormData omits `disabled` fields entirely, which would have
+// silently dropped them from the phase-2 submit. Using readonly here too
+// would be a no-op for <select>, so it isn't worth the inconsistency.
+
+function startProgress(steps){
+  prog.style.display='block';err.style.display='none';
+  w=0;bar.style.width='5%';
+  timer=setInterval(()=>{
+    w=Math.min(w+Math.random()*4,88);
+    bar.style.width=w+'%';
+    const idx=Math.min(Math.floor(w/(88/steps.length)),steps.length-1);
+    msg.textContent=steps[idx];
+  },800);
+}
+function stopProgress(){clearInterval(timer)}
+
+function buildReviewerSlots(names){
+  reviewerSlots.innerHTML='';
+  (names||[]).slice(0,3).forEach((name,i)=>{
+    const n=i+1;
+    const div=document.createElement('div');
+    div.className='reviewer-slot';
+    div.innerHTML=`<div class="rname">Photo for "${name}" (Reviewer ${n})</div>
+      <input type="file" data-reviewer-slot="${n}" accept="image/jpeg,image/png,image/webp,image/gif">
+      <div class="hint">Leave empty to show a plain "${(name||'?').charAt(0).toUpperCase()}" initial avatar instead.</div>`;
+    reviewerSlots.appendChild(div);
+  });
+}
+
+editLink.addEventListener('click',()=>{
+  contentData=null;
+  phase2.style.display='none';
+  editLinkWrap.style.display='none';
+  step1Fields.forEach(f=>f.readOnly=false);
+  btn.textContent='Continue → Generate Content';
+  reviewerSlots.innerHTML='';
+});
+
+form.addEventListener('submit',async e=>{
+  e.preventDefault();
+
+  if(!contentData){
+    // Phase 1: generate AI content only, so reviewer names are known
+    // before any reviewer photo gets picked.
+    btn.disabled=true;btn.textContent='⏳ Generating content...';
+    startProgress(['Generating AI content...','Almost ready...']);
+    try{
+      const fd=new FormData();
+      fd.append('product_name',form.product_name.value);
+      fd.append('product_hint',form.product_hint.value);
+      fd.append('affiliate_link',form.affiliate_link.value);
+      fd.append('domain',form.domain.value);
+      fd.append('ai_provider',form.ai_provider.value);
+      fd.append('anthropic_api_key',form.anthropic_api_key.value);
+      fd.append('openai_api_key',form.openai_api_key.value);
+      fd.append('deepseek_api_key',form.deepseek_api_key.value);
+      const r=await fetch('/api/generate_content',{method:'POST',body:fd});
+      stopProgress();prog.style.display='none';
+      const j=await r.json().catch(()=>({error:'Unknown error'}));
+      if(!r.ok)throw new Error(j.error||'Content generation failed');
+      contentData=j;
+      buildReviewerSlots(j.reviewer_names);
+      phase2.style.display='block';
+      editLinkWrap.style.display='block';
+      step1Fields.forEach(f=>f.readOnly=true);
+      btn.textContent='⚡ Generate Website ZIP';
+      phase2.scrollIntoView({behavior:'smooth',block:'start'});
+    }catch(e2){
+      stopProgress();prog.style.display='none';
+      err.textContent='❌ '+e2.message;err.style.display='block';
+    }finally{
+      btn.disabled=false;
+      if(!contentData)btn.textContent='Continue → Generate Content';
+    }
+    return;
+  }
+
+  // Phase 2: build the site using the already-generated content plus the
+  // (now correctly name-matched) reviewer photos and other images.
+  btn.disabled=true;btn.textContent='⏳ Generating...';
+  startProgress(['Downloading images...','Building pages...','Almost ready...']);
+  try{
+    const fd=new FormData(form);
+    fd.append('content_json',JSON.stringify(contentData));
+    reviewerSlots.querySelectorAll('input[type=file]').forEach(inp=>{
+      if(inp.files&&inp.files[0]){
+        const n=inp.getAttribute('data-reviewer-slot');
+        const file=inp.files[0];
+        const extMatch=file.name.match(/\.[^.]+$/);
+        const ext=extMatch?extMatch[0]:'.jpg';
+        fd.append('images',file,'reviewer-'+n+ext);
+      }
+    });
+    const r=await fetch('/api/generate',{method:'POST',body:fd});
+    stopProgress();
+    if(!r.ok){
+      const j=await r.json().catch(()=>({error:'Unknown error'}));
+      throw new Error(j.error||'Generation failed');
+    }
+    bar.style.width='100%';msg.textContent='✅ Done! Downloading ZIP...';
+    const blob=await r.blob();
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const cd=r.headers.get('content-disposition')||'';
+    const m=cd.match(/filename="([^"]+)"/);
+    a.href=url;a.download=m?m[1]:'affiliate-site.zip';
+    document.body.appendChild(a);a.click();a.remove();
+    URL.revokeObjectURL(url);
+    document.getElementById('ok').style.display='block';
+  }catch(e2){
+    stopProgress();bar.style.width='0%';
+    err.textContent='❌ '+e2.message;err.style.display='block';
+    msg.textContent='';
+  }finally{
+    btn.disabled=false;btn.textContent='⚡ Generate Website ZIP';
+  }
+});
+</script>
+</body></html>

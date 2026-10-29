@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Affiliate Website Generator</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,Arial,sans-serif;background:#f0f4fb;color:#172033}
+.header{background:#172033;color:#fff;padding:20px;text-align:center}
+.header a{color:#9db8ff;font-size:13px}
+.wrap{max-width:720px;margin:28px auto;padding:0 18px}
+.card{background:#fff;border:1px solid #dde3ec;border-radius:16px;padding:24px 28px;margin-bottom:18px;box-shadow:0 4px 20px rgba(20,30,50,.05)}
+h2{font-size:17px;margin-bottom:14px}
+label{display:block;font-size:13px;font-weight:600;color:#2d3a52;margin:14px 0 5px}
+input{width:100%;padding:11px 14px;border:1.5px solid #d0d8ea;border-radius:10px;font-size:14px;background:#fafbfd}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hint{font-size:12px;color:#8899bb;margin-top:4px}
+button{margin-top:18px;width:100%;padding:13px;border:0;border-radius:12px;background:linear-gradient(135deg,#2d52d4,#4a7cf7);color:#fff;font-size:15px;font-weight:800;cursor:pointer}
+textarea{width:100%;height:96px;padding:10px;border:1.5px solid #b8e8cc;border-radius:10px;font:12px monospace;background:#f0faf4}
+.ok{background:#f0faf4;border:1px solid #b8e8cc;border-radius:12px;padding:16px;font-size:14px}
+code{background:#eef1f7;padding:2px 6px;border-radius:6px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<div class="header"><strong>Admin: friend access</strong><br><a href="/app">&larr; Back to generator</a></div>
+<div class="wrap">
+  {% if created %}
+  <div class="card ok">
+    <h2>Code created for {{created.name}}</h2>
+    <p>Valid until <strong>{{created.expires}}</strong> ({{created.days}} days){% if created.cap %}, max <strong>{{created.cap}}</strong> websites per day{% endif %}.</p>
+    <label>Send this access code</label>
+    <textarea readonly onclick="this.select()">{{created.code}}</textarea>
+    <p class="hint">Login page: {{created.link}}. Code id: <code>{{created.id}}</code> (needed only to revoke it early).</p>
+  </div>
+  {% endif %}
+  <form class="card" method="post">
+    <h2>Create a friend access code</h2>
+    <label>Friend's name</label>
+    <input name="name" placeholder="e.g. Rahul" maxlength="40" required>
+    <div class="grid">
+      <div><label>Access duration (days)</label><input name="days" type="number" min="1" max="365" value="7">
+        <div class="hint">The code stops working after this many days.</div></div>
+      <div><label>Websites per day</label><input name="cap" type="number" min="0" max="100" value="3">
+        <div class="hint">0 = unlimited during the access period.</div></div>
+    </div>
+    <button type="submit">Generate access code</button>
+  </form>
+  <div class="card">
+    <h2>Revoke a code early</h2>
+    <p style="font-size:14px;color:#55627d;line-height:1.6">In your hosting dashboard, set the environment variable <code>REVOKED_CODES</code> to the code ids to block, separated by commas (e.g. <code>a1b2c3,d4e5f6</code>), and redeploy. Blocked friends are logged out immediately.</p>
+    <p style="font-size:14px;margin-top:10px">Currently revoked: {% if revoked %}{% for r in revoked %}<code>{{r}}</code> {% endfor %}{% else %}none{% endif %}</p>
+  </div>
+</div>
+</body></html>
