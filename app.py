@@ -820,6 +820,148 @@ def generate_how_it_works_image(path,steps,brand,primary_hex='#2563EB'):
  im.save(path)
  return True
 
+def generate_how_it_works_pro(path,steps,brand,primary_hex='#2563EB',hero_path=None,benefits=None):
+ """Poster-style "How it works": heading, up to 4 icon steps joined by dotted
+ arrows, and a benefits banner, with the product's own hero shot on a podium
+ at the left. Everything is drawn from this product's own data and colours.
+ Used in place of generate_how_it_works_image(), which stays as the fallback."""
+ from PIL import Image,ImageDraw,ImageFont,ImageChops
+ import math
+ steps=[s for s in (steps or []) if (s.get('title') or s.get('text'))][:4]
+ if not steps:return False
+ hexv=(primary_hex or '#2563EB').lstrip('#')
+ if len(hexv)!=6:hexv='2563EB'
+ primary=tuple(int(hexv[i:i+2],16) for i in (0,2,4))
+ dark=_darken(primary,0.42);soft=_lighten(primary,0.9);mid=_lighten(primary,0.55)
+ ink=(60,68,86);white=(255,255,255)
+ S=2;W,H=1500,1000
+ def sc(v):return int(round(v*S))
+ def font(px,bold=True):
+  names=('DejaVuSans-Bold.ttf','arialbd.ttf','LiberationSans-Bold.ttf') if bold else ('DejaVuSans.ttf','arial.ttf','LiberationSans-Regular.ttf')
+  for f in names:
+   try:return ImageFont.truetype(f,sc(px))
+   except Exception:pass
+  try:return ImageFont.load_default(size=sc(px))
+  except Exception:return ImageFont.load_default()
+ im=Image.new('RGB',(sc(W),sc(H)),white);d=ImageDraw.Draw(im)
+ def wrap(text,fnt,max_w,max_lines):
+  words=str(text).split();lines=[];cur=''
+  for w in words:
+   t=(cur+' '+w).strip()
+   if d.textlength(t,font=fnt)<=sc(max_w):cur=t
+   else:
+    if cur:lines.append(cur)
+    cur=w
+  if cur:lines.append(cur)
+  if len(lines)>max_lines:
+   lines=lines[:max_lines];lines[-1]=lines[-1].rstrip('.,;: ')+'…'
+  return lines or ['']
+ def ctext(x,y,t,fnt,fill):d.text((sc(x),sc(y)),t,font=fnt,fill=fill,anchor='mm')
+ # --- left dark swoosh, spheres, podium, product ---
+ d.ellipse((sc(-520),sc(-260),sc(360),sc(760)),fill=dark)
+ def sphere(cx,cy,r,col):
+  d.ellipse((sc(cx-r),sc(cy-r),sc(cx+r),sc(cy+r)),fill=col)
+  d.ellipse((sc(cx-r*0.55),sc(cy-r*0.62),sc(cx-r*0.1),sc(cy-r*0.2)),fill=_lighten(col,0.35))
+ sphere(390,195,30,_darken(primary,0.7));sphere(60,560,85,_darken(primary,0.75));sphere(395,650,38,_darken(primary,0.7))
+ if hero_path:
+  d.ellipse((sc(60),sc(790),sc(400),sc(900)),fill=(236,238,242));d.ellipse((sc(60),sc(770),sc(400),sc(870)),fill=(250,250,252))
+ if hero_path:
+  try:
+   h=Image.open(hero_path).convert('RGBA')
+   h.thumbnail((sc(700),sc(900)),Image.LANCZOS)
+   rgb=h.convert('RGB');mk=(255,0,255)
+   # a white photo background is flood-filled from the corners and made transparent
+   for pt in ((0,0),(rgb.width-1,0),(0,rgb.height-1),(rgb.width-1,rgb.height-1)):
+    if sum(rgb.getpixel(pt))>690:ImageDraw.floodfill(rgb,pt,mk,thresh=28)
+   isbg=Image.eval(rgb.split()[1],lambda v:255 if v==0 else 0)
+   isbg=ImageChops.multiply(isbg,Image.eval(rgb.split()[0],lambda v:255 if v==255 else 0))
+   h.putalpha(ImageChops.multiply(h.split()[-1],Image.eval(isbg,lambda v:255-v)))
+   bb=h.split()[-1].getbbox()
+   if bb:h=h.crop(bb)
+   h.thumbnail((sc(360),sc(640)),Image.LANCZOS)
+   im.paste(h,(sc(235)-h.width//2,sc(815)-h.height),h)
+  except Exception:pass
+ d=ImageDraw.Draw(im)
+ # --- heading ---
+ f_h=font(80);cx=965
+ part1,part2,part3='HOW ','IT',' WORKS'
+ w1,w2,w3=[d.textlength(t,font=f_h) for t in (part1,part2,part3)]
+ x0=sc(cx)-(w1+w2+w3)/2;y0=sc(105)
+ d.text((x0,y0),part1,font=f_h,fill=dark,anchor='lm');d.text((x0+w1,y0),part2,font=f_h,fill=primary,anchor='lm');d.text((x0+w1+w2,y0),part3,font=f_h,fill=dark,anchor='lm')
+ for sx,ex in ((cx-(w1+w2+w3)/2/S-130,cx-(w1+w2+w3)/2/S-30),(cx+(w1+w2+w3)/2/S+30,cx+(w1+w2+w3)/2/S+130)):
+  d.line((sc(sx),sc(105),sc(ex),sc(105)),fill=primary,width=sc(3))
+ ctext(cx,190,'Simple Steps. Better Results.',font(32,False),ink)
+ d.line((sc(cx-60),sc(238),sc(cx+60),sc(238)),fill=primary,width=sc(3))
+ # --- icons (drawn at c, scale u) ---
+ def icon(kind,cx_,cy_,u,col,bg):
+  X=lambda v:sc(cx_+v*u);Y=lambda v:sc(cy_+v*u)
+  if kind=='capsule':
+   lay=Image.new('RGBA',(sc(W),sc(H)),(0,0,0,0));ld=ImageDraw.Draw(lay)
+   ld.rounded_rectangle((X(-1),Y(-.42),X(1),Y(.42)),radius=sc(.42*u),fill=col)
+   ld.rounded_rectangle((X(0),Y(-.42),X(1),Y(.42)),radius=sc(.42*u),fill=white,outline=col,width=max(2,sc(.07*u)))
+   ld.rectangle((X(0),Y(-.42),X(.45),Y(.42)),fill=white)
+   lay=lay.rotate(40,center=(sc(cx_),sc(cy_)));im.paste(lay,(0,0),lay)
+  elif kind=='glass':
+   d.polygon([(X(-.62),Y(-.8)),(X(.62),Y(-.8)),(X(.46),Y(.85)),(X(-.46),Y(.85))],fill=white,outline=col)
+   d.polygon([(X(-.57),Y(-.15)),(X(.57),Y(-.15)),(X(.45),Y(.8)),(X(-.45),Y(.8))],fill=mid)
+   d.polygon([(X(-.62),Y(-.8)),(X(.62),Y(-.8)),(X(.46),Y(.85)),(X(-.46),Y(.85))],outline=col,width=max(2,sc(.07*u)))
+  elif kind=='shield':
+   pts=[(X(0),Y(-.95)),(X(.8),Y(-.65)),(X(.8),Y(.1)),(X(0),Y(.95)),(X(-.8),Y(.1)),(X(-.8),Y(-.65))]
+   d.polygon(pts,fill=col)
+   d.line([(X(-.4),Y(0)),(X(-.08),Y(.32)),(X(.45),Y(-.34))],fill=white,width=max(3,sc(.14*u)),joint='curve')
+  else:  # leaf
+   pts=[]
+   for t in range(0,181,6):
+    a=math.radians(t);pts.append((X(-.85+1.7*t/180),Y(-.62*math.sin(a))))
+   for t in range(180,-1,-6):
+    a=math.radians(t);pts.append((X(-.85+1.7*t/180),Y(.62*math.sin(a))))
+   lay=Image.new('RGBA',(sc(W),sc(H)),(0,0,0,0));ld=ImageDraw.Draw(lay)
+   ld.polygon(pts,fill=col);ld.line((X(-.7),Y(0),X(.7),Y(0)),fill=bg,width=max(2,sc(.07*u)))
+   lay=lay.rotate(35,center=(sc(cx_),sc(cy_)));im.paste(lay,(0,0),lay)
+ d=ImageDraw.Draw(im)
+ kinds=['capsule','glass','shield','leaf']
+ n=len(steps);x_l,x_r=545,1440;col_w=(x_r-x_l)/n
+ f_num=font(30);f_t=font(27);f_b=font(21,False);R=88;cy=410
+ centers=[x_l+col_w*(i+.5) for i in range(n)]
+ for i,s in enumerate(steps):
+  c=centers[i]
+  d.ellipse((sc(c-R),sc(cy-R),sc(c+R),sc(cy+R)),fill=soft)
+  for k in range(0,360,9):  # dotted ring
+   a=math.radians(k);rx,ry=c+(R-2)*math.cos(a),cy+(R-2)*math.sin(a)
+   d.ellipse((sc(rx-2.2),sc(ry-2.2),sc(rx+2.2),sc(ry+2.2)),fill=primary)
+  icon(kinds[i%4],c,cy,46,dark,soft);d=ImageDraw.Draw(im)
+  d.ellipse((sc(c-30),sc(cy+R+22),sc(c+30),sc(cy+R+82)),fill=primary)
+  ctext(c,cy+R+52,f'{i+1:02d}',f_num,white)
+  ty=cy+R+118
+  for ln in wrap(str(s.get('title','')).upper(),f_t,col_w-24,3):ctext(c,ty,ln,f_t,dark);ty+=34
+  ty+=8
+  for ln in wrap(s.get('text',''),f_b,col_w-30,5):ctext(c,ty,ln,f_b,ink);ty+=28
+  if i<n-1:  # dotted arrow to the next circle
+   ax0=c+R+14;ax1=centers[i+1]-R-18
+   xk=ax0
+   while xk<ax1-12:
+    d.ellipse((sc(xk-2.2),sc(cy-2.2),sc(xk+2.2),sc(cy+2.2)),fill=primary);xk+=12
+   d.polygon([(sc(ax1),sc(cy)),(sc(ax1-12),sc(cy-7)),(sc(ax1-12),sc(cy+7))],fill=primary)
+ # --- benefits banner ---
+ items=[]
+ for b in (benefits or [])[:4]:
+  t=re.split(r'\s[—–-]\s',str(b),1)[0].strip()
+  if t:items.append(t)
+ if items:
+  bx0,bx1,by0,by1=60,1440,830,950
+  d.rounded_rectangle((sc(bx0),sc(by0),sc(bx1),sc(by1)),radius=sc(22),fill=dark)
+  cw=(bx1-bx0)/len(items);f_i=font(22)
+  for i,t in enumerate(items):
+   ccx=bx0+cw*i+62;ccy=(by0+by1)/2
+   if i:d.line((sc(bx0+cw*i),sc(by0+22),sc(bx0+cw*i),sc(by1-22)),fill=_lighten(dark,0.3),width=sc(2))
+   d.ellipse((sc(ccx-42),sc(ccy-42),sc(ccx+42),sc(ccy+42)),fill=white)
+   icon(['shield','capsule','leaf','glass'][i%4],ccx,ccy,22,primary,white);d=ImageDraw.Draw(im)
+   lines=wrap(t,f_i,cw-130,3);ty=ccy-(len(lines)-1)*15
+   for ln in lines:d.text((sc(ccx+62),sc(ty)),ln,font=f_i,fill=white,anchor='lm');ty+=30
+ im=im.resize((W,H),Image.LANCZOS)
+ im.save(path)
+ return True
+
 def _clean_total_value(v):
  """Strip a leading "Total:"/"Total" label the AI occasionally bakes into
  the pricing.total field itself despite the prompt's instructions — every
@@ -7654,7 +7796,10 @@ def generate():
    _hiw_palette=build_theme_palette(extract_brand_color(_hiw_hero_disk) if _hiw_hero_disk else None)
    _hiw_path=imgdir/'how-it-works.png'
    try:
-    if generate_how_it_works_image(_hiw_path,data.get('how_it_works',[]),data['brand'],_hiw_palette['primary']):
+    _hiw_done=False
+    try:_hiw_done=generate_how_it_works_pro(_hiw_path,data.get('how_it_works',[]),data['brand'],_hiw_palette['primary'],_hiw_hero_disk,data.get('benefits',[]))
+    except Exception:_hiw_done=False   # poster style failed: use the plain numbered-steps version below
+    if _hiw_done or generate_how_it_works_image(_hiw_path,data.get('how_it_works',[]),data['brand'],_hiw_palette['primary']):
      images.append(f'assets/images/{_hiw_path.name}')
    except Exception:pass
   blog_articles=_blog_articles(data,domain,affiliate)
