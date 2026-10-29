@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Errors — AffiliateGen</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/site.css">
+<style>
+.wrap{max-width:960px;margin:28px auto;padding:0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 26px;margin-bottom:18px;box-shadow:var(--shadow)}
+.err{border-top:1px solid #eef1f7;padding:14px 0}
+.err:first-of-type{border-top:0}
+.sum{font-weight:700;font-size:15px;color:#a32020;word-break:break-word}
+.meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+details{margin-top:8px}
+summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--brand-dark)}
+pre{background:#0f172a;color:#d6e0f5;border-radius:10px;padding:14px;font-size:12px;line-height:1.5;overflow:auto;margin-top:8px;white-space:pre-wrap;word-break:break-word}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.sm{padding:8px 14px;border:1.5px solid #d0d8ea;border-radius:8px;background:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:#a32020}
+</style></head><body>
+{% include '_nav.html' %}
+<div class="page-head"><div class="container"><h1>Recent errors</h1><p>Failures from the generator, newest first. <a href="/admin" style="color:#9db8ff">&larr; Back to admin</a></p></div></div>
+<main class="wrap" style="margin-top:-44px">
+  <div class="card">
+    <div class="row"><strong>{{items|length}} error{{'' if items|length==1 else 's'}} stored</strong>
+      {% if items %}<form method="post" action="/admin/errors/clear" onsubmit="return confirm('Clear all stored errors?')"><button class="sm">Clear all</button></form>{% endif %}</div>
+    {% if not items %}<p style="color:var(--muted);margin-top:10px">No errors recorded. 🎉</p>{% endif %}
+    {% for e in items %}
+    <div class="err">
+      <div class="sum">{{e.summary}}</div>
+      <div class="meta">{{e.when}} &middot; {{e.who}} &middot; {{e.endpoint}}</div>
+      <details><summary>Show details</summary><pre>{{e.detail}}</pre></details>
+    </div>
+    {% endfor %}
+  </div>
+</main>
+{% include '_footer.html' %}
+</body></html>

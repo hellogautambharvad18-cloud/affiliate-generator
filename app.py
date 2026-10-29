@@ -12,8 +12,33 @@ from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
  is_non_product_image,reviewer_photo_slot)
 
 app=Flask(__name__)
+import traceback
+from werkzeug.exceptions import HTTPException
 import auth,niches,design15
 auth.init(app)
+
+def _log_failure(endpoint,exc):
+ """Send a failure to the server log (so it shows in Render's Logs tab) and to
+ the admin error log (/admin/errors). Never raises: reporting must not hide
+ the original error from the user."""
+ try:
+  tb=traceback.format_exc()
+  app.logger.error('%s failed: %s: %s\n%s',endpoint,type(exc).__name__,exc,tb)
+  ctx=(f'product={request.form.get("product_name","")!r} domain={request.form.get("domain","")!r} '
+       f'design={request.form.get("design","")!r} niche={request.form.get("niche","")!r} '
+       f'provider={request.form.get("ai_provider","")!r}')
+  auth.record_error(endpoint,f'{type(exc).__name__}: {str(exc)[:300]}',ctx+'\n\n'+tb)
+ except Exception:pass
+
+@app.errorhandler(Exception)
+def _unhandled(exc):
+ """Anything not already handled inside a route: log it, then answer with a
+ clean message. HTTP errors (404, 401, 413...) pass through untouched."""
+ if isinstance(exc,HTTPException):return exc
+ _log_failure(request.endpoint or request.path,exc)
+ if request.path.startswith('/api/'):
+  return jsonify(error='Something went wrong on our side. Please try again.'),500
+ return ('<h1>Something went wrong</h1><p>Please go back and try again.</p>',500)
 
 def _request_hint():
  """The publisher description with the chosen niche folded in."""
@@ -7405,6 +7430,7 @@ def generate_content():
   data['brand']=data.get('brand') or product
   return jsonify(data)
  except Exception as e:
+  _log_failure('generate_content',e)
   msg=str(e)
   if 'Traceback' in msg or len(msg)>800:msg='Content generation failed. Check your API keys and try again.'
   return jsonify(error=msg),500
@@ -7738,6 +7764,7 @@ def generate():
   out=build_zip(site,domain,product)
   return send_file(out,as_attachment=True,download_name=out.name,mimetype='application/zip')
  except Exception as e:
+  _log_failure('generate',e)
   msg=str(e)
   if 'Traceback' in msg or len(msg)>800:msg='Generation failed. Check your API keys and try again.'
   return jsonify(error=msg),500

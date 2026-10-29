@@ -18,7 +18,7 @@ from flask import (Blueprint,request,session,redirect,render_template,
                    jsonify,url_for,g)
 from werkzeug.security import generate_password_hash,check_password_hash
 from sqlalchemy import (create_engine,MetaData,Table,Column,Integer,BigInteger,
-                        String,Boolean,select,insert,update,delete,inspect,text)
+                        String,Boolean,Text,select,insert,update,delete,inspect,text)
 import niches as nx
 
 ADMIN_PASSWORD=os.getenv('ADMIN_PASSWORD','').strip()
@@ -51,6 +51,13 @@ users=Table('users',meta,
     Column('niches',String(1000),default=''),
     Column('active',Boolean,default=True),
     Column('created_at',BigInteger))
+errors=Table('errors',meta,
+    Column('id',Integer,primary_key=True),
+    Column('ts',BigInteger),
+    Column('who',String(255)),
+    Column('endpoint',String(80)),
+    Column('summary',String(500)),
+    Column('detail',Text))
 usage=Table('usage',meta,
     Column('user_id',Integer,primary_key=True),
     Column('day',String(10),primary_key=True),
@@ -299,6 +306,36 @@ def logout():
     return redirect(url_for('auth.landing'))
 
 
+MAX_ERROR_ROWS=300
+
+
+def record_error(endpoint,summary,detail=''):
+    """Store a failure for /admin/errors. Never raises."""
+    try:
+        try:
+            u=current()
+            who=(u.get('email') or u.get('name') or '?') if u else 'anonymous'
+        except Exception:
+            who='?'
+        with _db().begin() as c:
+            c.execute(insert(errors).values(ts=int(time.time()),who=str(who)[:255],
+                      endpoint=str(endpoint)[:80],summary=str(summary)[:500],detail=str(detail)[:6000]))
+            # keep the table small on a free database
+            old=c.execute(select(errors.c.id).order_by(errors.c.id.desc()).offset(MAX_ERROR_ROWS).limit(1)).first()
+            if old:
+                c.execute(delete(errors).where(errors.c.id<=old[0]))
+    except Exception:
+        pass
+
+
+def _recent_error_count():
+    try:
+        with _db().connect() as c:
+            return c.execute(select(text('count(*)')).select_from(errors).where(errors.c.ts>time.time()-86400)).scalar() or 0
+    except Exception:
+        return 0
+
+
 def _admin_page(created=None,error=''):
     with _db().connect() as c:
         rows=c.execute(select(users).order_by(users.c.id.desc())).fetchall()
@@ -310,13 +347,29 @@ def _admin_page(created=None,error=''):
              'designs':[TEMPLATES[k]['name'] for k in (r.designs or '').split(',') if k in TEMPLATES] or ['All'],
              'niches':[nx.NICHES[k]['name'] for k in (r.niches or '').split(',') if k in nx.NICHES] or ['All']}
             for r in rows]
-    return render_template('admin.html',created=created,error=error,people=people,
+    return render_template('admin.html',created=created,error=error,people=people,error_count=_recent_error_count(),
                            templates=TEMPLATES,niche_list=nx.NICHES,persistent=persistent_db(),admin_email=ADMIN_EMAIL)
 
 
 @bp.get('/admin')
 def admin():
     return _admin_page()
+
+
+@bp.get('/admin/errors')
+def admin_errors():
+    with _db().connect() as c:
+        rows=c.execute(select(errors).order_by(errors.c.id.desc()).limit(100)).fetchall()
+    items=[{'when':datetime.fromtimestamp(r.ts,timezone.utc).strftime('%d %b %H:%M UTC'),'who':r.who,
+            'endpoint':r.endpoint,'summary':r.summary,'detail':r.detail} for r in rows]
+    return render_template('errors.html',items=items)
+
+
+@bp.post('/admin/errors/clear')
+def admin_errors_clear():
+    with _db().begin() as c:
+        c.execute(delete(errors))
+    return redirect(url_for('auth.admin_errors'))
 
 
 @bp.post('/admin/create')

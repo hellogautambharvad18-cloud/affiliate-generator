@@ -39,6 +39,10 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
 {% include '_nav.html' %}
 <div class="header"><strong>Admin: friend accounts</strong><br><a href="/app">&larr; Back to generator</a></div>
 <div class="wrap">
+  <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 22px">
+    <span>{% if error_count %}<strong style="color:#a32020">{{error_count}} error{{'' if error_count==1 else 's'}} in the last 24 hours</strong>{% else %}<strong style="color:#166534">No errors in the last 24 hours</strong>{% endif %}</span>
+    <a href="/admin/errors" style="font-weight:700;color:#2447c9">View error log &rarr;</a>
+  </div>
   {% if not persistent %}
   <div class="warn"><strong>Accounts are stored temporarily.</strong> <code>DATABASE_URL</code> is not set, so every friend account is lost whenever the server restarts or redeploys. Add a free Neon database URL in Render &rarr; Environment.</div>
   {% endif %}
