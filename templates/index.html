@@ -91,6 +91,11 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
         <input name="domain" required placeholder="https://yoursite.com">
       </div>
     </div>
+    {% if is_admin %}
+    <label>More Sites in footer <span style="font-weight:400;color:#8899bb">(owner only, optional, max 5)</span></label>
+    <textarea name="network_sites" rows="5" placeholder="One per line:&#10;https://other-domain.com/product | Anchor text&#10;https://another.com"></textarea>
+    <div class="hint">Added as plain links at the very end of the footer on every page. The anchor text after | is optional.</div>
+    {% endif %}
   </div>
 
   <div class="card" {% if not is_admin %}style="display:none"{% endif %}>

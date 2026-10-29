@@ -6935,6 +6935,40 @@ def apply_order_redirect(site,domain,affiliate):
    rb.write_text('\n'.join(lines)+'\n',encoding='utf-8')
  return order_url
 
+def parse_network_sites(raw,own_domain='',limit=5):
+ """Lines of 'url' or 'url | anchor text' -> [(url,anchor)], at most `limit`,
+ http(s) only, own domain and repeats dropped."""
+ own=re.sub(r'^https?://(www\.)?','',(own_domain or '').lower()).rstrip('/')
+ out=[];seen=set()
+ for line in (raw or '').splitlines():
+  line=line.strip()
+  if not line:continue
+  url,_,anchor=line.partition('|')
+  url=url.strip();anchor=anchor.strip()
+  if not re.match(r'https?://[^\s"<>]+$',url):continue
+  host=re.sub(r'^www\.','',urlparse(url).netloc.lower())
+  if not host or host==own or url in seen:continue
+  seen.add(url)
+  out.append((url,anchor[:60] or host))
+  if len(out)>=limit:break
+ return out
+
+def apply_network_links(site,sites):
+ """Add a 'More Sites' line of plain links at the very end of every page's footer."""
+ if not sites:return 0
+ links=' &middot; '.join(f'<a href="{html.escape(u,quote=True)}">{html.escape(a)}</a>' for u,a in sites)
+ block=f'<div class="more-sites" style="text-align:center;padding:14px 16px;font-size:13px;line-height:1.8"><strong>More Sites:</strong> {links}</div>'
+ n=0
+ for p in site.rglob('*.html'):
+  if 'order' in p.relative_to(site).parts:continue
+  try:txt=p.read_text(encoding='utf-8')
+  except Exception:continue
+  i=txt.rfind('</footer>')
+  if i<0:continue
+  p.write_text(txt[:i]+block+txt[i:],encoding='utf-8')
+  n+=1
+ return n
+
 def write_htaccess(site,domain):
  """Force HTTPS and the exact canonical host (www vs non-www, whichever the
  user configured as `domain`) — without this, Bing/Google can index both
@@ -8109,6 +8143,8 @@ def generate():
   apply_favicon_links(site,_fav_palette['primary'])
   seo_rename_images(site,data['brand'])
   apply_order_redirect(site,domain,affiliate)
+  if auth.is_admin():
+   apply_network_links(site,parse_network_sites(request.form.get('network_sites',''),domain))
   out=build_zip(site,domain,product)
   return send_file(out,as_attachment=True,download_name=out.name,mimetype='application/zip')
  except Exception as e:
