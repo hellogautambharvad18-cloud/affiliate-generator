@@ -344,6 +344,7 @@ def _admin_page(created=None,error=''):
     people=[{'id':r.id,'name':r.name,'email':r.email,'active':bool(r.active),
              'expired':r.expires_at<now,'expires':datetime.fromtimestamp(r.expires_at,timezone.utc).strftime('%d %b %Y'),
              'cap':r.daily_cap or 0,'used':today.get(r.id,0),
+             'd_keys':{k for k in (r.designs or '').split(',') if k},'n_keys':{k for k in (r.niches or '').split(',') if k},
              'designs':[TEMPLATES[k]['name'] for k in (r.designs or '').split(',') if k in TEMPLATES] or ['All'],
              'niches':[nx.NICHES[k]['name'] for k in (r.niches or '').split(',') if k in nx.NICHES] or ['All']}
             for r in rows]
@@ -414,6 +415,19 @@ def admin_user(uid,action):
                 except ValueError:d=7
                 base=max(r.expires_at,int(time.time()))
                 c.execute(update(users).where(users.c.id==uid).values(expires_at=base+d*86400))
+            elif action=='edit':
+                vals={}
+                name=request.form.get('name','').strip()
+                if name:vals['name']=name[:80]
+                try:vals['daily_cap']=max(0,min(int(request.form.get('cap','')),100))
+                except ValueError:pass
+                vals['designs']=','.join(k for k in request.form.getlist('designs') if k in TEMPLATES)
+                vals['niches']=','.join(k for k in request.form.getlist('niches') if k in nx.NICHES)
+                days=request.form.get('days','').strip()
+                if days:   # blank leaves the expiry date alone
+                    try:vals['expires_at']=int(time.time())+max(1,min(int(days),3650))*86400
+                    except ValueError:pass
+                c.execute(update(users).where(users.c.id==uid).values(**vals))
             elif action=='password':
                 pw=request.form.get('password','').strip()
                 if len(pw)>=6:

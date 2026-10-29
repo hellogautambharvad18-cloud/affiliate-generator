@@ -34,6 +34,8 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
 .acts input{width:110px;padding:7px 9px;font-size:12px}
 .sm{padding:7px 12px;border:1.5px solid #d0d8ea;border-radius:8px;background:#fff;font-size:12px;font-weight:700;cursor:pointer;color:#2d3a52}
 .sm.red{color:#a32020;border-color:#f5c0c0}
+details.edit{margin-top:12px;border:1px solid #e3e8f2;border-radius:12px;padding:10px 14px;background:#f8faff}
+details.edit summary{cursor:pointer;font-size:13px;font-weight:700;color:#2447c9}
 @media(max-width:560px){.grid,.designs{grid-template-columns:1fr}}
 </style></head><body>
 {% include '_nav.html' %}
@@ -103,6 +105,32 @@ code{background:#eef1f7;padding:2px 6px;border-radius:6px}
         <form method="post" action="/admin/user/{{p.id}}/password"><input name="password" type="text" placeholder="new password" autocomplete="off"><button class="sm">Reset password</button></form>
         <form method="post" action="/admin/user/{{p.id}}/delete" onsubmit="return confirm('Delete {{p.name}}?')"><button class="sm red">Delete</button></form>
       </div>
+      <details class="edit">
+        <summary>Edit access (designs, niches, limit)</summary>
+        <form method="post" action="/admin/user/{{p.id}}/edit" class="editform">
+          <div class="grid">
+            <div><label>Name</label><input name="name" value="{{p.name}}" maxlength="80"></div>
+            <div><label>Websites per day</label><input name="cap" type="number" min="0" max="100" value="{{p.cap}}"><div class="hint">0 = unlimited.</div></div>
+          </div>
+          <label>Access ends in (days from today)</label>
+          <input name="days" type="number" min="1" max="3650" placeholder="Leave empty to keep {{p.expires}}">
+          <label>Designs this friend can use</label>
+          <div class="designs">
+            {% for k,v in templates.items() %}
+            <label class="chk"><input type="checkbox" name="designs" value="{{k}}" {% if k in p.d_keys %}checked{% endif %}> {{v.name}}</label>
+            {% endfor %}
+          </div>
+          <div class="hint">Tick none = all designs.</div>
+          <label>Niches this friend can use</label>
+          <div class="designs">
+            {% for k,v in niche_list.items() %}
+            <label class="chk"><input type="checkbox" name="niches" value="{{k}}" {% if k in p.n_keys %}checked{% endif %}> {{v.name}}</label>
+            {% endfor %}
+          </div>
+          <div class="hint">Tick none = all niches.</div>
+          <button class="big" type="submit" style="margin-top:14px">Save changes</button>
+        </form>
+      </details>
     </div>
     {% endfor %}
   </div>
