@@ -7571,8 +7571,8 @@ def name_images():
    if len(data)>imgname.MAX_BYTES:continue
    files.append((f.filename,data))
   if not files:return jsonify(error='Choose some images first.'),400
-  _serp,openai_key,_ds,anthropic_key=_resolve_keys(_load_cfg())
-  out=imgname.suggest(files,{'anthropic':anthropic_key,'openai':openai_key})
+  _serp,openai_key,deepseek_key,anthropic_key=_resolve_keys(_load_cfg())
+  out=imgname.suggest(files,{'anthropic':anthropic_key,'openai':openai_key,'deepseek':deepseek_key})
   out['slots']=imgname.slot_options()
   return jsonify(out)
  except Exception as e:

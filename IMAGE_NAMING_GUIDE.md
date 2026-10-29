@@ -10,8 +10,8 @@ supplement-facts label, how-it-works diagram, favicon).
 ## Don't want to rename files by hand?
 
 In the web tool (Step 4), choose your images with any file names and click **Auto-name my images**.
-The tool suggests a slot for every image (using AI vision when an `ANTHROPIC_API_KEY` or
-`OPENAI_API_KEY` is configured, otherwise guessing from the file names), shows a thumbnail with a
+The tool suggests a slot for every image (using AI vision when a `DEEPSEEK_API_KEY`,
+`ANTHROPIC_API_KEY` or `OPENAI_API_KEY` is configured, otherwise guessing from the file names), shows a thumbnail with a
 dropdown for each one, and sends them under the names you confirm.
 
 ## Standard Filenames

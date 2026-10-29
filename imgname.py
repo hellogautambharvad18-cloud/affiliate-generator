@@ -5,7 +5,7 @@ badge-fda, reviewer-1 ...). This module looks at a batch of images and
 proposes those names, so people don't have to rename files by hand.
 
 Order of attempts:
-  1. a vision model (Anthropic, then OpenAI) when a key is configured
+  1. a vision model (Anthropic, OpenAI, then DeepSeek) when a key is configured
   2. filename keywords, plus a few cheap image checks
 Every suggestion carries its source and a confidence so the UI can show what
 was a guess. Nothing here renames anything: the user confirms in the UI.
@@ -117,6 +117,20 @@ def _call_openai(key,names,thumbs):
     return _extract_json(r.json()['choices'][0]['message']['content'])
 
 
+def _call_deepseek(key,names,thumbs):
+    # deepseek-flash accepts images; deepseek-v4-pro does not, so don't point this at it.
+    content=[{'type':'text','text':_prompt(names)}]
+    for i,(n,b) in enumerate(zip(names,thumbs)):
+        content.append({'type':'text','text':f'Image {i}: {n}'})
+        content.append({'type':'image_url','image_url':{'url':'data:image/jpeg;base64,'+b}})
+    r=requests.post('https://api.deepseek.com/chat/completions',
+        headers={'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+        json={'model':os.getenv('DEEPSEEK_VISION_MODEL','deepseek-flash'),'max_tokens':8000,
+              'messages':[{'role':'user','content':content}]},timeout=170)
+    r.raise_for_status()
+    return _extract_json(r.json()['choices'][0]['message']['content'] or '')
+
+
 def _stem(name):
     return re.sub(r'[^a-z0-9]+','-',re.sub(r'\.[a-z0-9]+$','',name.lower())).strip('-')
 
@@ -173,8 +187,9 @@ def suggest(files,keys):
     attempts=[]
     if keys.get('anthropic'):attempts.append(('anthropic',_call_anthropic,keys['anthropic']))
     if keys.get('openai'):attempts.append(('openai',_call_openai,keys['openai']))
+    if keys.get('deepseek'):attempts.append(('deepseek',_call_deepseek,keys['deepseek']))
     if attempts:
-        try:thumbs=[_thumb_b64(d) for _,d in files]
+        try:thumbs=[_thumb_b64(d,side=512) for _,d in files]
         except Exception as e:
             note=f'Could not read an image ({e}). '; attempts=[]
     for prov,fn,key in attempts:
