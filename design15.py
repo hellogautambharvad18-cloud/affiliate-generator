@@ -173,10 +173,10 @@ def build_css(rc):
     # ---- header / top bar ----
     hd=rc['header']
     if hd=='light':
-        a("header.site{background:var(--surface);box-shadow:0 1px 0 var(--border)}.logo,.nav-link-c{color:var(--primary)!important}"
+        a("nav.site{background:var(--surface);box-shadow:0 1px 0 var(--border)}.logo,.nav-link-c{color:var(--primary)!important}"
           ".nav-link-c:hover{color:var(--accent,var(--primary-dark))!important}.navbar-toggler-icon{filter:invert(1)}")
     elif hd=='glass':
-        a("@supports (background:color-mix(in srgb,red,blue)){header.site{background:color-mix(in srgb,var(--primary) 82%,transparent);backdrop-filter:blur(14px)}}")
+        a("@supports (background:color-mix(in srgb,red,blue)){nav.site{background:color-mix(in srgb,var(--primary) 82%,transparent);backdrop-filter:blur(14px)}}")
     tb=rc['topbar']
     if tb=='hidden':a(".topbar{display:none}")
     elif tb=='accent':a(".topbar{background:var(--primary-dark);color:var(--on-primary)}.topbar i{color:var(--gold)}")

@@ -46,7 +46,7 @@ img{max-width:100%}
 .topbar{background:#0a0f12;color:#fff;font-size:.86rem;font-weight:600;letter-spacing:.4px;padding:8px 0;text-align:center}
 .topbar i{color:var(--gold);margin-right:6px}
 
-header.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+nav.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow:0 4px 15px rgba(0,0,0,.15)}
 .logo{font-size:1.9rem;font-weight:900;color:var(--on-primary)!important;letter-spacing:-.5px;display:flex;align-items:center}
 .nav-link-c{color:var(--on-primary)!important;font-weight:600;padding:8px 16px!important;display:inline-flex;align-items:center;gap:8px}
 .nav-link-c:hover{color:var(--gold-soft)!important}
@@ -189,9 +189,8 @@ footer hr{border-color:#334155;margin:24px 0}
 
 <div class="topbar"><div class="container"><i class="bi bi-truck"></i> Official pricing: larger bundles ship free and cost less per bottle &mdash; __CATEGORY__ support backed by a 60-day guarantee</div></div>
 
-<header class="site">
+<nav class="site navbar navbar-dark navbar-expand-lg py-2">
 <div class="container">
-<nav class="navbar navbar-dark navbar-expand-lg py-2">
 <a class="logo navbar-brand" href="index.html">__BRAND__</a>
 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
 <div class="collapse navbar-collapse" id="mainNav">
@@ -205,9 +204,8 @@ footer hr{border-color:#334155;margin:24px 0}
 </ul>
 <a class="btn-cta" href="__AFFILIATE__">__CTA_HEADER__ <i class="bi bi-arrow-right"></i></a>
 </div>
-</nav>
 </div>
-</header>
+</nav>
 
 <header class="hero">
 <div class="container">
