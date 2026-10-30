@@ -56,6 +56,8 @@ _KEYWORDS=[  # (regex on the file stem, slot) - first match wins
 
 def _thumb_b64(data,side=640,quality=72):
     im=Image.open(io.BytesIO(data))
+    try:im.draft('RGB',(side*2,side*2))   # JPEG: decode at reduced size, far less memory
+    except Exception:pass
     if im.mode in ('RGBA','LA','P'):
         im=im.convert('RGBA'); bg=Image.new('RGB',im.size,(255,255,255)); bg.paste(im,mask=im.split()[-1]); im=bg
     else:

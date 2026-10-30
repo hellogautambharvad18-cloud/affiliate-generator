@@ -351,7 +351,7 @@ nameBtn.addEventListener('click',async()=>{
     }
     renderNameRows(files,j);
     nameMsg.textContent='Done. Change any name below if needed, then continue.';
-  }catch(e){nameMsg.textContent='❌ '+e.message;}
+  }catch(e){nameMsg.textContent='❌ '+(e.message==='Failed to fetch'?'The server did not answer (it may be restarting or busy). Wait a minute and press Auto-name again; try fewer images if it repeats.':e.message);}
   finally{nameBtn.disabled=false;}
 });
 
@@ -387,7 +387,7 @@ pgBtn.addEventListener('click',async()=>{
     });
     pgPanel.style.display='block';pgCount();
     pgMsg.textContent=`${j.images.length} images found (tiny icons are hidden). Click the ones you want.`;
-  }catch(e){pgMsg.textContent='❌ '+e.message;}
+  }catch(e){pgMsg.textContent='❌ '+(e.message==='Failed to fetch'?'The server did not answer (it may be restarting). Wait a minute and try again.':e.message);}
   finally{pgBtn.disabled=false;}
 });
 document.getElementById('pgAll').onclick=()=>pgItems.forEach(i=>{if(i.ok){i.sel=true;i.card.style.borderColor='#2563eb';}pgCount();});
