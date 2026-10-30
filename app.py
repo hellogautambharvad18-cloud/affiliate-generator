@@ -1,6 +1,6 @@
-import os,re,json,html,io,zipfile,tempfile,shutil,hashlib,secrets,base64
+import os,re,json,html,io,zipfile,tempfile,shutil,hashlib,secrets,base64,socket,ipaddress
 from pathlib import Path
-from urllib.parse import urlparse,unquote
+from urllib.parse import urlparse,unquote,urljoin
 from datetime import date,timedelta
 from flask import Flask,render_template,request,jsonify,send_file
 from openai import OpenAI
@@ -7790,6 +7790,107 @@ def generate_content():
   msg=str(e)
   if 'Traceback' in msg or len(msg)>800:msg='Content generation failed. Check your API keys and try again.'
   return jsonify(error=msg),500
+
+# ── Fetch images from a web page (for the upload list) ─────────────────────
+_FETCH_UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'
+_PAGE_IMG_EXT=re.compile(r'\.(jpe?g|png|webp|gif)(\?|#|$)',re.I)
+
+def _safe_public_url(u):
+ """http(s) on port 80/443 only, and the host must resolve to public addresses
+ only — keeps this tool from being used to reach the server's own network."""
+ try:
+  p=urlparse(u)
+  if p.scheme not in ('http','https') or not p.hostname:return False
+  if p.port not in (None,80,443):return False
+  return all(ipaddress.ip_address(i[4][0]).is_global for i in socket.getaddrinfo(p.hostname,None))
+ except Exception:return False
+
+def _safe_get(url,max_bytes,referer='',timeout=12):
+ """GET that re-checks every redirect hop. Returns (final_url,bytes)."""
+ for _ in range(4):
+  if not _safe_public_url(url):raise ValueError('That address is not allowed.')
+  r=requests.get(url,headers={'User-Agent':_FETCH_UA,'Referer':referer or url,'Accept':'*/*'},timeout=timeout,stream=True,allow_redirects=False)
+  try:
+   if r.status_code in (301,302,303,307,308):
+    url=urljoin(url,r.headers.get('Location',''));continue
+   if r.status_code>=400:raise ValueError(f'The site answered HTTP {r.status_code}.')
+   buf=bytearray()
+   for chunk in r.iter_content(65536):
+    buf+=chunk
+    if len(buf)>max_bytes:raise ValueError('File is too large.')
+   return url,bytes(buf)
+  finally:r.close()
+ raise ValueError('Too many redirects.')
+
+def _sniff_image(b):
+ if b[:3]==b'\xff\xd8\xff':return 'image/jpeg'
+ if b[:8]==b'\x89PNG\r\n\x1a\n':return 'image/png'
+ if b[:4]==b'GIF8':return 'image/gif'
+ if b[:4]==b'RIFF' and b[8:12]==b'WEBP':return 'image/webp'
+ return ''
+
+def extract_page_images(page_html,base_url,limit=60):
+ """Absolute URLs of the images a page uses: <img> (largest srcset), lazy-load
+ attributes, <picture>, og:image, links to image files, inline backgrounds."""
+ soup=BeautifulSoup(page_html,'html.parser')
+ out=[]
+ def add(u):
+  u=(u or '').strip()
+  if not u or u.startswith(('data:','blob:','javascript:')):return
+  u=urljoin(base_url,u)
+  if urlparse(u).scheme in ('http','https') and not re.search(r'\.(svg|ico)(\?|#|$)',u,re.I) and u not in out:out.append(u)
+ def best(ss):
+  top=None;w=-1.0
+  for part in re.split(r',\s+(?=\S)',ss or ''):
+   t=part.strip().split()
+   if not t:continue
+   try:d=float(t[1].rstrip('wx')) if len(t)>1 else 1.0
+   except ValueError:d=1.0
+   if d>=w:w=d;top=t[0]
+  add(top)
+ for m in soup.find_all('meta'):
+  if (m.get('property') or m.get('name') or '').lower() in ('og:image','twitter:image'):add(m.get('content'))
+ for i in soup.find_all('img'):
+  ss=i.get('srcset') or i.get('data-srcset')
+  if ss:best(ss)
+  else:add(i.get('src'))
+  for a in ('data-src','data-original','data-lazy-src','data-full'):add(i.get(a))
+ for s in soup.select('picture source'):best(s.get('srcset'))
+ for a in soup.find_all('a',href=True):
+  if _PAGE_IMG_EXT.search(a['href']):add(a['href'])
+ for el in soup.find_all(style=True):
+  for m in re.finditer(r'url\((["\']?)(.*?)\1\)',el['style']):add(m.group(2))
+ return out[:limit]
+
+@app.post('/api/page_images')
+def page_images():
+ """List the images on a web page the user names; the browser then picks some."""
+ try:
+  url=clean_url(request.form.get('url',''))
+  if not url:return jsonify(error='Enter a page address first.'),400
+  final,body=_safe_get(url,3*1024*1024)
+  if _sniff_image(body):return jsonify(images=[final],page=final)
+  imgs=extract_page_images(body.decode('utf-8',errors='ignore'),final)
+  if not imgs:return jsonify(error='No images found in the page HTML. Pages that build themselves with JavaScript may need the browser extension instead.'),404
+  return jsonify(images=imgs,page=final)
+ except ValueError as e:return jsonify(error=str(e)),400
+ except Exception as e:
+  _log_failure('page_images',e)
+  return jsonify(error='Could not open that page.'),502
+
+@app.get('/api/img_proxy')
+def img_proxy():
+ """Pass one image through our server so the browser can read it (no CORS) and
+ sites that block hotlinking still answer. JPG/PNG/WebP/GIF only, 10 MB max."""
+ try:
+  _,body=_safe_get(request.args.get('url',''),10*1024*1024,referer=request.args.get('ref',''))
+  ctype=_sniff_image(body)
+  if not ctype:return jsonify(error='Not a supported image.'),415
+  return send_file(io.BytesIO(body),mimetype=ctype,max_age=600)
+ except ValueError as e:return jsonify(error=str(e)),400
+ except Exception as e:
+  _log_failure('img_proxy',e)
+  return jsonify(error='Could not load that image.'),502
 
 _NAME_CALLS={}   # (user key, day) -> auto-name requests; best effort, resets on restart
 NAME_CALLS_PER_DAY=int(os.getenv('NAME_IMAGES_PER_DAY','15'))

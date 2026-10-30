@@ -176,6 +176,20 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
           <div class="hint">serpapi.com — exact product image matching</div>
         </div>
       </div>
+      <label>Get images from a website <span style="font-weight:400;color:#8899bb">(optional — you may only use images you have the rights to)</span></label>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="pgUrl" placeholder="https://site-with-images.com/product-page" style="flex:1">
+        <button type="button" class="an-btn" id="pgBtn">Fetch images</button>
+      </div>
+      <div class="hint" id="pgMsg">Paste a page address, pick the images you want, and they are added to the upload list below and auto-named.</div>
+      <div id="pgPanel" style="display:none">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+          <button type="button" class="an-btn" id="pgAll">Select all</button>
+          <button type="button" class="an-btn" id="pgNone">Select none</button>
+          <button type="button" class="an-btn" id="pgAdd">Add selected &amp; auto-name</button>
+        </div>
+        <div id="pgGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:10px"></div>
+      </div>
       <label>Upload Other Images <span style="font-weight:400;color:#8899bb">(optional — reviewer photos are uploaded in Step 3 above)</span></label>
       <input type="file" name="images" multiple accept="image/jpeg,image/png,image/webp,image/gif" style="padding:8px">
       <div class="hint">Hero &amp; bottle images — named as hero.jpg, bottle-2.jpg, bottle-3.jpg, bottle-6.jpg (1-bottles/3-bottles-style names also work). Trust badges &amp; guarantee seal — badge-fda.jpg, badge-gmp.jpg, badge-usa.jpg, badge-natural.jpg, guarantee.jpg, credit-cards.jpg. Extra/theme-specific slots some designs have — checkout.jpg (order/checkout page), supplement-facts.jpg (ingredients/dosage label). Any of these you upload replaces the template's own version; see IMAGE_NAMING_GUIDE.md for the full list.</div>
@@ -333,6 +347,71 @@ nameBtn.addEventListener('click',async()=>{
   }catch(e){nameMsg.textContent='❌ '+e.message;}
   finally{nameBtn.disabled=false;}
 });
+
+// ── Get images from a website ──────────────────────────────────────────
+const pgUrl=document.getElementById('pgUrl'),pgBtn=document.getElementById('pgBtn'),pgMsg=document.getElementById('pgMsg');
+const pgPanel=document.getElementById('pgPanel'),pgGrid=document.getElementById('pgGrid');
+let pgItems=[],pgPage='';
+const PG_MIN=150;
+const pgProxy=u=>'/api/img_proxy?url='+encodeURIComponent(u)+'&ref='+encodeURIComponent(pgPage);
+function pgCount(){const n=pgItems.filter(i=>i.sel).length;document.getElementById('pgAdd').textContent=`Add selected (${n}) & auto-name`;return n;}
+pgUrl.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();pgBtn.click();}});
+pgBtn.addEventListener('click',async()=>{
+  const u=pgUrl.value.trim();
+  if(!u){pgMsg.textContent='Enter a page address first.';return;}
+  pgBtn.disabled=true;pgMsg.textContent='Opening the page...';pgGrid.innerHTML='';pgItems=[];pgPanel.style.display='none';
+  try{
+    const fd=new FormData();fd.append('url',u);
+    const r=await fetch('/api/page_images',{method:'POST',body:fd});
+    const j=await r.json().catch(()=>({error:'Unexpected response'}));
+    if(!r.ok)throw new Error(j.error||'Failed');
+    pgPage=j.page||u;
+    j.images.forEach(url=>{
+      const it={url,sel:false,ok:true,w:0};
+      const card=document.createElement('div');
+      card.style.cssText='position:relative;background:#fff;border:2px solid #dde3ee;border-radius:8px;overflow:hidden;cursor:pointer';
+      card.innerHTML='<img alt="" style="display:block;width:100%;height:90px;object-fit:contain;background:#eef1f7"><div style="font-size:11px;padding:3px 6px;color:#5a6785">loading...</div>';
+      const img=card.querySelector('img'),meta=card.lastChild;
+      img.onload=()=>{it.w=Math.max(img.naturalWidth,img.naturalHeight);meta.textContent=img.naturalWidth+'×'+img.naturalHeight;if(it.w<PG_MIN){it.ok=false;card.style.display='none';}pgCount();};
+      img.onerror=()=>{it.ok=false;card.style.display='none';};
+      img.src=pgProxy(url);
+      card.onclick=()=>{it.sel=!it.sel;card.style.borderColor=it.sel?'#2563eb':'#dde3ee';pgCount();};
+      it.card=card;pgItems.push(it);pgGrid.appendChild(card);
+    });
+    pgPanel.style.display='block';pgCount();
+    pgMsg.textContent=`${j.images.length} images found (tiny icons are hidden). Click the ones you want.`;
+  }catch(e){pgMsg.textContent='❌ '+e.message;}
+  finally{pgBtn.disabled=false;}
+});
+document.getElementById('pgAll').onclick=()=>pgItems.forEach(i=>{if(i.ok){i.sel=true;i.card.style.borderColor='#2563eb';}pgCount();});
+document.getElementById('pgNone').onclick=()=>pgItems.forEach(i=>{i.sel=false;i.card.style.borderColor='#dde3ee';pgCount();});
+document.getElementById('pgAdd').onclick=async()=>{
+  const sel=pgItems.filter(i=>i.sel&&i.ok);
+  if(!sel.length){pgMsg.textContent='Click some images first.';return;}
+  const have=[...imgInput.files];
+  if(have.length+sel.length>20){pgMsg.textContent=`Max 20 images at a time (you have ${have.length} already, selected ${sel.length}).`;return;}
+  const addBtn=document.getElementById('pgAdd');addBtn.disabled=true;
+  const dt=new DataTransfer(),used=new Set(have.map(f=>f.name));
+  have.forEach(f=>dt.items.add(f));
+  let fail=0;
+  for(const [k,it] of sel.entries()){
+    pgMsg.textContent=`Downloading ${k+1} of ${sel.length}...`;
+    try{
+      const r=await fetch(pgProxy(it.url));if(!r.ok)throw new Error();
+      const b=await r.blob();
+      const ext={'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'}[b.type]||'jpg';
+      let base='';try{base=decodeURIComponent(new URL(it.url).pathname.split('/').pop()||'')}catch(e){}
+      base=base.replace(/\.[a-z0-9]{1,5}$/i,'').replace(/[^\w.-]+/g,'_').slice(0,50)||'image';
+      let name=`${base}.${ext}`,n=2;while(used.has(name))name=`${base}-${n++}.${ext}`;
+      used.add(name);dt.items.add(new File([b],name,{type:b.type}));
+    }catch(e){fail++;}
+  }
+  imgInput.files=dt.files;
+  imgInput.dispatchEvent(new Event('change'));
+  addBtn.disabled=false;
+  pgMsg.textContent=`Added ${sel.length-fail} image${sel.length-fail===1?'':'s'}${fail?` (${fail} failed)`:''}. Auto-naming...`;
+  if(dt.files.length)nameBtn.click();
+};
 
 function buildReviewerSlots(names){
   reviewerSlots.innerHTML='';
