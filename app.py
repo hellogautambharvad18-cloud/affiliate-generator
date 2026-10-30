@@ -1479,8 +1479,14 @@ def _openai_content(prompt,key):
 
 def _deepseek_content(prompt,key):
  c=OpenAI(api_key=key,base_url=os.getenv('DEEPSEEK_BASE_URL','https://api.deepseek.com'))
- r=c.chat.completions.create(model=os.getenv('DEEPSEEK_MODEL','deepseek-chat'),messages=[{'role':'system','content':'Factual product research writer. Output valid JSON only.'},{'role':'user','content':prompt}],response_format={'type':'json_object'},temperature=0.9)
- return _extract_json(r.choices[0].message.content)
+ # DeepSeek now and then returns JSON with a stray quote or comma; a fresh
+ # sample (cooler each time) almost always parses, so retry before giving up.
+ last=None
+ for temp in (0.9,0.6,0.3):
+  r=c.chat.completions.create(model=os.getenv('DEEPSEEK_MODEL','deepseek-chat'),messages=[{'role':'system','content':'Factual product research writer. Output valid JSON only. Escape every double quote inside string values.'},{'role':'user','content':prompt}],response_format={'type':'json_object'},temperature=temp,max_tokens=8000)
+  try:return _extract_json(r.choices[0].message.content)
+  except Exception as e:last=e
+ raise last
 
 def _extract_bonuses_from_text(data):
  """If the AI wrote bonus names into description/tagline text but left the
