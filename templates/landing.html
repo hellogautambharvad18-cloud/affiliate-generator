@@ -58,6 +58,7 @@
     <div class="step"><h3>Choose a design</h3><p>Select a template and upload your product, badge and reviewer photos.</p></div>
     <div class="step"><h3>Download &amp; publish</h3><p>Get a ZIP with every page, then upload it to your hosting. That is it.</p></div>
   </div>
+  <figure class="howshot"><img src="/static/how/generator.webp" alt="The AffiliateGen website generator: product name, description, affiliate link and domain" width="960" height="705" loading="lazy" onerror="this.parentNode.remove()"><figcaption>Step 1 in the generator: type your product, affiliate link and domain. The next steps appear one after another.</figcaption></figure>
 </div></section>
 
 <section class="block" id="designs"><div class="container">
@@ -65,9 +66,10 @@
   {% set swatches=['#2447c9,#6a5cff','#0f766e,#34d399','#be185d,#fb7185','#b45309,#fbbf24','#1d4ed8,#38bdf8','#4c1d95,#a78bfa','#065f46,#6ee7b7','#9f1239,#f97316'] %}
   <div class="designs">
     {% for k,label in designs %}
-    <div class="design"><div class="sw" style="background:linear-gradient(135deg,{{ swatches[loop.index0 % swatches|length] }})"></div><div class="t"><b>Design {{k}}</b><span>{{label}}</span></div></div>
+    <div class="design"><a class="shot" href="/static/designs/design-{{k}}.webp" target="_blank" rel="noopener" aria-label="Open the Design {{k}} sample preview"><div class="sw" style="background:linear-gradient(135deg,{{ swatches[loop.index0 % swatches|length] }})"></div><img src="/static/designs/design-{{k}}.webp" alt="Sample website made with Design {{k}}" width="640" height="733" loading="lazy" onerror="this.remove()"></a><div class="t"><b>Design {{k}}</b><span>{{label}}</span></div></div>
     {% endfor %}
   </div>
+  <p class="design-note">Previews are sample sites generated for a made-up product. Your own product, images and colours are used when you build yours.</p>
 </div></section>
 
 <section class="block alt"><div class="container">

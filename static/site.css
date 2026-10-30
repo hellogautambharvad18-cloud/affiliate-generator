@@ -100,6 +100,14 @@ section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px s
 .designs{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .design{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card);transition:transform .15s,box-shadow .15s}
 .design:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.design .shot{display:block;position:relative;height:230px;overflow:hidden;background:#eef2f9}
+.design .shot .sw{position:absolute;inset:0;height:auto}
+.design .shot img{position:relative;display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s}
+.design:hover .shot img{transform:scale(1.04)}
+.howshot{margin:38px auto 0;max-width:860px;text-align:center}
+.howshot img{width:100%;height:auto;border-radius:16px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.howshot figcaption{margin-top:12px;font-size:13px;color:var(--muted)}
+.design-note{margin:18px 0 0;text-align:center;font-size:13px;color:var(--muted)}
 .design .sw{height:84px;position:relative}
 .design .sw::after{content:"";position:absolute;left:14px;right:14px;bottom:12px;height:8px;border-radius:4px;background:rgba(255,255,255,.55)}
 .design .sw::before{content:"";position:absolute;left:14px;width:46%;top:14px;height:10px;border-radius:5px;background:rgba(255,255,255,.85)}
