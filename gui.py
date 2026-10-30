@@ -44,6 +44,7 @@ DESIGNS = [
     ('14','Design 14 — Teal Classic (Auto-Themed)','Native'),
     ('15','Design 15 — Dynamic Unique (new look every time)','Native'),
     ('16','Design 16 — Editorial (Auto-Themed)','Native'),
+    ('17','Design 17 — Airy (Auto-Themed)','Native'),
 ]
 
 # A small color per design just so the picker cards aren't all identical —
@@ -51,7 +52,7 @@ DESIGNS = [
 _SWATCH = {
     '1':'#8B5CF6','2':'#7C3AED','3':'#0EA5E9','4':'#3B82F6','5':'#EC4899',
     '6':'#10B981','7':'#6366F1','8':'#06B6D4','9':'#F97316','10':'#F43F5E',
-    '11':'#8B5CF6','12':'#65A30D','13':'#0F766E','14':'#0F6E7E','15':'#D946EF','16':'#007953',
+    '11':'#8B5CF6','12':'#65A30D','13':'#0F766E','14':'#0F6E7E','15':'#D946EF','16':'#007953','17':'#2747C9',
 }
 
 # ── Image slot requirements, shared across every design — every design's

@@ -97,6 +97,7 @@ TEMPLATES={
  '14':{'name':'Design 14 — Teal Classic (Native, Auto-Themed)','source':'design-14.source.md','old':None,'old_domains':[],'native':True},
  '15':{'name':'Design 15 — Dynamic Unique (Native, Auto-Themed)','source':'design-15.source.md','old':None,'old_domains':[],'native':True},
  '16':{'name':'Design 16 — Editorial (Native, Auto-Themed)','source':'design-16.source.md','old':None,'old_domains':[],'native':True},
+ '17':{'name':'Design 17 — Airy (Native, Auto-Themed)','source':'design-17.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -5965,6 +5966,69 @@ def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_wo
   '__HIW_PARAS__':how,
  }
 
+_D17_ICONS=['<path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7"/>',
+ '<path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/>',
+ '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
+ '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/>',
+ '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+ '<path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19 13 11"/>']
+
+def _d17_accent(primary_hex):
+ """A warm, contrasting accent for Design 17's buttons: the hue opposite the
+ product colour, darkened until white text on it reads clearly (WCAG ~3.2:1)."""
+ import colorsys
+ r,g,b=[int(primary_hex.lstrip('#')[k:k+2],16)/255 for k in (0,2,4)]
+ h,_l,_s=colorsys.rgb_to_hls(r,g,b)
+ h=(h+0.5)%1
+ if 0.22<h<0.45 or 0.1<h<0.2:h=0.065   # green beside a green product looks flat, and darkened yellow turns olive; use orange
+ l=0.56
+ def lum(l_):
+  rr,gg,bb=colorsys.hls_to_rgb(h,l_,0.78)
+  f=lambda c:c/12.92 if c<=0.03928 else ((c+0.055)/1.055)**2.4
+  return 0.2126*f(rr)+0.7152*f(gg)+0.0722*f(bb)
+ while l>0.3 and 1.05/(lum(l)+0.05)<3.0:l-=0.02   # 3:1 is the WCAG bar for large bold text, which is what these buttons use
+ rr,gg,bb=colorsys.hls_to_rgb(h,l,0.78)
+ return '#%02x%02x%02x'%(round(rr*255),round(gg*255),round(bb*255))
+
+def _design17_extras(data,brand,category,ingredients,palette):
+ esc=html.escape
+ names=[(i.get('name') or '').strip() for i in ingredients if i.get('name')]
+ tag=(data.get('tagline') or '').strip() or f'{brand} — Daily {category}'
+ m=re.split(r'\s+[—–|-]\s+|:\s+',tag,maxsplit=1)
+ h1=(f'{esc(m[0])}<span>{esc(m[1])}</span>' if len(m)==2 and m[0] and m[1] else esc(tag))
+ # Ingredient "fan" next to the hero: the product at the centre, up to 3 key ingredients around it.
+ spots=[(76,116),(220,66),(364,116)]
+ if len(names)==2:spots=[(76,116),(364,116)]
+ elif len(names)==1:spots=[(220,66)]
+ cls=['n1','n2','n3']
+ shown=[(i.get('name') or '').strip() for i in ingredients if i.get('name')][:len(spots)]
+ roles=[(i.get('role') or '').strip() for i in ingredients if i.get('name')][:len(spots)]
+ rays=''.join(f'<line class="ray" x1="220" y1="236" x2="{x}" y2="{y}"/>' for x,y in spots[:len(shown)])
+ nodes=''
+ for k,(x,y) in enumerate(spots[:len(shown)]):
+  nm=shown[k]
+  if len(nm)>13:nm=nm[:12].rstrip()+'…'
+  fs=16 if len(nm)<=9 else (13 if len(nm)<=12 else 12)
+  rl=roles[k]
+  rl=(rl[:20].rstrip()+'…') if len(rl)>20 else rl
+  nodes+=(f'<circle class="leafnode {cls[k]}" cx="{x}" cy="{y}" r="58"/>'
+          f'<text class="nm" style="font-size:{fs}px" x="{x}" y="{y-1 if rl else y+5}" text-anchor="middle">{esc(nm)}</text>'
+          +(f'<text class="rl" x="{x}" y="{y+17}" text-anchor="middle">{esc(rl)}</text>' if rl else ''))
+ b=brand.upper()
+ parts=b.split(' ',1) if ' ' in b else ([b[:len(b)//2],b[len(b)//2:]] if len(b)>9 else [b])
+ centre=''.join(f'<text class="ct" x="220" y="{(233 if len(parts)>1 else 241)+(18*k)}" text-anchor="middle">{esc(p[:12])}</text>' for k,p in enumerate(parts))
+ hub=(f'<svg class="lu-fan" viewBox="0 0 440 300" role="img" aria-label="{esc(brand)} with its key ingredients">'
+      f'<path class="arc" d="M30 200 A 190 190 0 0 1 410 200"/>{rays}'
+      f'<circle class="mid2" cx="220" cy="236" r="48"/><circle class="mid" cx="220" cy="236" r="48"/>{centre}{nodes}</svg>')
+ return {
+  '__GUARANTEE_DAYS__':str(GUARANTEE_DAYS),'__N_ING__':str(len(ingredients)),
+  '__CATEGORY_TITLE__':esc(category[:1].upper()+category[1:]),
+  '__H1_HTML__':h1,
+  '__KEY_ING__':esc(', '.join(names[:3]) or 'See the ingredients section'),
+  '__HUB_SVG__':hub,
+  '__COLOR_ACCENT__':_d17_accent(palette['primary']),
+ }
+
 def build_native_page(data,domain,affiliate,images,filename,page_kind='index',design='8',site_root=None):
  """Build native (auto-themed, own template) pages via reliable string-template
  replacement. page_kind: 'index' (full page) or a subpage kind. design: which
@@ -6007,6 +6071,9 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
 
  # ── Card builders (design-aware: Design 10 uses distinct structural markup) ──
  def ing_card(ing,i):
+  if design=='17':
+   return (f'<li data-in><span class="no">Ingredient {i+1}</span><h3>{html.escape(ing.get("name",""))}</h3>'
+           f'<p>{html.escape(ing.get("description",""))}</p></li>')
   if design=='16':
    return (f'<div class="ing-card"><div class="ing-num-circle">{i+1}</div><div class="ing-content">'
            f'<h3 class="ing-name">{html.escape(ing.get("name",""))}</h3>'
@@ -6025,6 +6092,9 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
           f'<h4>{html.escape(ing.get("name",""))}</h4>'
           f'<p>{html.escape(ing.get("description",""))}</p></div></div>')
  def hiw_card(step,i):
+  if design=='17':
+   return (f'<li data-in><h3>{html.escape(step.get("title",""))}</h3>'
+           f'<p>{html.escape(step.get("text",""))}</p></li>')
   if design=='16':
    return f'<p><strong>{i+1}. {html.escape(step.get("title",""))}.</strong> {html.escape(step.get("text",""))}</p>'
   if design=='10':
@@ -6042,6 +6112,10 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   parts=b.split(' — ',1) if ' — ' in b else [b,'']
   desc=parts[1] if len(parts)>1 else "Supports your daily "+category+" routine."
   desc=desc[:1].upper()+desc[1:] if desc else desc
+  if design=='17':
+   return (f'<div data-in><span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" '
+           f'stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_D17_ICONS[i%len(_D17_ICONS)]}</svg></span>'
+           f'<h3>{html.escape(parts[0])}</h3><p>{html.escape(desc)}</p></div>')
   if design=='16':
    icon=['🌿','💪','🛡️','⚡','🧠','❤️','✨','🌱'][i%8]
    return (f'<div class="benefit-card"><div class="benefit-icon">{icon}</div>'
@@ -6065,6 +6139,13 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   text=sample_reviews[i] if i<len(sample_reviews) else 'Great product, easy to use daily.'
   img=_get_reviewer_img(images,i)
   img_tag=f'<img src="{img}" alt="{html.escape(name)}">' if img else _avatar_tag(name)
+  if design=='17':
+   face=(f'<img class="face" src="{img}" alt="{html.escape(name)}" width="76" height="76" loading="lazy">' if img else
+         f'<div class="face" style="display:grid;place-items:center;background:var(--lu-sky);color:var(--lu-cob);'
+         f'font:800 1.6rem var(--lu-hd)">{html.escape((name.strip()[:1] or "?").upper())}</div>')
+   return (f'<article class="lu-voice" data-in><div class="lu-vh">{face}<div><h3>{html.escape(name)}</h3>'
+           f'<p class="st">Verified Purchase</p></div></div><p class="lu-star" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</p>'
+           f'<blockquote>&ldquo;{html.escape(text)}&rdquo;</blockquote></article>')
   if design=='16':
    photo=(f'<img class="testi-photo" src="{img}" alt="{html.escape(name)}" width="100" height="100" loading="lazy">'
           if img else f'<div class="testi-photo-placeholder">{html.escape((name.strip()[:1] or "?").upper())}</div>')
@@ -6101,6 +6182,21 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   prices=[(p.get('bottles',0),_price_num(p.get('price_per_bottle',''))) for p in sorted_pricing]
   is_best_value=bottles==max((b for b,_ in prices),default=bottles)
   is_middle=len(sorted_pricing)==3 and bottles==sorted(b for b,_ in prices)[1]
+  if design=='17':
+   total_num=_price_num(pkg.get('total',''))
+   was_total=max((p for _,p in prices),default=0)*bottles
+   flag='Best Value' if is_best_value else ('Most Popular' if is_middle else 'Starter')
+   was=f' <s>${was_total:.0f}</s>' if was_total>total_num else ''
+   nb=len(bonuses)
+   gift=f'<p class="gift">+ {nb} free bonus{"es" if nb>1 else ""}</p>' if (is_best_value and bonuses) else ''
+   save=(f'<p class="nog">You save ${was_total-total_num:.0f}</p>' if was_total>total_num else '<p class="nog">Regular price</p>')
+   return (f'<div class="lu-offer{" lu-star6" if is_best_value else ""}" data-in><span class="flag">{flag}</span>'
+           f'<h3>{bottles} Bottle{"s" if bottles>1 else ""}</h3><p class="sup">{bottles*30}-day supply</p>'
+           f'<img src="{img}" alt="{html.escape(brand)} {bottles} bottle pack" width="230" height="230" loading="lazy">'
+           f'<p class="per">{html.escape(str(pkg.get("price_per_bottle","")))}<small> /bottle</small></p>'
+           f'<p class="tot">Total ${total_num:.0f}{was}</p>'
+           f'<p class="ship">{html.escape(str(pkg.get("shipping","Free Shipping")))}</p>{gift}{save}'
+           f'<a class="lu-go lu-full{"" if is_best_value else " lu-blue"}" href="{affiliate}" target="_blank" rel="noopener sponsored">{html.escape(buy_text)}</a></div>')
   if design=='10':
    badge=f'<span class="price-pkg-badge">{"Best Value" if is_best_value else "Most Popular"}</span>' if (is_best_value or is_middle) else ''
    row_cls='price-row top' if is_best_value else 'price-row'
@@ -6186,6 +6282,9 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
           f'<li>60-day money-back guarantee</li><li>Secure checkout</li></ul>'
           f'<a class="btn" href="{affiliate}">{html.escape(buy_text)}</a>{cta_trust_line_html()}</div>')
  def faq_row(f):
+  if design=='17':
+   return (f'<details><summary>{html.escape(f.get("q",""))}</summary>'
+           f'<div><p>{html.escape(f.get("a",""))}</p></div></details>')
   if design=='16':
    return (f'<div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">'
            f'<span>{html.escape(f.get("q",""))}</span><span class="faq-icon">+</span></button>'
@@ -6226,7 +6325,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   except Exception:return 0
  sorted_pricing_asc=sorted(pricing[:3],key=lambda p:p.get('bottles',0))
  _plan_order=sorted_pricing_asc
- if design=='16' and len(_plan_order)==3:
+ if design in ('16','17') and len(_plan_order)==3:
   _plan_order=[sorted_pricing_asc[0],sorted_pricing_asc[2],sorted_pricing_asc[1]]  # best value in the middle
  plan_html=''.join(plan_card(p,i,sorted_pricing_asc) for i,p in enumerate(_plan_order))
  faq_html=''.join(faq_row(f) for f in faqs)
@@ -6308,6 +6407,8 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
  if design=='16':
   replacements.update(_design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_works,pricing,serving,bonuses,price_low_val,price_high))
   replacements['__HIW_CARD_TEMPLATE__']=hiw_html
+ if design=='17':
+  replacements.update(_design17_extras(data,brand,category,ingredients,palette))
  html_out=tpl
  for k,v in replacements.items():
   html_out=html_out.replace(k,str(v))
@@ -6363,7 +6464,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   # Quick Facts box — the real home page only; page_kind=='index' is also
   # how legal pages/blog articles reuse this function's nav/footer chrome,
   # which filename=='index.html' tells apart from the actual homepage.
-  if filename=='index.html':
+  if filename=='index.html' and design!='17':   # design 17 already has Quick Facts in its hero
    whatis_sec=soup.find('section',id='what-is')
    if whatis_sec:
     _section_wrap(whatis_sec).append(
