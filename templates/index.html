@@ -93,8 +93,13 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
     </div>
     {% if is_admin %}
     <label>More Sites in footer <span style="font-weight:400;color:#8899bb">(owner only, optional, max 5)</span></label>
-    <textarea name="network_sites" rows="5" placeholder="One per line:&#10;https://other-domain.com/product | Anchor text&#10;https://another.com"></textarea>
-    <div class="hint">Added as plain links at the very end of the footer on every page. The anchor text after | is optional.</div>
+    {% for i in range(1,6) %}
+    <div class="grid2" style="margin-top:6px">
+      <div><input name="network_url_{{i}}" placeholder="Site {{i}} URL, e.g. https://other-domain.com/product"></div>
+      <div><input name="network_anchor_{{i}}" placeholder="Anchor text {{i}} (optional)" maxlength="60"></div>
+    </div>
+    {% endfor %}
+    <div class="hint">Added as plain links at the very end of the footer on every page. If the anchor text is empty, the domain name is used.</div>
     {% endif %}
   </div>
 

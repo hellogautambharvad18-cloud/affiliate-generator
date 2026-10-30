@@ -8144,7 +8144,8 @@ def generate():
   seo_rename_images(site,data['brand'])
   apply_order_redirect(site,domain,affiliate)
   if auth.is_admin():
-   apply_network_links(site,parse_network_sites(request.form.get('network_sites',''),domain))
+   raw='\n'.join(f"{request.form.get(f'network_url_{i}','').strip()} | {request.form.get(f'network_anchor_{i}','').strip().replace('|',' ')}" for i in range(1,6))
+   apply_network_links(site,parse_network_sites(raw,domain))
   out=build_zip(site,domain,product)
   return send_file(out,as_attachment=True,download_name=out.name,mimetype='application/zip')
  except Exception as e:
