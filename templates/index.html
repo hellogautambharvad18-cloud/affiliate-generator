@@ -335,13 +335,20 @@ function renderNameRows(files,j){
 nameBtn.addEventListener('click',async()=>{
   const files=[...imgInput.files];
   if(!files.length){nameMsg.textContent='Choose some images first.';return;}
-  if(files.length>20){nameMsg.textContent='Please choose 20 images or fewer at a time.';return;}
+  if(files.length>60){nameMsg.textContent='Please choose 60 images or fewer at a time.';return;}
   nameBtn.disabled=true;nameMsg.textContent='Looking at your images...';
   try{
-    const fd=new FormData();files.forEach(f=>fd.append('images',f,f.name));
-    const r=await fetch('/api/name_images',{method:'POST',body:fd});
-    const j=await r.json().catch(()=>({error:'Unexpected response'}));
-    if(!r.ok)throw new Error(j.error||'Failed');
+    // The AI looks at 20 images per request, so send bigger sets in batches and join the answers.
+    let j=null;
+    for(let off=0;off<files.length;off+=20){
+      if(files.length>20)nameMsg.textContent=`Looking at your images... (${Math.min(off+20,files.length)} of ${files.length})`;
+      const fd=new FormData();files.slice(off,off+20).forEach(f=>fd.append('images',f,f.name));
+      const r=await fetch('/api/name_images',{method:'POST',body:fd});
+      const part=await r.json().catch(()=>({error:'Unexpected response'}));
+      if(!r.ok)throw new Error(part.error||'Failed');
+      part.items.forEach(it=>it.index+=off);
+      if(!j)j=part;else j.items.push(...part.items);
+    }
     renderNameRows(files,j);
     nameMsg.textContent='Done. Change any name below if needed, then continue.';
   }catch(e){nameMsg.textContent='❌ '+e.message;}
@@ -389,7 +396,7 @@ document.getElementById('pgAdd').onclick=async()=>{
   const sel=pgItems.filter(i=>i.sel&&i.ok);
   if(!sel.length){pgMsg.textContent='Click some images first.';return;}
   const have=[...imgInput.files];
-  if(have.length+sel.length>20){pgMsg.textContent=`Max 20 images at a time (you have ${have.length} already, selected ${sel.length}).`;return;}
+  if(have.length+sel.length>60){pgMsg.textContent=`Max 60 images at a time (you have ${have.length} already, selected ${sel.length}).`;return;}
   const addBtn=document.getElementById('pgAdd');addBtn.disabled=true;
   const dt=new DataTransfer(),used=new Set(have.map(f=>f.name));
   have.forEach(f=>dt.items.add(f));
