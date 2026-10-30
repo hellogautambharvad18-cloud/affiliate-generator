@@ -91,8 +91,8 @@ input[readonly]{background:#eef1f7;color:#6b7994;cursor:not-allowed}
         <input name="domain" required placeholder="https://yoursite.com">
       </div>
     </div>
-    {% if is_admin %}
-    <label>More Sites in footer <span style="font-weight:400;color:#8899bb">(owner only, optional, max 5)</span></label>
+    {% if can_footer %}
+    <label>More Sites in footer <span style="font-weight:400;color:#8899bb">(optional, max 5)</span></label>
     {% for i in range(1,6) %}
     <div class="grid2" style="margin-top:6px">
       <div><input name="network_url_{{i}}" placeholder="Site {{i}} URL, e.g. https://other-domain.com/product"></div>

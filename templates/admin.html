@@ -89,6 +89,7 @@ details.edit summary{cursor:pointer;font-size:13px;font-weight:700;color:#2447c9
       {% endfor %}
     </div>
     <div class="hint">Tick the niches to allow. Tick none = all niches.</div>
+    <label class="chk" style="margin-top:12px"><input type="checkbox" name="footer_links" value="1"> Can use the "More Sites" footer links (up to 5)</label>
     <button class="big" type="submit">Create account</button>
   </form>
   <div class="card">
@@ -98,7 +99,7 @@ details.edit summary{cursor:pointer;font-size:13px;font-weight:700;color:#2447c9
     <div class="person">
       <div><span class="pname">{{p.name}}</span>
         {% if not p.active %}<span class="tag t-bad">Disabled</span>{% elif p.expired %}<span class="tag t-bad">Expired</span>{% else %}<span class="tag t-ok">Active</span>{% endif %}</div>
-      <div class="meta">{{p.email}} &bull; until {{p.expires}} &bull; today {{p.used}}{% if p.cap %}/{{p.cap}}{% endif %} websites &bull; designs: {{p.designs|join(', ')}} &bull; niches: {{p.niches|join(', ')}}</div>
+      <div class="meta">{{p.email}} &bull; until {{p.expires}} &bull; today {{p.used}}{% if p.cap %}/{{p.cap}}{% endif %} websites &bull; designs: {{p.designs|join(', ')}} &bull; niches: {{p.niches|join(', ')}}{% if p.footer %} &bull; footer links: on{% endif %}</div>
       <div class="acts">
         <form method="post" action="/admin/user/{{p.id}}/toggle"><button class="sm">{{ 'Enable' if not p.active else 'Disable' }}</button></form>
         <form method="post" action="/admin/user/{{p.id}}/extend"><input name="days" type="number" min="1" value="7" title="days"><button class="sm">+ days</button></form>
@@ -128,6 +129,7 @@ details.edit summary{cursor:pointer;font-size:13px;font-weight:700;color:#2447c9
             {% endfor %}
           </div>
           <div class="hint">Tick none = all niches.</div>
+          <label class="chk" style="margin-top:12px"><input type="checkbox" name="footer_links" value="1" {% if p.footer %}checked{% endif %}> Can use the "More Sites" footer links (up to 5)</label>
           <button class="big" type="submit" style="margin-top:14px">Save changes</button>
         </form>
       </details>

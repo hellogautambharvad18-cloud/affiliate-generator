@@ -7842,7 +7842,7 @@ def index():
  _server_keys={p:bool(os.getenv(v,'').strip()) for p,v in (('anthropic','ANTHROPIC_API_KEY'),('openai','OPENAI_API_KEY'),('deepseek','DEEPSEEK_API_KEY'))}
  return render_template('index.html',templates=_visible,cfg=_load_cfg(),server_keys=_server_keys,
                         niche_list=_niches,default_niche=(niches.DEFAULT_NICHE if niches.DEFAULT_NICHE in _niches else next(iter(_niches))),
-                        is_admin=auth.is_admin(),user=auth.current(),auth_on=auth.ENABLED)
+                        is_admin=auth.is_admin(),can_footer=auth.can_footer_links(),user=auth.current(),auth_on=auth.ENABLED)
 
 def _resolve_keys(_cfg):
  """Shared key-resolution: form field -> env var -> saved config, same
@@ -8351,7 +8351,7 @@ def generate():
   apply_favicon_links(site,_fav_palette['primary'])
   seo_rename_images(site,data['brand'])
   apply_order_redirect(site,domain,affiliate)
-  if auth.is_admin():
+  if auth.can_footer_links():
    raw='\n'.join(f"{request.form.get(f'network_url_{i}','').strip()} | {request.form.get(f'network_anchor_{i}','').strip().replace('|',' ')}" for i in range(1,6))
    apply_network_links(site,parse_network_sites(raw,domain))
   out=build_zip(site,domain,product)
