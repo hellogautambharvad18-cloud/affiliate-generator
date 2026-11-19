@@ -85,7 +85,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px
 .trust-strip{background:var(--bg-alt);padding:30px 0;border-bottom:1px solid var(--border)}
 .trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .trust-item{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;font-size:.82rem;font-weight:600;color:var(--muted)}
-.trust-item img{width:40px;height:40px;object-fit:contain}
+.trust-item img{width:60px;height:60px;object-fit:contain}
 
 section{padding:78px 0}
 .section-alt{background:var(--bg-alt)}

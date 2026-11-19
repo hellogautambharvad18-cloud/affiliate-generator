@@ -90,7 +90,7 @@ section{padding:76px 0}
 .card p{color:var(--muted);font-size:.94rem;font-weight:500}
 .section-alt .card p{color:rgba(255,255,255,.65)}
 .badge-card{text-align:center}
-.badge-card img{width:60px;height:60px;object-fit:contain;margin:0 auto 14px}
+.badge-card img{width:76px;height:76px;object-fit:contain;margin:0 auto 14px}
 
 .split{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
 .split-reverse{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}

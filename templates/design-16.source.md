@@ -171,7 +171,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .why-choose-grid{display:grid;gap:24px;grid-template-columns:repeat(2,1fr);}
 @media(min-width:800px){.why-choose-grid{grid-template-columns:repeat(4,1fr);}}
 .trust-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;box-shadow:0 4px 14px rgba(20,40,45,0.05);}
-.trust-card img{width:100px;height:100px;object-fit:contain;margin:0 auto 15px;}
+.trust-card img{width:130px;height:130px;object-fit:contain;margin:0 auto 15px;}
 .trust-card h3{font-size:22px;margin-bottom:10px;color:var(--primary-dark);}
 .trust-card p{font-size:18px;color:var(--text-secondary);line-height:1.6;margin:0;}
 
@@ -351,10 +351,10 @@ __REVIEW_CARD_TEMPLATE__
   <div class="purple-heading-bar"><h2>Why Should You Choose __BRAND__?</h2></div>
   <div class="container" style="max-width:1200px;">
     <div class="why-choose-grid">
-      <div class="trust-card"><img src="assets/images/badge-usa.png" alt="Made in USA" width="100" height="100" loading="lazy"><h3>Made In USA</h3><p>__BRAND__ is manufactured in the United States under strict quality standards.</p></div>
-      <div class="trust-card"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="100" height="100" loading="lazy"><h3>FDA-Registered Facility</h3><p>Produced in a facility registered with the FDA and following applicable regulations.</p></div>
-      <div class="trust-card"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="100" height="100" loading="lazy"><h3>GMP Certified</h3><p>Made under Good Manufacturing Practice standards for product safety and quality.</p></div>
-      <div class="trust-card"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="100" height="100" loading="lazy"><h3>Natural Ingredients</h3><p>Every ingredient is named and explained individually on this site.</p></div>
+      <div class="trust-card"><img src="assets/images/badge-usa.png" alt="Made in USA" width="130" height="130" loading="lazy"><h3>Made In USA</h3><p>__BRAND__ is manufactured in the United States under strict quality standards.</p></div>
+      <div class="trust-card"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="130" height="130" loading="lazy"><h3>FDA-Registered Facility</h3><p>Produced in a facility registered with the FDA and following applicable regulations.</p></div>
+      <div class="trust-card"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="130" height="130" loading="lazy"><h3>GMP Certified</h3><p>Made under Good Manufacturing Practice standards for product safety and quality.</p></div>
+      <div class="trust-card"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="130" height="130" loading="lazy"><h3>Natural Ingredients</h3><p>Every ingredient is named and explained individually on this site.</p></div>
     </div>
   </div>
 </section>

@@ -65,7 +65,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px
 .trust-strip{background:#fff;padding:26px 0;border-bottom:1px solid var(--border)}
 .trust-row{display:flex;justify-content:center;gap:44px;flex-wrap:wrap;align-items:center}
 .trust-item{display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;color:var(--muted)}
-.trust-item img{width:34px;height:34px;object-fit:contain}
+.trust-item img{width:56px;height:56px;object-fit:contain}
 
 section{padding:64px 0}
 .head{text-align:center;max-width:640px;margin:0 auto 40px}

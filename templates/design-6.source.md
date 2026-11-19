@@ -88,7 +88,7 @@ section{padding:70px 0}
 /* Trust strip badges */
 .badge-row{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
 .badge-chip{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 20px;min-width:190px}
-.badge-chip img{width:34px;height:34px;object-fit:contain;flex:none}
+.badge-chip img{width:56px;height:56px;object-fit:contain;flex:none}
 .badge-chip h4{font-size:.88rem;margin-bottom:2px}
 .badge-chip p{font-size:.74rem;color:var(--muted)}
 

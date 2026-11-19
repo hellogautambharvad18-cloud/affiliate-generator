@@ -86,7 +86,7 @@ section{padding:64px 0}
 .card h4{font-size:1.05rem;margin-bottom:8px}
 .card p{color:var(--muted);font-size:.92rem}
 .badge-card{text-align:center}
-.badge-card img{width:56px;height:56px;object-fit:contain;margin:0 auto 12px}
+.badge-card img{width:76px;height:76px;object-fit:contain;margin:0 auto 12px}
 
 /* What-is split */
 .split{display:grid;grid-template-columns:1fr 1.1fr;gap:52px;align-items:center}

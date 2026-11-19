@@ -138,7 +138,7 @@ nav.navbar{background:rgba(247,245,241,.94)!important;backdrop-filter:blur(10px)
 .med{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--red);border-radius:0 8px 8px 0;padding:18px 20px;font-size:.88rem;color:var(--text)}
 
 .badges .badge-tile{text-align:center}
-.badge-img{width:64px;height:64px;object-fit:contain;margin:0 auto 12px}
+.badge-img{width:90px;height:90px;object-fit:contain;margin:0 auto 12px}
 .badge-cap{font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:.01em}
 .warranty-img{max-width:190px;margin:0 auto}
 
@@ -324,10 +324,10 @@ __ING_CARD_TEMPLATE__
 <section class="sec badges"><div class="container">
 <div class="head"><span class="kick">Quality You Can Trust</span><h2>Made To A Higher Standard</h2></div>
 <div class="row g-4 justify-content-center text-center">
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-usa.png" alt="Made in the USA" class="badge-img" width="64" height="64" loading="lazy"><div class="badge-cap">Made In The USA</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-natural.png" alt="Natural ingredients" class="badge-img" width="64" height="64" loading="lazy"><div class="badge-cap">Natural Ingredients</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-gmp.png" alt="GMP certified" class="badge-img" width="64" height="64" loading="lazy"><div class="badge-cap">GMP Certified</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" class="badge-img" width="64" height="64" loading="lazy"><div class="badge-cap">FDA-Registered Facility</div></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-usa.png" alt="Made in the USA" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Made In The USA</div></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-natural.png" alt="Natural ingredients" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Natural Ingredients</div></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-gmp.png" alt="GMP certified" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">GMP Certified</div></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">FDA-Registered Facility</div></div>
 </div>
 </div></section>
 

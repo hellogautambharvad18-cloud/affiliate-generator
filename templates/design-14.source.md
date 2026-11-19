@@ -69,7 +69,7 @@ nav.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow
 .trust{background:var(--soft);border-bottom:1px solid var(--border);padding:44px 0}
 .trust-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;text-align:center;height:100%;box-shadow:0 10px 25px rgba(0,0,0,.04);transition:all .25s}
 .trust-card:hover{transform:translateY(-5px);border-color:var(--primary)}
-.trust-card img{max-height:78px;object-fit:contain;margin-bottom:12px}
+.trust-card img{max-height:110px;object-fit:contain;margin-bottom:12px}
 .trust-card h3{font-size:1rem;margin-bottom:2px}
 .trust-card p{font-size:.82rem;color:var(--muted);margin:0}
 
@@ -232,10 +232,10 @@ footer hr{border-color:#334155;margin:24px 0}
 
 <section class="trust"><div class="container">
 <div class="row g-4">
-<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-usa.png" alt="Made in the USA" width="78" height="78" loading="lazy"><h3>Made In USA</h3><p>Formulated under strict standards</p></div></div>
-<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="78" height="78" loading="lazy"><h3>Natural Ingredients</h3><p>Every ingredient named</p></div></div>
-<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="78" height="78" loading="lazy"><h3>GMP Certified</h3><p>Good Manufacturing Practice</p></div></div>
-<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="78" height="78" loading="lazy"><h3>FDA-Registered Facility</h3><p>Manufactured in a registered facility</p></div></div>
+<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-usa.png" alt="Made in the USA" width="110" height="110" loading="lazy"><h3>Made In USA</h3><p>Formulated under strict standards</p></div></div>
+<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="110" height="110" loading="lazy"><h3>Natural Ingredients</h3><p>Every ingredient named</p></div></div>
+<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="110" height="110" loading="lazy"><h3>GMP Certified</h3><p>Good Manufacturing Practice</p></div></div>
+<div class="col-6 col-md-3"><div class="trust-card"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="110" height="110" loading="lazy"><h3>FDA-Registered Facility</h3><p>Manufactured in a registered facility</p></div></div>
 </div>
 </div></section>
 
