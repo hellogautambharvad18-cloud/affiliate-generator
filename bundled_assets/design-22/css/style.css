@@ -34,7 +34,7 @@ img{max-width:100%;height:auto}
 
 /* Hero */
 .as-hero{background:linear-gradient(180deg,var(--primary-light),var(--cream));padding:52px 0 50px;border-bottom:1px solid var(--border)}
-.as-hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.as-hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
 .as-hero h1{font-size:2.6rem;margin:0 0 16px;color:var(--primary-dark)}
 .as-hero__sub{font-size:1.08rem;color:var(--muted);margin:0 0 20px}
 .as-ticks{list-style:none;padding:0;margin:0 0 22px;display:grid;gap:8px;font-weight:600}
