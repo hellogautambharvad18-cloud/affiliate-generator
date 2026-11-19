@@ -8470,6 +8470,23 @@ def generate():
       with _PILImage.open(_final_disk) as _fim:
        _fim.convert('RGB').save(imgdir/'final.png','PNG')
    except Exception:pass
+  # Same literal-placeholder gap as final.png above, for a template whose
+  # "at a glance" illustrative product shot is a bare
+  # <img src="assets/images/bottle-3.png"> with no data-orig-stem — never
+  # rewritten by localize_images() (which only touches tags carrying that
+  # attribute), so it 404'd whenever the real photo was saved under a
+  # different name/extension. Not appended to `images` for the same reason
+  # final.png isn't: it would get cycled into an unrelated slot.
+  if not (imgdir/'bottle-3.png').exists():
+   try:
+    _b3_rel=_get_img(images,'bottle-3',0)
+    if _b3_rel:
+     _b3_disk=Path(_b3_rel) if Path(_b3_rel).is_absolute() else site/_b3_rel
+     if _b3_disk.exists():
+      from PIL import Image as _PILImage
+      with _PILImage.open(_b3_disk) as _b3im:
+       _b3im.convert('RGB').save(imgdir/'bottle-3.png','PNG')
+   except Exception:pass
   blog_articles=_blog_articles(data,domain,affiliate)
   if TEMPLATES[design].get('native'):
    (site/'index.html').write_text(build_native_page(data,domain,affiliate,images,'index.html','index',design,site),encoding='utf-8')
