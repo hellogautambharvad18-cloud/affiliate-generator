@@ -8403,6 +8403,17 @@ def generate():
   # own (that only exists for design 1's legacy clone pipeline), so without
   # a publisher upload named exactly "badge-usa.png"/etc. those badges were
   # just broken images. Generate a real icon for any slot still missing one.
+  def _mirror_as_png(src_rel,dst_path):
+   """Convert/copy a real uploaded image (any extension) to the exact
+   literal filename a legacy template hardcodes, so that template shows
+   the REAL photo instead of a generated placeholder."""
+   src_disk=Path(src_rel) if Path(src_rel).is_absolute() else site/src_rel
+   if not src_disk.exists():return False
+   from PIL import Image as _PILImage
+   with _PILImage.open(src_disk) as _im:
+    _im.convert('RGB').save(dst_path,'PNG')
+   return True
+
   _badge_makers={'badge-usa':make_usa_badge,'badge-gmp':make_gmp_badge,
    'badge-fda':make_fda_registered_badge,'badge-natural':make_natural_badge}
   for _slot,_maker in _badge_makers.items():
@@ -8410,38 +8421,44 @@ def generate():
    # A same-stem file elsewhere in `images` (e.g. a real badge-usa.webp) is
    # enough for native templates, which resolve slots via _get_img() regardless
    # of extension — but legacy templates with a literal hardcoded
-   # "badge-usa.png" <img> path need that exact file to exist on disk, so
-   # always create it when missing; only skip appending it to `images` (and
-   # risking a duplicate candidate for _get_img) when a real one already claims the slot.
-   _has_real=any(Path(p).stem.lower()==_slot for p in images)
-   if _has_real and _badge_path.exists():continue
+   # "badge-usa.png" <img> path need that exact file to exist on disk. If a
+   # real upload already claims the slot, mirror THAT photo to the exact
+   # filename instead of generating a placeholder over it; only fall back
+   # to the generated badge when there's no real upload at all.
+   _real_match=next((p for p in images if Path(p).stem.lower()==_slot),None)
+   if _real_match:
+    if not _badge_path.exists():
+     try:_mirror_as_png(_real_match,_badge_path)
+     except Exception:pass
+    continue
+   if _badge_path.exists():continue
    try:
-    if not _badge_path.exists():_maker(_badge_path)
-    if not _has_real:images.append(f'assets/images/{_badge_path.name}')
+    _maker(_badge_path)
+    images.append(f'assets/images/{_badge_path.name}')
    except Exception:pass
   # Reviewer-photo fallback — same gap as the badges above: a template
   # whose reviewer-photo <img> is a literal "assets/images/reviewer-N.png"
   # placeholder with no data-orig-stem never gets touched by either the
-  # scrape-classification pipeline or build_native_page's own replacements,
-  # so it stayed broken with no upload. Generate the same neutral initials
-  # avatar used elsewhere (_initials_avatar_data_uri) as a real file under
-  # that exact name whenever no real uploaded photo fills the slot.
+  # scrape-classification pipeline or build_native_page's own replacements.
+  # If a real uploaded photo already fills that slot (just under a
+  # different extension), mirror it to the exact filename so the real
+  # photo shows up; only generate the neutral initials avatar used
+  # elsewhere (_initials_avatar_data_uri) when there's no real photo at all.
   _reviewer_names_for_avatars=data.get('reviewer_names') or []
   for _i in range(4):
    _rslot=f'reviewer-{_i+1}'
    _avatar_path=imgdir/f'{_rslot}.png'
-   # Same extension-mismatch gap as the badges above: a real photo under a
-   # different extension satisfies native _get_img() lookups but leaves a
-   # legacy template's literal "reviewer-N.png" path 404ing, so always create
-   # that exact file when missing and only skip registering it in `images`
-   # when a real photo already claims the slot.
-   _has_real=any(Path(p).stem.lower()==_rslot for p in images)
-   if _has_real and _avatar_path.exists():continue
-   try:
+   _real_match=next((p for p in images if Path(p).stem.lower()==_rslot),None)
+   if _real_match:
     if not _avatar_path.exists():
-     _rname=_reviewer_names_for_avatars[_i] if _i<len(_reviewer_names_for_avatars) else f'Verified Buyer {_i+1}'
-     make_initials_avatar(_avatar_path,_rname)
-    if not _has_real:images.append(f'assets/images/{_avatar_path.name}')
+     try:_mirror_as_png(_real_match,_avatar_path)
+     except Exception:pass
+    continue
+   if _avatar_path.exists():continue
+   try:
+    _rname=_reviewer_names_for_avatars[_i] if _i<len(_reviewer_names_for_avatars) else f'Verified Buyer {_i+1}'
+    make_initials_avatar(_avatar_path,_rname)
+    images.append(f'assets/images/{_avatar_path.name}')
    except Exception:pass
   # Final-CTA bottle-photo fallback — "final.png" has the same gap: no
   # data-orig-stem, so it's never replaced even when a real product photo
