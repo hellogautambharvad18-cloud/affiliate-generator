@@ -100,7 +100,7 @@ section.trust span:before{content:"★ ";color:#f59e0b}
 .plan.top .plan-ttl,.plan.top .plan-price{color:#fff}
 .plan.top .plan-sub,.plan.top .plan-tot,.plan.top .plan-ship{color:rgba(255,255,255,.85)}
 .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--cta);color:#fff;border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:900;font-size:.82rem;white-space:nowrap}
-.plan img{max-width:190px;margin:10px auto;display:block}
+.plan img{max-width:220px;margin:10px auto;display:block}
 .plan-ttl{font-size:1.4rem;font-weight:900;text-transform:uppercase}
 .plan-sub{font-weight:700;color:var(--muted)}
 .plan-price{font-size:2.4rem;font-weight:900;margin:12px 0 4px}
