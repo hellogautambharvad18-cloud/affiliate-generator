@@ -134,7 +134,7 @@ footer a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<div class="topbar">🔥 <strong>LIMITED-TIME OFFER</strong> — Today only: prices from <strong>__PRICE_FROM__</strong> per bottle &nbsp;·&nbsp; Ends in <span id="d18-count">23:59:59</span></div>
+<div class="topbar">🔥 <strong>LIMITED-TIME OFFER</strong> — <strong>STOCK LOW</strong> — Today only: prices from <strong>__PRICE_FROM__</strong> per bottle &nbsp;·&nbsp; Ends in <span id="d18-count">23:59:59</span></div>
 <nav class="site"><div class="wrap">
 <a class="logo" href="index.html">__BRAND__<span>.</span></a>
 <div class="nav-links">

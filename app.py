@@ -99,6 +99,7 @@ TEMPLATES={
  '16':{'name':'Design 16 — Editorial (Native, Auto-Themed)','source':'design-16.source.md','old':None,'old_domains':[],'native':True},
  '17':{'name':'Design 17 — Airy (Native, Auto-Themed)','source':'design-17.source.md','old':None,'old_domains':[],'native':True},
  '18':{'name':'Design 18 — Bold High-Converting (Native, Auto-Themed)','source':'design-18.source.md','old':None,'old_domains':[],'native':True},
+ '19':{'name':'Design 19 — Warm Honey Editorial (Native, Auto-Themed)','source':'design-19.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -466,9 +467,27 @@ def inject_img_css(soup):
 # hand-editing 13 different template files. ──
 GUARANTEE_DAYS=60
 
-def cta_texts(brand,category=''):
+def cta_texts(brand,category='',aggressive=True):
+ """aggressive=True (the native/auto-themed pipeline's default) writes
+ urgency-led buttons with no fixed %/$ claim baked in, so the copy stays
+ accurate for any product. The scraped reference themes (1-5,7) and blog
+ article closings call this with aggressive=False to keep their own
+ original button wording instead."""
  cat=(category or '').lower()
  breathing=any(k in cat for k in ('respiratory','breath','lung','sinus','nasal','airway'))
+ if aggressive:
+  return {
+   'header':'ORDER NOW — CLAIM YOUR DISCOUNT →',
+   'hero':('Yes, I Want Easier Breathing – Claim My Discount Now →' if breathing
+           else 'CLAIM MY DISCOUNT NOW →'),
+   'mid':"See Today's Best Price →",
+   'pack2':'CLAIM 2 BOTTLES — SAVE NOW →','pack3':'CLAIM MY 3 BOTTLES + FREE SHIPPING →',
+   'pack6':'CLAIM 6 BOTTLES — BEST VALUE →',
+   'bonus':'Grab My Free Bonuses With This Order →',
+   'afterReviews':'Join Customers Who Made It Part of Their Day →',
+   'afterFaq':f"DON'T WAIT — TRY IT RISK-FREE FOR {GUARANTEE_DAYS} DAYS →",
+   'closing':f'YES! I WANT {brand.upper()} NOW →',
+  }
  return {
   'header':f'Get {brand} →',
   'hero':'Yes, I Want Easier Breathing – Get Mine →' if breathing else 'Get Mine →',
@@ -496,20 +515,26 @@ _CTA_CSS=('.auto-cta-trust{display:block;text-align:center;font-size:.78rem;'
  '.btn,.nav-btn,a.btn,button.btn{min-height:48px;transition:transform .15s ease,box-shadow .15s ease}'
  '.btn:hover,a.btn:hover,button.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.18)}')
 
-def inject_cta_extras(soup,brand,affiliate):
- """Mobile sticky bottom CTA bar + shared button hover/tap-target CSS. Every
- native design (6,8-13) already ships its own working `.sticky-bar`, and so
- do reference designs 1 (.bpo-sticky), 5 (.ge-sticky) and 7 (.mv-sticky) —
- skip adding a second, competing one on any of those and only add it where
- none exists (reference designs 2, 3, 4; design 3's own "sticky-top" is
- just a sticky NAV header, not a bottom CTA bar, so it still gets one).
- Never touches the affiliate link's own rel/target attributes beyond what
- every other generated CTA already uses (nofollow sponsored noopener)."""
+def inject_cta_extras(soup,brand,affiliate,aggressive=False):
+ """Mobile sticky bottom CTA bar + shared button hover/tap-target CSS. Most
+ native designs (6,8-17) already ship their own working `.sticky-bar`, and
+ so do reference designs 1 (.bpo-sticky), 5 (.ge-sticky) and 7 (.mv-sticky)
+ — skip adding a second, competing one on any of those and only add it
+ where none exists (reference designs 2, 3, 4, and native designs 18+ that
+ rely on this shared bar instead of shipping their own; design 3's own
+ "sticky-top" is just a sticky NAV header, not a bottom CTA bar, so it
+ still gets one). aggressive=True (passed only from build_native_page)
+ gives the urgency-led wording; the reference pipeline keeps the original,
+ calmer line. Never touches the affiliate link's own rel/target attributes
+ beyond what every other generated CTA already uses (nofollow sponsored
+ noopener)."""
  if not soup.find(class_=re.compile(r'\bsticky-bar\b|\bbpo-sticky\b|\bge-sticky\b|\bmv-sticky\b|\bauto-sticky-cta\b')):
+  btn_text=(f'🔥 CLAIM YOUR DISCOUNT NOW — {html.escape(brand)} →' if aggressive
+            else f'Get {html.escape(brand)} – {GUARANTEE_DAYS}-Day Guarantee &rarr;')
   bar=BeautifulSoup(
    f'<div class="auto-sticky-cta"><a class="auto-sticky-cta-btn" style="background:var(--primary,#2563EB)" '
    f'href="{html.escape(affiliate)}" target="_blank" rel="nofollow sponsored noopener">'
-   f'Get {html.escape(brand)} – {GUARANTEE_DAYS}-Day Guarantee &rarr;</a></div>','html.parser')
+   f'{btn_text}</a></div>','html.parser')
   if soup.body:soup.body.append(bar)
  style=soup.new_tag('style');style.string=_CTA_CSS
  if soup.head:soup.head.append(style)
@@ -5140,7 +5165,7 @@ def populate(soup,data,design='1',domain='',affiliate=''):
    # pipeline's own pack2/pack3/pack6 CTAs.
    buy_a=card.find('a')
    if buy_a:
-    buy_text=cta_texts(brand,category).get(f'pack{expected_count}',cta_texts(brand,category)['mid'])
+    buy_text=cta_texts(brand,category,aggressive=False).get(f'pack{expected_count}',cta_texts(brand,category,aggressive=False)['mid'])
     buy_a.string=buy_text
     if not card.find(class_='auto-cta-trust'):
      buy_a.insert_after(BeautifulSoup(cta_trust_line_html(),'html.parser'))
@@ -6369,7 +6394,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
 
  replacements={
   '__TITLE__':data.get('seo',{}).get('title',f'{brand} Reviews'),
-  '__META_DESC__':data.get('seo',{}).get('description',description)[:160],
+  '__META_DESC__':(lambda _d=data.get('seo',{}).get('description',description): _d if len(_d)<=155 else _d[:152].rsplit(' ',1)[0]+'…')(),
   '__CANONICAL__':current_domain_url(domain,'' if filename=='index.html' else filename),
   '__COLOR_PRIMARY__':palette['primary'],'__COLOR_DARK__':palette['primary_dark'],
   '__COLOR_LIGHT__':palette['primary_light'],'__COLOR_ACCENT__':palette['accent'],
@@ -6377,7 +6402,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   '__YEAR__':str(date.today().year),
   '__BRAND__':brand,'__AFFILIATE__':affiliate,
   '__PILL_TEXT__':f'{n_ing} Named Ingredients — {category}',
-  '__HERO_H1__':data.get('tagline',f'{brand} — Daily {category}'),
+  '__HERO_H1__':f"{brand} — {data.get('tagline',f'Daily {category}')}",
   '__HERO_DESC__':description,
   '__REVIEW_COUNT__':'2,500+',
   '__FACT1_NUM__':str(n_ing),'__FACT1_LABEL__':'Ingredients',
@@ -6544,7 +6569,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   if _ing_links_html:_section_wrap(ing_sec).append(BeautifulSoup(_ing_links_html,'html.parser'))
  apply_img_sizing(soup,site_root,brand,category)
  inject_img_css(soup)
- inject_cta_extras(soup,brand,affiliate)
+ inject_cta_extras(soup,brand,affiliate,aggressive=True)
  ensure_social_meta(soup,domain,images)
  # ── Minify this native design's inline CSS/JS — the counterpart to
  # _localize_one_asset()'s minification of the reference pipeline's
@@ -7308,7 +7333,7 @@ def _article_closing_html(brand,category,affiliate):
  reference pipeline (make_page/page_variant/legal_page), never from
  build_native_page(), so a native blog article's CTA href would otherwise
  stay a literal, unsubstituted placeholder."""
- cta=cta_texts(brand,category)['closing']
+ cta=cta_texts(brand,category,aggressive=False)['closing']
  return (f'<p style="margin:28px 0 14px;font-size:.85rem;color:#6b7280">'
          f'This article is for general informational purposes only and is not medical advice. '
          f'Individual results vary, and nothing here should be taken as a guarantee of any outcome. '
