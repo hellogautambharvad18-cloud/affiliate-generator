@@ -8,7 +8,7 @@
 <link rel="canonical" href="__CANONICAL__">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -170,7 +170,7 @@ footer p{margin-bottom:12px;color:rgba(255,255,255,.55);font-size:.78rem;line-he
 .final{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;border-radius:32px;padding:60px 44px;text-align:center;border:4px solid var(--ink)}
 .final h2{color:#fff;margin-bottom:14px;font-size:2.2rem}
 .final p{color:rgba(255,255,255,.85);margin-bottom:26px;font-weight:600}
-.final img{max-width:170px;margin:0 auto 26px}
+.final img{max-width:400px;margin:0 auto 26px}
 .final .old{text-decoration:line-through;opacity:.7;font-size:1rem;font-weight:600}
 .final .new{font-size:2rem;font-weight:800;margin-bottom:22px}
 

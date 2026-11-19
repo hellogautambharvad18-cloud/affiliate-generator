@@ -8,7 +8,7 @@
 <link rel="canonical" href="__CANONICAL__">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -179,7 +179,7 @@ footer p{margin-bottom:10px;color:rgba(255,255,255,.55);font-size:.76rem;line-he
 .final{background:var(--primary);color:#fff;border-radius:36px;padding:50px 36px;text-align:center}
 .final h2{color:#fff;margin-bottom:10px}
 .final p{color:rgba(255,255,255,.85);margin-bottom:22px;font-weight:500}
-.final img{max-width:150px;margin:0 auto 22px}
+.final img{max-width:400px;margin:0 auto 22px}
 .final .old{text-decoration:line-through;opacity:.7;font-size:.92rem}
 .final .new{font-size:1.6rem;margin-bottom:18px}
 

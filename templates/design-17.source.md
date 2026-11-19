@@ -22,7 +22,7 @@
   --lu-w:1220px;
 }
 *,*::before,*::after{box-sizing:border-box}
-html{font-size:19px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html{font-size:20px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:#fff;color:var(--lu-txt);font:400 1.08rem/1.75 var(--lu-bd);overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
 a{color:var(--lu-cob);text-underline-offset:3px}

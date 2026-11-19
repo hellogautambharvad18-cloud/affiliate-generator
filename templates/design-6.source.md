@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link crossorigin href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -194,7 +194,7 @@ footer p{margin-bottom:12px;color:rgba(255,255,255,.55);font-size:.78rem;line-he
 .final{background:linear-gradient(155deg,var(--ink),var(--primary-dark));color:#fff;border-radius:32px;padding:60px 40px;text-align:center}
 .final h2{color:#fff;margin-bottom:12px}
 .final p{color:rgba(255,255,255,.7);margin-bottom:26px;max-width:52ch;margin-left:auto;margin-right:auto}
-.final img{max-width:150px;margin:0 auto 26px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.3))}
+.final img{max-width:400px;margin:0 auto 26px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.3))}
 .final .old{text-decoration:line-through;opacity:.55;font-size:.95rem}
 .final .new{font-size:1.8rem;font-family:'Sora',sans-serif;font-weight:800;margin-bottom:22px}
 

@@ -8,7 +8,7 @@
 <link rel="canonical" href="__CANONICAL__">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -173,7 +173,7 @@ footer p{margin-bottom:12px;color:rgba(255,255,255,.6);font-size:.78rem;line-hei
 .final{background:var(--primary-dark);color:#fff;border-radius:28px;padding:56px 40px;text-align:center}
 .final h2{color:#fff;margin-bottom:12px}
 .final p{color:rgba(255,255,255,.75);margin-bottom:24px}
-.final img{max-width:160px;margin:0 auto 24px}
+.final img{max-width:400px;margin:0 auto 24px}
 .final .old{text-decoration:line-through;opacity:.6;font-size:.95rem}
 .final .new{font-size:1.7rem;font-family:'Fraunces',serif;margin-bottom:20px}
 

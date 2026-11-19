@@ -8,7 +8,7 @@
 <link rel="canonical" href="__CANONICAL__">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -184,7 +184,7 @@ footer p{margin-bottom:12px;font-size:.78rem;line-height:1.7}
 .final{background:linear-gradient(135deg,color-mix(in srgb, var(--primary) 22%, var(--bg-alt)),var(--bg-alt));border:1px solid color-mix(in srgb, var(--primary) 35%, transparent);color:var(--ink);border-radius:32px;padding:60px 44px;text-align:center}
 .final h2{margin-bottom:14px;font-size:2.1rem}
 .final p{color:var(--muted);margin-bottom:26px}
-.final img{max-width:170px;margin:0 auto 26px;filter:drop-shadow(0 20px 36px rgba(0,0,0,.5))}
+.final img{max-width:400px;margin:0 auto 26px;filter:drop-shadow(0 20px 36px rgba(0,0,0,.5))}
 .final .old{text-decoration:line-through;opacity:.6;font-size:1rem;color:var(--muted)}
 .final .new{font-size:2rem;font-weight:700;margin-bottom:22px;color:var(--primary);font-family:'Space Grotesk',sans-serif}
 

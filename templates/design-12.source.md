@@ -26,7 +26,7 @@
  --radius:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{font-size:20px;scroll-behavior:smooth}
 body{font-family:'Work Sans',system-ui,sans-serif;color:var(--text);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.12;letter-spacing:-.01em;color:var(--ink)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -202,7 +202,7 @@ table.cmp td.good:before{content:'✓ ';color:var(--primary);font-weight:800}
 .final{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 55%,var(--ink) 100%);border-radius:36px;padding:64px 40px;text-align:center;color:#fff}
 .final h2{color:#fff;font-size:2.2rem;margin-bottom:14px;font-weight:600}
 .final p{color:rgba(255,255,255,.85);margin-bottom:26px;font-size:1rem;max-width:540px;margin-left:auto;margin-right:auto}
-.final img{max-width:160px;margin:0 auto 24px}
+.final img{max-width:400px;margin:0 auto 24px}
 .final .old{text-decoration:line-through;opacity:.7;font-size:1rem}
 .final .new{font-family:'Fraunces',serif;font-size:2rem;font-weight:600;margin-bottom:22px}
 

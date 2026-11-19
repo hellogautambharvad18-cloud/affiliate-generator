@@ -13,7 +13,7 @@
 <style>
 :root{--primary:__COLOR_PRIMARY__;--primary-dark:__COLOR_DARK__;--primary-light:__COLOR_LIGHT__;--accent:__COLOR_ACCENT__;--on-primary:__COLOR_ON_PRIMARY__;--cta:#ff6a00;--cta-dark:#e55e00;--ink:#0f172a;--muted:#475569;--border:#0f172a;--soft:#f8fafc;--gold:#ffc107;--green:#16a34a}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{font-size:20px;scroll-behavior:smooth}
 body{margin:0;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
 h1,h2,h3,h4,.logo,.plan-price,.plan-ttl{font-family:'Archivo',sans-serif;line-height:1.05;letter-spacing:-.02em}
 a{color:var(--primary)}

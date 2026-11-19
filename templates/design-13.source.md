@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800;900&display=swap">
 </noscript>
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -200,7 +200,7 @@ nav.navbar{background:rgba(247,245,241,.94)!important;backdrop-filter:blur(10px)
 .final{background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:16px;padding:56px 36px;text-align:center;color:#fff}
 .final h2{color:#fff;margin-bottom:12px;font-size:2rem}
 .final p{color:rgba(255,255,255,.85);max-width:520px;margin:0 auto 22px}
-.final img{max-width:150px;margin:0 auto 20px;border-radius:8px}
+.final img{max-width:400px;margin:0 auto 20px;border-radius:8px}
 .final .old{text-decoration:line-through;opacity:.7}
 .final .new{font-family:'Anton',sans-serif;font-size:1.8rem;margin-bottom:18px}
 
@@ -403,7 +403,7 @@ __FAQ_ROW_TEMPLATE__
 <div class="final">
 <h2>Ready To Try __BRAND__?</h2>
 <p>__FINAL_TEXT__</p>
-<img src="assets/images/bottle-6.png" alt="__BRAND__ six bottle pack" width="150" height="150" loading="lazy">
+<img src="assets/images/bottle-6.png" alt="__BRAND__ six bottle pack" width="400" height="400" loading="lazy">
 <div class="old">Regular: __PRICE_HIGH__ / bottle</div>
 <div class="new">Today From __PRICE_LOW__ / bottle</div>
 <a class="btn btn-ember btn-lg" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> Claim Your __BRAND__ Discount</a>

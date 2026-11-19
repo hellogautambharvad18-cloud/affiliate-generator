@@ -146,7 +146,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .price-card.best-value{transform:translateY(-8px);box-shadow:0 14px 38px rgba(0,0,0,.2);border-color:var(--primary);}
 .price-badge{padding:18px 16px;text-align:center;background:var(--bg-soft);border-bottom:1px solid var(--border);font-family:var(--font-head);font-size:24px;font-weight:800;color:var(--primary-dark);}
 .price-card.best-value .price-badge{background:var(--primary-dark);color:#fff;border:none;}
-.price-img{max-height:150px;width:auto;margin:16px auto 0;object-fit:contain;}
+.price-img{max-height:200px;width:auto;margin:16px auto 0;object-fit:contain;}
 .price-amount{text-align:center;padding:20px 20px 5px;font-family:var(--font-head);font-size:66px;font-weight:900;color:var(--primary-dark);line-height:1;}
 .price-amount span{font-size:30px;vertical-align:top;}
 .price-per{text-align:center;font-size:18px;color:var(--text-secondary);margin-bottom:5px;font-weight:600;}

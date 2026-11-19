@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 </noscript>
-<style>
+<style>html{font-size:20px}
 :root{
  --primary:__COLOR_PRIMARY__;
  --primary-dark:__COLOR_DARK__;
@@ -167,7 +167,7 @@ nav.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow
 .final{background:linear-gradient(135deg,var(--primary),var(--primary-dark));text-align:center;color:var(--on-primary);padding:70px 0}
 .final h2{color:var(--on-primary);font-size:2.2rem;margin-bottom:12px}
 .final p{color:var(--on-primary);opacity:.9;max-width:560px;margin:0 auto 22px}
-.final img{max-width:170px;margin:0 auto 18px;border-radius:10px}
+.final img{max-width:400px;margin:0 auto 18px;border-radius:10px}
 
 footer.site{background:#111827;color:#e2e8f0;border-top:4px solid var(--primary);padding:56px 0 28px;font-size:.92rem}
 footer .foot-logo{font-size:1.5rem;font-weight:900;color:#fff;display:block;margin-bottom:10px}
@@ -336,7 +336,7 @@ __FAQ_ROW_TEMPLATE__
 <section class="final"><div class="container">
 <h2>Ready To Try __BRAND__?</h2>
 <p>__FINAL_TEXT__</p>
-<img src="assets/images/bottle-6.png" alt="__BRAND__ six bottle pack" width="170" height="170" loading="lazy">
+<img src="assets/images/bottle-6.png" alt="__BRAND__ six bottle pack" width="400" height="400" loading="lazy">
 <div style="text-decoration:line-through;opacity:.7">Regular: __PRICE_HIGH__ / bottle</div>
 <div style="font-size:1.8rem;font-weight:900;margin-bottom:18px">Today From __PRICE_LOW__ / bottle</div>
 <a class="btn-big" href="__AFFILIATE__">__CTA_CLOSING__ <i class="bi bi-cart3 ms-2"></i></a>
