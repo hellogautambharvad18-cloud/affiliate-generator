@@ -259,3 +259,46 @@ def make_fda_registered_badge(path, size=420):
     center('REGISTERED', int(S * 0.52), int(S * 0.095))
     center('FACILITY', int(S * 0.64), int(S * 0.095))
     im.save(path)
+
+
+def _seal_badge(path, lines, size=420):
+    """Shared drawing for the USA/GMP/Natural trust-badge fallbacks below —
+    same navy double-ring seal as make_fda_registered_badge, just different
+    text, so a design with no manually-uploaded badge image (the common case
+    for native designs, which bundle no badge-*.png of their own) still shows
+    a real icon instead of a broken image at the 38x38 size these render at."""
+    from PIL import Image, ImageDraw, ImageFont
+    S = size
+    im = Image.new('RGBA', (S, S), (255, 255, 255, 0))
+    d = ImageDraw.Draw(im)
+    navy = (16, 68, 96, 255)
+    d.ellipse((6, 6, S - 6, S - 6), outline=navy, width=14)
+    d.ellipse((34, 34, S - 34, S - 34), outline=navy, width=4)
+    def font(px):
+        for f in ('DejaVuSans-Bold.ttf', 'arialbd.ttf', 'Arial Bold.ttf'):
+            try:
+                return ImageFont.truetype(f, px)
+            except Exception:
+                pass
+        return ImageFont.load_default()
+    def center(text, y, px):
+        f = font(px)
+        w = d.textlength(text, font=f)
+        d.text(((S - w) / 2, y), text, font=f, fill=navy)
+    n = len(lines)
+    start_y = S * 0.5 - (n * S * 0.13) / 2
+    for i, text in enumerate(lines):
+        center(text, int(start_y + i * S * 0.13), int(S * 0.095))
+    im.save(path)
+
+
+def make_usa_badge(path, size=420):
+    _seal_badge(path, ['MADE IN', 'USA'], size)
+
+
+def make_gmp_badge(path, size=420):
+    _seal_badge(path, ['GMP', 'CERTIFIED'], size)
+
+
+def make_natural_badge(path, size=420):
+    _seal_badge(path, ['100%', 'NATURAL'], size)

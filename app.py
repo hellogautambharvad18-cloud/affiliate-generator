@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup,NavigableString,Comment
 import rcssmin,rjsmin
 from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
  retheme_reference_css,retheme_html_inline,make_fda_registered_badge,
+ make_usa_badge,make_gmp_badge,make_natural_badge,
  is_non_product_image,reviewer_photo_slot)
 
 app=Flask(__name__)
@@ -2494,8 +2495,10 @@ def _get_product_img(image_paths,slot_key,fallback_idx=0):
  # 3. Fallback to another bottle image (never hero)
  bottle_imgs=[p for p in image_paths if Path(p).stem.lower() in ('bottle-2','bottle-3','bottle-6','bottle2','bottle3','bottle6')]
  if bottle_imgs:return bottle_imgs[min(fallback_idx,len(bottle_imgs)-1)]
- # 4. Last resort — any image
- return image_paths[0] if image_paths else None
+ # No real product shot at all (step 2 already ruled out anything outside
+ # MANUAL_SLOTS) — never fall back to a badge/seal/how-it-works/reviewer/
+ # bonus image standing in for a bottle photo; no image beats the wrong one.
+ return None
 
 def localize_images(soup,image_paths,design='1'):
  if not image_paths:
@@ -5969,7 +5972,11 @@ def _get_img(images,slot,fallback_idx=0):
  # mock-up for a product-photo slot (e.g. "vapocept-customer-1" as a bottle).
  non_manual=[p for p in images if Path(p).stem.lower() not in MANUAL_SLOTS and not is_non_product_image(p)]
  if non_manual:return safe_rel(non_manual[min(fallback_idx,len(non_manual)-1)])
- pool=seo_images(images) or images
+ # seo_images() already returns [] rather than ever handing back a non-product
+ # image — falling back to the raw, unfiltered `images` list here (as before)
+ # defeated that guarantee and let a badge/how-it-works image stand in as the
+ # hero/bottle photo whenever no real product shot existed at all.
+ pool=seo_images(images)
  if pool:return safe_rel(pool[min(fallback_idx,len(pool)-1)])
  return ''
 
@@ -8376,6 +8383,21 @@ def generate():
     except Exception:_hiw_done=False   # poster style failed: use the plain numbered-steps version below
     if _hiw_done or generate_how_it_works_image(_hiw_path,data.get('how_it_works',[]),data['brand'],_hiw_palette['primary']):
      images.append(f'assets/images/{_hiw_path.name}')
+   except Exception:pass
+  # Trust-badge fallbacks (Made in USA / GMP / FDA-registered / Natural) —
+  # the 12 native-design templates (6,8-11,13-17,19,23) all reference a
+  # plain "assets/images/badge-usa.png" etc. with no bundled icon of their
+  # own (that only exists for design 1's legacy clone pipeline), so without
+  # a publisher upload named exactly "badge-usa.png"/etc. those badges were
+  # just broken images. Generate a real icon for any slot still missing one.
+  _badge_makers={'badge-usa':make_usa_badge,'badge-gmp':make_gmp_badge,
+   'badge-fda':make_fda_registered_badge,'badge-natural':make_natural_badge}
+  for _slot,_maker in _badge_makers.items():
+   if any(Path(p).stem.lower()==_slot for p in images):continue
+   try:
+    _badge_path=imgdir/f'{_slot}.png'
+    _maker(_badge_path)
+    images.append(f'assets/images/{_badge_path.name}')
    except Exception:pass
   blog_articles=_blog_articles(data,domain,affiliate)
   if TEMPLATES[design].get('native'):
