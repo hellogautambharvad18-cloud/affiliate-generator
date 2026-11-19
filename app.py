@@ -5935,9 +5935,18 @@ def add_jsonld(soup,data,domain,canonical,affiliate,image_paths,include_product=
   if visible_faqs:
    graph.append({'@type':'FAQPage','@id':canonical+'#faq','mainEntity':[
     {'@type':'Question','name':x['q'],'acceptedAnswer':{'@type':'Answer','text':x['a']}} for x in visible_faqs[:12]]})
+ # Same bug the WebPage node above was already fixed for (see the comment
+ # on it): this used to stamp every page's breadcrumb with the bare brand
+ # name regardless of which page it was, so about.html, benefits.html,
+ # faq.html etc. all showed a BreadcrumbList position-2 of just "Brand"
+ # instead of "About Us"/"Benefits"/"FAQ". Read the page's own <title> (every
+ # caller writes a page-specific one before reaching here) and take the part
+ # before the " | Brand" suffix every design's <title> uses.
+ page_title_text=(soup.title.get_text().strip() if soup.title and soup.title.get_text().strip() else data['seo']['title'])
+ breadcrumb_label=page_title_text.split(' | ')[0].strip() or data['brand']
  graph.append({'@type':'BreadcrumbList','@id':canonical+'#breadcrumb','itemListElement':[
   {'@type':'ListItem','position':1,'name':'Home','item':site_root_url},
-  {'@type':'ListItem','position':2,'name':data['brand'],'item':canonical}]})
+  {'@type':'ListItem','position':2,'name':breadcrumb_label,'item':canonical}]})
  sc=soup.new_tag('script',type='application/ld+json')
  sc.string=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False)
  soup.body.append(sc)
