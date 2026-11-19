@@ -41,7 +41,8 @@ header.hero{position:relative;padding:70px 0 56px;overflow:hidden}
 .hero-glow.alt{top:auto;bottom:-220px;left:-160px;right:auto;background:radial-gradient(circle,rgba(99,102,241,.22),rgba(99,102,241,0) 70%);animation-delay:1.4s}
 @keyframes pulseGlow{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:.9;transform:scale(1.08)}}
 @media(prefers-reduced-motion:reduce){.hero-glow{animation:none}}
-.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center;position:relative}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:start;position:relative}
+.hero-media{padding-top:6px}
 .pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-weight:700;font-size:.8rem;color:var(--glow);letter-spacing:.03em}
 .hero h1{font-size:2.9rem;margin:18px 0 16px}
 .hero-sub{font-size:1.12rem;color:var(--muted);margin:0 0 24px;max-width:46ch}
