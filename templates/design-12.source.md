@@ -96,7 +96,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px
 .head p{color:var(--muted);font-size:1.02rem}
 
 .trust{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:48px 0}
-.trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.trust .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
 .tcard{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;padding:10px}
 .tcard .ic{width:52px;height:52px;border-radius:50%;background:var(--paper2);display:flex;align-items:center;justify-content:center;color:var(--primary-dark)}
 .tcard b{font-size:.86rem;font-weight:700}
@@ -104,8 +104,8 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px
 @media(max-width:760px){.trust .wrap{grid-template-columns:1fr 1fr}}
 
 .grid{display:grid;gap:24px}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:900px){.g3,.g4{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.g3,.g4{grid-template-columns:1fr}}
 
@@ -166,7 +166,7 @@ table.cmp td.good:before{content:'✓ ';color:var(--primary);font-weight:800}
 .rev-board b{display:block;font-family:'Fraunces',serif;font-size:2.1rem;font-weight:600;color:var(--primary)}
 .rev-board span{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.03em}
 
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;align-items:stretch}
 @media(max-width:900px){.plans{grid-template-columns:1fr}}
 .plan{background:var(--card);border:1.5px solid var(--border);border-radius:24px;padding:32px 26px;text-align:center;display:flex;flex-direction:column;position:relative}
 .plan.top{border-color:var(--primary);box-shadow:0 18px 40px -16px rgba(0,0,0,.28);transform:translateY(-8px)}

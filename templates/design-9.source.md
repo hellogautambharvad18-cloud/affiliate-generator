@@ -58,7 +58,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px
 .hero .lede{font-size:1.1rem;color:rgba(255,255,255,.75);margin-bottom:26px;font-weight:500}
 .rating{display:flex;align-items:center;gap:10px;margin-bottom:22px;font-size:.9rem;color:rgba(255,255,255,.8);font-weight:600}
 .stars{color:var(--primary);letter-spacing:2px;font-size:1.1rem}
-.factrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.factrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
 .factrow div{background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15);border-radius:14px;padding:14px 8px;text-align:center}
 .factrow b{display:block;font-size:1.3rem;color:var(--primary);font-weight:800}
 .factrow span{font-size:.7rem;color:rgba(255,255,255,.6);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
@@ -81,9 +81,9 @@ section{padding:76px 0}
 .head p{color:var(--muted);font-size:1.05rem;font-weight:500}
 
 .grid{display:grid;gap:22px}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .card{background:#fff;border:3px solid var(--ink);border-radius:var(--radius);padding:28px;box-shadow:6px 6px 0 var(--border)}
 .section-alt .card{background:rgba(255,255,255,.05);border:2px solid rgba(255,255,255,.15);box-shadow:none}
 .card h4{font-size:1.1rem;margin-bottom:10px;font-weight:800}
@@ -122,7 +122,7 @@ section{padding:76px 0}
 .rev-board b{display:block;font-size:2rem;font-weight:800;color:var(--primary)}
 .rev-board span{font-size:.78rem;color:var(--muted);font-weight:700;text-transform:uppercase}
 
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:start}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:start}
 .plan{background:#fff;border:3px solid var(--ink);border-radius:22px;padding:30px 24px;text-align:center;position:relative;box-shadow:6px 6px 0 var(--border)}
 .plan.top{border-color:var(--primary);box-shadow:8px 8px 0 var(--primary)}
 .plan-badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:var(--primary);color:var(--on-primary);font-size:.72rem;font-weight:800;padding:7px 18px;border-radius:999px;white-space:nowrap;border:2px solid var(--ink)}
@@ -176,10 +176,10 @@ footer p{margin-bottom:12px;color:rgba(255,255,255,.55);font-size:.78rem;line-he
 
 @media(max-width:860px){
  .hero-grid,.split{grid-template-columns:1fr}
- .g4{grid-template-columns:repeat(2,1fr)}
+ .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
  .g3,.g2{grid-template-columns:1fr}
  .plans{grid-template-columns:1fr}
- .factrow{grid-template-columns:repeat(2,1fr)}
+ .factrow{grid-template-columns:repeat(2,minmax(0,1fr))}
  .navlinks{display:none}
  .guar{flex-direction:column;text-align:center}
  .rev-board{gap:32px}

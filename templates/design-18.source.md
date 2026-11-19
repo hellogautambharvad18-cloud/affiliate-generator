@@ -69,9 +69,9 @@ header.hero{background:var(--primary-light);border-bottom:3px solid var(--ink);p
 .eyebrow{display:inline-block;background:var(--gold);border:2px solid var(--ink);padding:4px 12px;border-radius:999px;font-weight:900;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
 .grid{display:grid;gap:20px}
 .g1{grid-template-columns:1fr}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 /* Cards - shared markup from build_native_page */
 .card,.pcard,.ing-card,.rev-card,.trust-card,.science-col,.step-card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:24px;box-shadow:6px 6px 0 var(--ink)}
 .card h4,.pcard h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.2rem}
@@ -94,7 +94,7 @@ section.trust span:before{content:"★ ";color:#f59e0b}
 .chips span{background:var(--primary-light);border:2px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:800;font-size:.85rem}
 .callout,.note{background:#fffbeb;border:3px solid var(--ink);border-left:10px solid var(--gold);border-radius:12px;padding:18px 20px;font-weight:600;box-shadow:5px 5px 0 var(--ink)}
 /* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
 .plan{position:relative;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:28px 22px;text-align:center;box-shadow:6px 6px 0 var(--ink);display:flex;flex-direction:column}
 .plan.top{background:var(--ink);color:#fff;transform:scale(1.04);box-shadow:8px 8px 0 var(--cta)}
 .plan.top .plan-ttl,.plan.top .plan-price{color:#fff}

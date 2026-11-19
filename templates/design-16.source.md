@@ -62,8 +62,8 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .what-is-grid img{border-radius:var(--radius);box-shadow:var(--shadow);width:100%;max-width:500px;margin:0 auto;}
 
 .benefit-grid{display:grid;grid-template-columns:1fr;gap:24px;}
-@media(min-width:700px){.benefit-grid{grid-template-columns:repeat(2,1fr);}}
-@media(min-width:1000px){.benefit-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:700px){.benefit-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(min-width:1000px){.benefit-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .benefit-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px 24px;box-shadow:var(--shadow);transition:.2s;}
 .benefit-card:hover{transform:translateY(-3px);}
 .benefit-icon{font-size:42px;margin-bottom:14px;line-height:1;}
@@ -125,7 +125,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .wh-pricing-list li{font-size:21px;margin-bottom:8px;color:#111;font-weight:600;}
 
 .testimonial-grid{display:grid;gap:30px;grid-template-columns:1fr;}
-@media(min-width:900px){.testimonial-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:900px){.testimonial-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .testimonial{background:#fff;border:1px solid var(--border);border-radius:12px;padding:30px 24px;box-shadow:var(--shadow);text-align:center;display:flex;flex-direction:column;align-items:center;}
 .testi-photo{width:100px;height:100px;border-radius:50%;object-fit:cover;margin-bottom:15px;border:3px solid var(--border);box-shadow:0 4px 10px rgba(0,0,0,0.1);}
 .testi-photo-placeholder{width:100px;height:100px;border-radius:50%;background:var(--primary-light);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:800;font-family:var(--font-head);margin-bottom:15px;border:3px solid var(--border);}
@@ -141,7 +141,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .pricing-title-bar h2{color:var(--on-primary);margin:0 0 10px 0;font-size:clamp(26px,4.5vw,40px);}
 .pricing-title-bar p{color:var(--on-primary);opacity:.92;font-size:20px;margin:0;}
 .pricing-grid{display:grid;gap:24px;grid-template-columns:1fr;align-items:stretch;}
-@media(min-width:900px){.pricing-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:900px){.pricing-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .price-card{background:#fff;border:2px solid var(--border);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:.2s;position:relative;padding-bottom:20px;}
 .price-card.best-value{transform:translateY(-8px);box-shadow:0 14px 38px rgba(0,0,0,.2);border-color:var(--primary);}
 .price-badge{padding:18px 16px;text-align:center;background:var(--bg-soft);border-bottom:1px solid var(--border);font-family:var(--font-head);font-size:24px;font-weight:800;color:var(--primary-dark);}
@@ -168,8 +168,8 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 .warning-banner{background:#FFD700;border:2px solid #000;padding:16px 22px;text-align:center;font-weight:800;font-size:20px;margin-top:32px;border-radius:8px;color:#000;}
 .bonus-block{max-width:1000px;margin:0 auto;}
 
-.why-choose-grid{display:grid;gap:24px;grid-template-columns:repeat(2,1fr);}
-@media(min-width:800px){.why-choose-grid{grid-template-columns:repeat(4,1fr);}}
+.why-choose-grid{display:grid;gap:24px;grid-template-columns:repeat(2,minmax(0,1fr));}
+@media(min-width:800px){.why-choose-grid{grid-template-columns:repeat(4,minmax(0,1fr));}}
 .trust-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;box-shadow:0 4px 14px rgba(20,40,45,0.05);}
 .trust-card img{width:130px;height:130px;object-fit:contain;margin:0 auto 15px;}
 .trust-card h3{font-size:22px;margin-bottom:10px;color:var(--primary-dark);}
@@ -177,7 +177,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 
 .sci-ref-section{background:#f9fafb;border-top:1px solid var(--border);padding:60px 0;}
 .sci-ref-grid{display:grid;gap:30px;grid-template-columns:1fr;text-align:left;max-width:1100px;margin:0 auto;}
-@media(min-width:800px){.sci-ref-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:800px){.sci-ref-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .sci-ref-item{font-size:19px;line-height:1.7;color:#333;margin-bottom:15px;}
 .ref-badge{display:inline-block;font-weight:800;font-size:15px;padding:2px 8px;border-radius:4px;margin-right:8px;text-decoration:none;transition:0.2s;background:#eef2f7;color:#0070e0;}
 .ref-badge:hover{background:#0070e0;color:#fff;}
@@ -200,7 +200,7 @@ nav.sitenav{position:sticky;top:0;background:#fff;z-index:200;box-shadow:0 2px 1
 
 .more-guides-section{background:linear-gradient(135deg,var(--primary-light) 0%,#fdf8f0 100%);padding:60px 0;}
 .more-guides-grid{display:grid;gap:16px;grid-template-columns:1fr;max-width:880px;margin:32px auto 0;}
-@media(min-width:700px){.more-guides-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:700px){.more-guides-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .guide-card{background:#fff;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:12px;padding:20px 22px;box-shadow:0 4px 14px rgba(20,40,45,0.08);transition:.25s;display:flex;align-items:flex-start;gap:14px;text-decoration:none;color:var(--text);}
 .guide-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(20,40,45,0.14);}
 .guide-card-icon{font-size:26px;flex-shrink:0;line-height:1;}
@@ -290,7 +290,7 @@ footer.sitefoot a:hover{text-decoration:underline;}
         <strong style="color:#FFD700;">FDA-registered facility</strong>, and made with
         <strong style="color:#FFD700;">named natural ingredients</strong> &mdash; every one of them listed individually below.
       </p>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:24px 0;max-width:480px;">
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:24px 0;max-width:480px;">
         <div style="background:rgba(255,255,255,0.1);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);font-size:18px;font-weight:600;color:var(--on-primary);">&#127482;&#127480; Made In USA</div>
         <div style="background:rgba(255,255,255,0.1);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);font-size:18px;font-weight:600;color:var(--on-primary);">&#127807; Natural Ingredients</div>
         <div style="background:rgba(255,255,255,0.1);padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);font-size:18px;font-weight:600;color:var(--on-primary);">&#127981; GMP Certified</div>

@@ -113,7 +113,7 @@ section{padding:64px 0}
 .rev-spotlight .rev-stars{color:#ffb03b;font-size:1.3rem;margin-bottom:14px}
 .rev-spotlight p{font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:18px;font-family:'Baloo 2',sans-serif;line-height:1.4}
 .rev-spotlight .rev-head{justify-content:center}
-.rev-mini-row{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:780px;margin:0 auto}
+.rev-mini-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:780px;margin:0 auto}
 .rev-mini{background:#fff;border:2px solid var(--border);border-radius:18px;padding:18px}
 .rev-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
 .rev-head img{width:42px;height:42px;border-radius:50%;object-fit:cover}
@@ -125,7 +125,7 @@ section{padding:64px 0}
 .rev-board span{font-size:.78rem;color:var(--muted);font-weight:600}
 
 /* ═══ Blog teaser — horizontal scroll cards ═══ */
-.blog-row{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.blog-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .blog-card{background:#fff;border:2px solid var(--border);border-radius:20px;padding:22px}
 .blog-card h4{font-size:.98rem;margin-bottom:6px}
 .blog-card p{color:var(--muted);font-size:.85rem;font-weight:500}

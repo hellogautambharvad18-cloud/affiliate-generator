@@ -52,12 +52,12 @@ img{max-width:100%;height:auto}
 /* Trust badges */
 .as-trust{background:var(--paper);padding:40px 0;border-bottom:1px solid var(--border)}
 .as-trust__h{text-align:center;font-size:1.8rem;color:var(--primary-dark);margin:0 0 28px}
-.as-trust__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.as-trust__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .as-trust__c{background:var(--cream);border-radius:20px;padding:26px 18px;text-align:center;box-shadow:0 6px 18px rgba(74,13,20,.06)}
 .as-trust__c img{width:64px;height:64px;object-fit:contain;margin:0 auto 14px}
 .as-trust__c h3{font-size:1.05rem;margin:0 0 8px}
 .as-trust__c p{color:var(--muted);font-size:.92rem;margin:0}
-@media(max-width:860px){.as-trust__grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:860px){.as-trust__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Generic section */
 .as-sec{padding:58px 0}
@@ -71,7 +71,7 @@ img{max-width:100%;height:auto}
 .as-callout{background:var(--primary-light);border:1px solid var(--gold);border-left:6px solid var(--gold);border-radius:14px;padding:18px 20px;font-weight:600;max-width:800px;margin:18px auto}
 
 .as-grid{display:grid;gap:20px}
-.as-grid--3{grid-template-columns:repeat(3,1fr)}
+.as-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 @media(max-width:900px){.as-grid--3{grid-template-columns:1fr}}
 
 /* Numbered circle used by ingredients/benefits/how-it-works */
@@ -94,7 +94,7 @@ img{max-width:100%;height:auto}
 .as-qf th{color:var(--muted);font-weight:700;white-space:nowrap}
 
 /* Pricing */
-.as-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.as-plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
 .price-card{position:relative;text-align:center;display:flex;flex-direction:column}
 .price-card.is-best{border:2px solid var(--cta);transform:scale(1.04);box-shadow:0 16px 34px rgba(249,115,22,.22)}
 .as-plan__badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--cta);color:#1a1005;border-radius:999px;padding:6px 16px;font-weight:800;font-size:.78rem;white-space:nowrap}
@@ -113,14 +113,14 @@ img{max-width:100%;height:auto}
 @media(max-width:900px){.as-plans{grid-template-columns:1fr}.price-card.is-best{transform:none}}
 
 /* Bonuses */
-.as-bns{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.as-bns{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
 .bonus-card{text-align:center}
 .as-bn__pic{margin-bottom:10px}
 .as-bn__pic img{max-width:100px;margin:0 auto;border-radius:10px}
 .bonus-card small{color:var(--cta-dark);font-weight:800;font-size:.76rem;text-transform:uppercase;letter-spacing:.05em}
 .bonus-card h3{font-size:.98rem;margin:4px 0 6px}
 .bonus-card p{font-size:.84rem;color:var(--muted);margin:0}
-@media(max-width:900px){.as-bns{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.as-bns{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* Guarantee */
 .as-guarantee{display:flex;align-items:center;gap:30px;background:var(--paper);border-radius:22px;padding:34px;box-shadow:0 10px 26px rgba(74,13,20,.08)}
@@ -131,7 +131,7 @@ img{max-width:100%;height:auto}
 @media(max-width:700px){.as-guarantee{flex-direction:column;text-align:center}}
 
 /* Reviews */
-.as-vcs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.as-vcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .review-card header{display:flex;gap:12px;align-items:center;margin-bottom:10px}
 .reviewer-photo{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}
 .reviewer-name{margin:0;font-size:1.02rem}

@@ -190,7 +190,7 @@ strong,b{color:var(--vc-text);font-weight:700}
 
 /* ── Spec strip ───────────────────────────────────────────── */
 .vc-specs{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--vc-line-soft);
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--vc-line-soft);
   border:1px solid var(--vc-line-soft);border-radius:var(--vc-r);overflow:hidden;margin-top:1.6rem;
 }
 .vc-specs > div{background:var(--vc-ink);padding:.95rem .8rem;min-width:0}

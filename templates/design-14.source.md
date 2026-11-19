@@ -84,10 +84,10 @@ nav.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow
 
 /* Generic grids that wrap the generator's card markup */
 .grid{display:grid;gap:22px}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:991px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:991px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){.g2,.g3,.g4{grid-template-columns:1fr}}
 
 .pcard,.card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;height:100%;box-shadow:0 4px 15px rgba(0,0,0,.03);transition:all .25s}
@@ -104,14 +104,14 @@ nav.site{background:var(--primary);position:sticky;top:0;z-index:1030;box-shadow
 .ing-card h4{font-size:1.02rem;margin-bottom:6px}
 .ing-card p{color:var(--muted);font-size:.88rem;margin:0}
 
-.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
 @media(max-width:767px){.steps{grid-template-columns:1fr}}
 .step-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:14px;padding:24px;color:var(--on-primary)}
 .step-card .step-num{width:42px;height:42px;border-radius:50%;background:var(--gold-soft);color:#0f172a;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
 .step-card h4{color:var(--on-primary);font-size:1.08rem;margin-bottom:8px}
 .step-card p{color:var(--on-primary);opacity:.88;font-size:.92rem;margin:0}
 
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:stretch}
 @media(max-width:991px){.plans{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
 .plan{position:relative;display:flex;flex-direction:column;text-align:center;background:#fff;border:2px solid var(--border);border-radius:20px;padding:34px 22px 26px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
 .plan.top{border-color:var(--primary);box-shadow:0 15px 40px rgba(0,0,0,.14);transform:scale(1.03)}

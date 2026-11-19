@@ -81,9 +81,9 @@ header.hero{background:var(--paper);padding:56px 0 60px;border-bottom:1px solid 
 .eyebrow{display:inline-block;background:var(--cta-soft);border:1px solid var(--gold);color:var(--cta-dark);padding:4px 14px;border-radius:999px;font-weight:800;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
 .grid{display:grid;gap:20px}
 .g1{grid-template-columns:1fr}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 /* Cards - shared markup from build_native_page */
 .card,.pcard,.ing-card,.rev-card,.trust-card,.science-col,.step-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(120,72,0,.07)}
 .card h4,.pcard h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.25rem}
@@ -106,7 +106,7 @@ section.trust span:before{content:"★ ";color:var(--gold)}
 .chips span{background:var(--cta-soft);border:1px solid var(--gold);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.86rem;color:var(--cta-dark)}
 .callout,.note{background:var(--cta-soft);border:1px solid var(--gold);border-left:6px solid var(--gold);border-radius:14px;padding:18px 20px;font-weight:600}
 /* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
 .plan{position:relative;background:#fff;border:1px solid var(--border);border-radius:22px;padding:28px 22px;text-align:center;box-shadow:0 10px 28px rgba(120,72,0,.08);display:flex;flex-direction:column}
 .plan.top{border:2px solid var(--cta);transform:scale(1.03);box-shadow:0 16px 36px rgba(184,105,10,.22)}
 .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--cta);color:#fff;border-radius:999px;padding:6px 14px;font-weight:800;font-size:.82rem;white-space:nowrap;box-shadow:0 6px 14px rgba(184,105,10,.3)}

@@ -57,7 +57,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px
 .hero .lede{font-size:1.08rem;color:var(--muted);margin-bottom:24px}
 .rating{display:flex;align-items:center;gap:10px;margin-bottom:20px;font-size:.9rem;color:var(--muted)}
 .stars{color:#f5a623;letter-spacing:2px}
-.factrow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0}
+.factrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}
 .factrow div{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 8px;text-align:center}
 .factrow b{display:block;font-size:1.15rem;color:var(--primary-dark);font-family:'Fraunces',serif}
 .factrow span{font-size:.72rem;color:var(--muted)}
@@ -79,9 +79,9 @@ section{padding:64px 0}
 
 /* Grid cards */
 .grid{display:grid;gap:20px}
-.g2{grid-template-columns:repeat(2,1fr)}
-.g3{grid-template-columns:repeat(3,1fr)}
-.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:26px}
 .card h4{font-size:1.05rem;margin-bottom:8px}
 .card p{color:var(--muted);font-size:.92rem}
@@ -121,7 +121,7 @@ section{padding:64px 0}
 .rev-board span{font-size:.8rem;color:var(--muted)}
 
 /* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start}
 .plan{background:#fff;border:2px solid var(--border);border-radius:18px;padding:28px 22px;text-align:center;position:relative}
 .plan.top{border-color:var(--primary);box-shadow:0 20px 40px -16px color-mix(in srgb, var(--primary) 40%, transparent)}
 .plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--primary);color:var(--on-primary);font-size:.7rem;font-weight:700;padding:5px 16px;border-radius:999px;white-space:nowrap}
@@ -179,10 +179,10 @@ footer p{margin-bottom:12px;color:rgba(255,255,255,.6);font-size:.78rem;line-hei
 
 @media(max-width:860px){
  .hero-grid,.split{grid-template-columns:1fr}
- .g4{grid-template-columns:repeat(2,1fr)}
+ .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
  .g3,.g2{grid-template-columns:1fr}
  .plans{grid-template-columns:1fr}
- .factrow{grid-template-columns:repeat(2,1fr)}
+ .factrow{grid-template-columns:repeat(2,minmax(0,1fr))}
  .navlinks{display:none}
  .guar{flex-direction:column;text-align:center}
  .rev-board{gap:28px}
