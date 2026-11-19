@@ -23,9 +23,9 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:20px}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;
-  font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  font-size:20px;line-height:1.72;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:'Domine',serif;font-weight:700;line-height:1.26;margin:0 0 .5em;color:var(--navy);
   overflow-wrap:break-word;word-break:break-word}
 h1{font-size:clamp(1.95rem,4.8vw,3.05rem)}
@@ -186,7 +186,7 @@ img{max-width:100%;height:auto;display:block}
 .bpo-sec-dark .bpo-card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.13)}
 .bpo-sec-dark .bpo-card p{color:#AEB4C6}
 .bpo-card-badge{text-align:center}
-.bpo-card-badge img{max-width:min(135px,100%);margin:0 auto 14px}
+.bpo-card-badge img{max-width:min(150px,100%);margin:0 auto 14px}
 
 .bpo-idx{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:7px;
   background:var(--navy);color:#fff;font-family:'Domine',serif;font-weight:700;font-size:.95rem;margin-bottom:13px}
@@ -233,7 +233,7 @@ img{max-width:100%;height:auto;display:block}
 .bpo-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--copper);color:#fff;
   font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 16px;border-radius:999px;white-space:nowrap}
 .bpo-badge-navy{background:var(--navy);color:#fff}
-.bpo-plan img.pk{max-width:min(180px,100%);margin:8px auto 16px}
+.bpo-plan img.pk{max-width:min(220px,100%);margin:8px auto 16px}
 .bpo-plan-ttl{font-family:'Domine',serif;font-size:1.36rem;color:var(--navy)}
 .bpo-plan-sub{font-size:.83rem;color:var(--slate);margin-bottom:14px}
 .bpo-plan-price{font-family:'Domine',serif;font-size:2.25rem;color:var(--navy);line-height:1}
@@ -279,7 +279,7 @@ img{max-width:100%;height:auto;display:block}
   padding:52px 30px;text-align:center}
 .bpo-final h2{color:#fff}
 .bpo-final p{color:#AEB4C6}
-.bpo-final img{max-width:min(300px,100%);margin:22px auto}
+.bpo-final img{max-width:min(400px,100%);margin:22px auto}
 .bpo-final .old{color:#AEB4C6;text-decoration:line-through}
 .bpo-final .new{font-family:'Domine',serif;font-size:2rem;color:#E3A46B;margin:4px 0 20px}
 .bpo-final .sm{font-size:.84rem;color:#AEB4C6;margin:16px 0 0}

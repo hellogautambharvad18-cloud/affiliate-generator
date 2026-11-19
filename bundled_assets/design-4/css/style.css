@@ -27,11 +27,11 @@
   --radius-pill:   50px;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 20px; }
 
 body {
   font-family: 'Lato', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   color: var(--text);
   background: var(--white);
   overflow-x: hidden;
@@ -1065,7 +1065,7 @@ nav {
 }
 
 .cta-product-img {
-  max-width: 380px;
+  max-width: 420px;
   margin: 0 auto 28px;
   position: relative;
 }

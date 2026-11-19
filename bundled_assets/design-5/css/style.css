@@ -23,10 +23,10 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;font-size:20px}
 body{
   margin:0;background:var(--cream);color:var(--ink);
-  font-family:'Jost',system-ui,sans-serif;font-size:17px;line-height:1.72;
+  font-family:'Jost',system-ui,sans-serif;font-size:20px;line-height:1.72;
   -webkit-font-smoothing:antialiased;
 }
 h1,h2,h3{font-family:'Cormorant',serif;font-weight:600;line-height:1.2;margin:0 0 .5em;
@@ -168,7 +168,7 @@ img{max-width:100%;height:auto;display:block}
 .ge-sec-dark .ge-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14)}
 .ge-sec-dark .ge-card p{color:#C7ABAE}
 .ge-card-badge{text-align:center}
-.ge-card-badge img{max-width:min(135px,100%);margin:0 auto 14px;border-radius:6px}
+.ge-card-badge img{max-width:min(150px,100%);margin:0 auto 14px;border-radius:6px}
 
 .ge-idx{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;
   background:var(--ink);color:var(--gold);font-family:'Cormorant',serif;font-weight:700;font-size:1.05rem;margin-bottom:13px}
@@ -219,7 +219,7 @@ img{max-width:100%;height:auto;display:block}
   font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 16px;border-radius:999px;
   white-space:nowrap}
 .ge-badge-ink{background:var(--ink);color:var(--gold)}
-.ge-plan img.pk{max-width:min(160px,100%);max-height:172px;width:auto;height:172px;object-fit:contain;
+.ge-plan img.pk{max-width:min(220px,100%);max-height:220px;width:auto;height:220px;object-fit:contain;
   margin:8px auto 16px}
 .ge-plan-ttl{font-family:'Cormorant',serif;font-size:1.65rem;color:var(--ink)}
 .ge-plan-sub{font-size:.83rem;color:var(--slate);margin-bottom:14px}
@@ -271,7 +271,7 @@ img{max-width:100%;height:auto;display:block}
   padding:52px 30px;text-align:center}
 .ge-final h2{color:#fff}
 .ge-final p{color:#C7ABAE}
-.ge-final img{max-width:min(260px,100%);margin:22px auto}
+.ge-final img{max-width:min(400px,100%);margin:22px auto}
 .ge-final .old{color:#C7ABAE;text-decoration:line-through}
 .ge-final .new{font-family:'Cormorant',serif;font-size:2.4rem;color:var(--gold);margin:4px 0 20px}
 .ge-final .sm{font-size:.84rem;color:#C7ABAE;margin:16px 0 0}
