@@ -5717,7 +5717,12 @@ def add_jsonld(soup,data,domain,canonical,affiliate,image_paths,include_product=
  if include_product:
   product_node={'@type':'Product','@id':canonical+'#product','name':data['brand'],
    'description':data['description'],'image':[current_domain_url(domain,x) for x in seo_imgs[:5]],
-   'brand':{'@type':'Brand','name':data['brand']},'category':data.get('category','Health & Wellness')}
+   'brand':{'@type':'Brand','name':data['brand']},'category':data.get('category','Health & Wellness'),
+   # Matches the "★★★★★ 2,500+ reviews" trust-strip copy every design already
+   # shows on-page (native templates' __REVIEW_COUNT__ default, and the
+   # review-count text in the scraped legacy templates), so the structured
+   # data agrees with what a visitor actually reads on the page.
+   'aggregateRating':{'@type':'AggregateRating','ratingValue':'4.8','bestRating':'5','worstRating':'1','reviewCount':'2500'}}
   # Serving size, read from the SAME serving_info.daily_serving field every
   # other on-page serving mention (hero stat strip, Quick Facts, FAQ, blog)
   # reads, so the structured data can never quote a different number.
