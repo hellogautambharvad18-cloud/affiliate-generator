@@ -6801,6 +6801,24 @@ def page_variant(base_soup,data,domain,affiliate,images,design,filename,kind,sit
    nxt=band.find_next_sibling(True)
    if target_sec is not None and nxt is target_sec:continue
    band.decompose()
+  # Same orphaning problem for purely decorative section dividers (e.g.
+  # design 21's honeycomb/wave <div class="hm-wave">) that sat between
+  # consecutive sections on the full homepage — once every section but
+  # target_sec is removed, every divider that used to separate two now-gone
+  # sections has nothing left to divide, so a dozen of them end up stacked
+  # back-to-back on every subpage (benefits.html, faq.html, etc. all showed
+  # a tall run of meaningless wavy lines). Keep at most one divider
+  # immediately before and one immediately after target_sec; drop the rest.
+  wave_divs=list(main.find_all('div',class_=re.compile(r'\bhm-wave\b')))
+  if wave_divs:
+   keep=set()
+   if target_sec is not None:
+    prev=target_sec.find_previous_sibling(True)
+    if prev in wave_divs:keep.add(id(prev))
+    nxt=target_sec.find_next_sibling(True)
+    if nxt in wave_divs:keep.add(id(nxt))
+   for w in wave_divs:
+    if id(w) not in keep:w.decompose()
  # Replace the full hero on subpages with a compact page-title banner,
  # so it's immediately clear this is a distinct page and not the homepage.
  page_labels={'what-is':'What Is {brand}?','how-it-works':'How {brand} Works',
@@ -6814,7 +6832,18 @@ def page_variant(base_soup,data,domain,affiliate,images,design,filename,kind,sit
                f'background:#1A2744"><h1 class="page-banner-h1" style="color:#fff;font-size:1.6rem;margin:0">'
                f'{html.escape(label)}</h1></div>')
   banner_soup=BeautifulSoup(banner_html,'html.parser')
-  header_tag.replace_with(banner_soup)
+  # Some designs (e.g. 21) wrap the persistent site nav — logo, menu links,
+  # order button, mobile hamburger — INSIDE <header> rather than as a
+  # sibling <nav>. replace_with() here used to delete that whole header,
+  # so every subpage silently lost all site navigation and was left with
+  # just this title strip and no way to reach any other page except via
+  # the footer links. Only replace the header when it's genuinely just
+  # hero content with no nav in it; otherwise keep the nav and place the
+  # banner right after it instead.
+  if header_tag.find('nav') is not None:
+   header_tag.insert_after(banner_soup)
+  else:
+   header_tag.replace_with(banner_soup)
   # A page should only ever carry one <h1> — the banner's own title just
   # inserted above. The template's original product-title h1 still sits
   # elsewhere in the DOM (it's a sibling, not inside <header>), so it
@@ -7327,7 +7356,19 @@ def legal_page(base_soup,data,domain,affiliate,images,design,filename,page_title
  # gone, soup.find('nav') matches the mobile-sidebar's own <nav class="sidebar-nav">
  # instead, which silently inserts the whole page's content inside that
  # hidden off-canvas <aside>, where it never renders on page load.
- if header_tag:
+ if header_tag and header_tag.find('nav') is not None:
+  # Same nav-loss problem as page_variant(): a design that wraps its
+  # persistent site nav inside <header> (e.g. 21) would otherwise lose
+  # that nav entirely on every legal/info page — replaced outright by
+  # this plain content block with no way back to the rest of the site
+  # except the footer. Keep the header (and its nav) and put the content
+  # inside the real <main> landmark instead of replacing the header —
+  # dropping it in as a mere sibling of <main> would leave <main> empty,
+  # which breaks the "Skip to content" link (it targets #main) the same
+  # way the empty-<main> case just below this was already fixed for.
+  if main.name=='main':main.append(content_soup)
+  else:header_tag.insert_after(content_soup)
+ elif header_tag:
   header_tag.replace_with(content_soup)
  elif main.name=='main':
   # <header> was already stripped by the "remove headers inside main" loop
