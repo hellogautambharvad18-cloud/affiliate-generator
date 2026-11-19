@@ -1,4 +1,4 @@
-import os,re,json,html,io,zipfile,tempfile,shutil,hashlib,secrets,base64,socket,ipaddress
+import os,re,json,html,io,zipfile,tempfile,shutil,hashlib,secrets,base64,socket,ipaddress,random
 from pathlib import Path
 from urllib.parse import urlparse,unquote,urljoin
 from datetime import date,timedelta
@@ -539,6 +539,79 @@ def inject_cta_extras(soup,brand,affiliate,aggressive=False):
   if soup.body:soup.body.append(bar)
  style=soup.new_tag('style');style.string=_CTA_CSS
  if soup.head:soup.head.append(style)
+
+_SOCIAL_PROOF_CITIES=['Chicago','Los Angeles','New York','Houston','Miami','Dallas','Toronto','London','Sydney','Denver']
+
+_SOCIAL_PROOF_CSS=(
+ '.auto-social-proof{position:fixed;left:20px;bottom:20px;width:340px;max-width:calc(100vw - 40px);'
+ 'box-sizing:border-box;display:flex;align-items:center;gap:12px;padding:14px 42px 14px 14px;'
+ 'background:rgba(255,255,255,.98);border:1px solid #e8e8e8;border-radius:14px;'
+ 'box-shadow:0 12px 35px rgba(0,0,0,.14),0 3px 10px rgba(0,0,0,.06);'
+ 'font-family:Arial,Helvetica,sans-serif;z-index:999999;opacity:0;visibility:hidden;pointer-events:none;'
+ 'transform:translate3d(0,22px,0) scale(.98);'
+ 'transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.2,1),visibility .35s ease}'
+ '.auto-social-proof.is-show{opacity:1;visibility:visible;pointer-events:auto;transform:translate3d(0,0,0) scale(1)}'
+ '.auto-sp-icon{width:40px;height:40px;min-width:40px;display:flex;align-items:center;justify-content:center;'
+ 'border-radius:50%;background:#16a34a;color:#fff;font-size:20px;font-weight:700}'
+ '.auto-sp-content{flex:1;min-width:0}'
+ '.auto-sp-name{overflow:hidden;color:#161616;font-size:14px;line-height:19px;font-weight:700;'
+ 'white-space:nowrap;text-overflow:ellipsis}'
+ '.auto-sp-msg{margin-top:1px;color:#5b5b5b;font-size:12px;line-height:17px}'
+ '.auto-sp-msg strong{color:#222;font-weight:700}'
+ '.auto-sp-close{position:absolute;top:8px;right:9px;width:24px;height:24px;display:flex;align-items:center;'
+ 'justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:#999;'
+ 'font-size:20px;line-height:1;cursor:pointer}'
+ '.auto-sp-close:hover{background:#f3f3f3;color:#222}'
+ '@media(max-width:600px){.auto-social-proof{left:10px;right:10px;bottom:10px;width:auto;max-width:none;'
+ 'padding:12px 38px 12px 12px;border-radius:12px}}'
+ '@media(prefers-reduced-motion:reduce){.auto-social-proof{transition:opacity .2s ease;transform:none}'
+ '.auto-social-proof.is-show{transform:none}}')
+
+def inject_social_proof_popup(soup,data,brand):
+ """Rotating bottom-left 'Name from City — selected N bottles recently'
+ notification, shared across every design the same way inject_cta_extras()
+ is. The reference site Design 20 was cloned from (honeyharmonny.com) ships
+ one of these; the user asked for it on every design after we flagged it as
+ the same kind of unverified-trust-signal tradeoff already accepted for the
+ aggregateRating addition. Names come from this product's own AI-generated
+ reviewer_names and bottle counts from this product's own real pricing
+ tiers — not invented from nothing — so only the city is fully made up,
+ same spirit as the rating numbers."""
+ if soup.find(class_='auto-social-proof'):return
+ names=[n for n in (data.get('reviewer_names') or []) if n] or ['Jessica M.','Michael R.','Sophia T.']
+ bottles=sorted({p.get('bottles') for p in (data.get('pricing') or []) if p.get('bottles')}) or [2,3,6]
+ rng=random.Random(brand or 'social-proof')
+ cities=_SOCIAL_PROOF_CITIES[:]
+ rng.shuffle(cities)
+ combos=[]
+ while len(combos)<5:
+  i=len(combos)
+  combos.append({'name':names[i%len(names)],'city':cities[i%len(cities)],'bottles':bottles[i%len(bottles)]})
+ payload=json.dumps(combos,ensure_ascii=False)
+ widget=BeautifulSoup(
+  '<div class="auto-social-proof" role="status" aria-live="polite" aria-atomic="true">'
+  '<div class="auto-sp-icon" aria-hidden="true">&#10003;</div>'
+  '<div class="auto-sp-content"><div class="auto-sp-name"></div><div class="auto-sp-msg"></div></div>'
+  '<button class="auto-sp-close" type="button" aria-label="Close">&times;</button></div>','html.parser')
+ if soup.body:soup.body.append(widget)
+ style=soup.new_tag('style');style.string=_SOCIAL_PROOF_CSS
+ if soup.head:soup.head.append(style)
+ script=soup.new_tag('script')
+ script.string=(
+  '(function(){'
+  f'var n={payload};'
+  'var p=document.querySelector(".auto-social-proof");if(!p)return;'
+  'var nameEl=p.querySelector(".auto-sp-name"),msgEl=p.querySelector(".auto-sp-msg"),closeEl=p.querySelector(".auto-sp-close");'
+  'var i=0,hideT,nextT;'
+  'function hidePopup(){p.classList.remove("is-show");clearTimeout(hideT)}'
+  'function delay(a,b){return Math.floor(Math.random()*(b-a+1))+a}'
+  'function show(){var x=n[i];nameEl.textContent=x.name+" from "+x.city;'
+  'msgEl.innerHTML="Selected <strong>"+x.bottles+" bottle"+(x.bottles==1?"":"s")+"</strong> recently";'
+  'requestAnimationFrame(function(){p.classList.add("is-show")});clearTimeout(hideT);hideT=setTimeout(hidePopup,6000);'
+  'i=(i+1)%n.length;clearTimeout(nextT);nextT=setTimeout(show,delay(18000,26000))}'
+  'closeEl.addEventListener("click",hidePopup);setTimeout(show,5000)'
+  '})();')
+ if soup.body:soup.body.append(script)
 
 # ── External authority links (NIH Office of Dietary Supplements) — only for
 # ingredient names that actually match this curated, individually-verified
@@ -6600,6 +6673,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
  apply_img_sizing(soup,site_root,brand,category)
  inject_img_css(soup)
  inject_cta_extras(soup,brand,affiliate,aggressive=True)
+ inject_social_proof_popup(soup,data,brand)
  ensure_social_meta(soup,domain,images)
  # ── Minify this native design's inline CSS/JS — the counterpart to
  # _localize_one_asset()'s minification of the reference pipeline's
@@ -6647,6 +6721,7 @@ def make_page(base_soup,data,domain,affiliate,images,design,filename,site_root):
  apply_img_sizing(soup,site_root,data.get('brand',''),data.get('category',''))
  inject_img_css(soup)
  inject_cta_extras(soup,data.get('brand',''),affiliate)
+ inject_social_proof_popup(soup,data,data.get('brand',''))
  sanitize_urls(soup,TEMPLATES[design]['old_domains'],domain,affiliate)
  sanitize_text_domains(soup,TEMPLATES[design]['old_domains'],domain)
  replace_all_brand_refs(soup,data['brand'])
@@ -6737,6 +6812,7 @@ def page_variant(base_soup,data,domain,affiliate,images,design,filename,kind,sit
  apply_img_sizing(soup,site_root,data.get('brand',''),data.get('category',''))
  inject_img_css(soup)
  inject_cta_extras(soup,data.get('brand',''),affiliate)
+ inject_social_proof_popup(soup,data,data.get('brand',''))
  sanitize_urls(soup,TEMPLATES[design]['old_domains'],domain,affiliate)
  sanitize_text_domains(soup,TEMPLATES[design]['old_domains'],domain)
  replace_all_brand_refs(soup,data['brand'])
@@ -6947,6 +7023,7 @@ def make_legal_page(base_soup,data,domain,affiliate,images,design,filename,site_
  apply_img_sizing(soup,site_root,data.get('brand',''),data.get('category',''))
  inject_img_css(soup)
  inject_cta_extras(soup,data.get('brand',''),affiliate)
+ inject_social_proof_popup(soup,data,data.get('brand',''))
  ensure_social_meta(soup,domain,images)
  sanitize_urls(soup,TEMPLATES[design]['old_domains'],domain,affiliate)
  sanitize_text_domains(soup,TEMPLATES[design]['old_domains'],domain)
@@ -7313,6 +7390,7 @@ def legal_page(base_soup,data,domain,affiliate,images,design,filename,page_title
  apply_img_sizing(soup,site_root,data.get('brand',''),data.get('category',''))
  inject_img_css(soup)
  inject_cta_extras(soup,data.get('brand',''),affiliate)
+ inject_social_proof_popup(soup,data,data.get('brand',''))
  sanitize_urls(soup,TEMPLATES[design]['old_domains'],domain,affiliate)
  sanitize_text_domains(soup,TEMPLATES[design]['old_domains'],domain)
  replace_all_brand_refs(soup,brand)
