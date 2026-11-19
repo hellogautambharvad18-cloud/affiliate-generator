@@ -2309,11 +2309,33 @@ def localize_reference_assets(soup,site_root,design,old_domains,brand='',images=
  base_css_text=None
  for tag in list(soup.find_all('link',href=True)):
   href=str(tag['href']);host=urlparse(href).netloc.lower()
-  if host and any(d in host for d in ods) and 'stylesheet' in [x.lower() for x in (tag.get('rel') or [])]:
+  if 'stylesheet' not in [x.lower() for x in (tag.get('rel') or [])]:continue
+  if host and any(d in host for d in ods):
    new_href,css_text=_localize_one_asset(href,cssdir,design,'css',bundled_dir,token,target_rgb)
    if css_text and base_css_text is None:base_css_text=css_text
    if new_href:tag['href']=new_href
    else:tag.decompose()
+  elif not host:
+   # Designs built directly from a bundled CSS file (20, 21) ship their
+   # template with the <link> already pointing at its own final relative
+   # path (e.g. href="css/style.css") instead of the original scraped
+   # site's absolute URL, so the domain-matching branch above never fires
+   # for them — the real stylesheet was never copied into the generated
+   # site at all, and every page of every site built from these designs
+   # rendered completely unstyled (confirmed from two real downloads: the
+   # output had no css/ folder whatsoever). Copy the bundled file straight
+   # to that same relative path under site_root instead of renaming/
+   # relocating it the way the domain-matched branch does.
+   rel_path=Path(urlparse(href).path)
+   if rel_path.is_absolute() or '..' in rel_path.parts:continue
+   dest=site_root/rel_path
+   bundled_css=bundled_dir/'css'/rel_path.name
+   if not dest.exists() and bundled_css.exists():
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    original_text=bundled_css.read_text(encoding='utf-8',errors='ignore')
+    if base_css_text is None:base_css_text=original_text
+    css_text=retheme_reference_css(original_text,target_rgb) if target_rgb else original_text
+    dest.write_bytes(minify_css(css_text).encode('utf-8'))
  for tag in list(soup.find_all('script',src=True)):
   href=str(tag['src']);host=urlparse(href).netloc.lower()
   if host and any(d in host for d in ods):
