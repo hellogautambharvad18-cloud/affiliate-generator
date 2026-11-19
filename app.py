@@ -101,6 +101,7 @@ TEMPLATES={
  '18':{'name':'Design 18 — Bold High-Converting (Native, Auto-Themed)','source':'design-18.source.md','old':None,'old_domains':[],'native':True},
  '19':{'name':'Design 19 — Warm Honey Editorial (Native, Auto-Themed)','source':'design-19.source.md','old':None,'old_domains':[],'native':True},
  '20':{'name':'Design 20 — HoneyHarmony Structured','source':'design-20.source.md','old':'HoneyHarmony','old_domains':['honeyharmonny.com']},
+ '21':{'name':'Design 21 — HoneyHarmony Daily Arc','source':'design-21.source.md','old':'HoneyHarmony','old_domains':['honeyharrmony.com']},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -537,7 +538,7 @@ def inject_cta_extras(soup,brand,affiliate,aggressive=False):
  calmer line. Never touches the affiliate link's own rel/target attributes
  beyond what every other generated CTA already uses (nofollow sponsored
  noopener)."""
- if not soup.find(class_=re.compile(r'\bsticky-bar\b|\bbpo-sticky\b|\bge-sticky\b|\bmv-sticky\b|\bauto-sticky-cta\b')):
+ if not soup.find(class_=re.compile(r'\bsticky-bar\b|\bbpo-sticky\b|\bge-sticky\b|\bmv-sticky\b|\bauto-sticky-cta\b|\bhm-dock\b')):
   btn_text=(f'🔥 CLAIM YOUR DISCOUNT NOW — {html.escape(brand)} →' if aggressive
             else f'Get {html.escape(brand)} – {GUARANTEE_DAYS}-Day Guarantee &rarr;')
   bar=BeautifulSoup(
@@ -4466,7 +4467,9 @@ def populate(soup,data,design='1',domain='',affiliate=''):
   # generated site kept the ORIGINAL scraped product's own numbers verbatim
   # (literally "5 Ingredients" and "2 Gummies daily" on every site regardless
   # of this product's real ingredient count or capsule/gummy form).
-  stat=hero.find(class_=re.compile('stat.strip|stat-strip|stats-row|figures',re.I))
+  # "hm-stats" added for design 21, whose stat divs are already written in
+  # the same Ingredients/Serving/Guarantee order stat_vals below assumes.
+  stat=hero.find(class_=re.compile('stat.strip|stat-strip|stats-row|figures|hm-stats',re.I))
   if stat:
    divs=[d for d in stat.find_all('div') if not d.find('div')]
    stat_vals=[(str(len(ingredients)),'Ingredients'),(_serving_per_day_label(serving),'Capsules'),('60-Day','Guarantee'),('USA','Made In')]
