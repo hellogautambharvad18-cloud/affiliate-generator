@@ -6802,14 +6802,15 @@ def page_variant(base_soup,data,domain,affiliate,images,design,filename,kind,sit
    if target_sec is not None and nxt is target_sec:continue
    band.decompose()
   # Same orphaning problem for purely decorative section dividers (e.g.
-  # design 21's honeycomb/wave <div class="hm-wave">) that sat between
-  # consecutive sections on the full homepage — once every section but
-  # target_sec is removed, every divider that used to separate two now-gone
-  # sections has nothing left to divide, so a dozen of them end up stacked
-  # back-to-back on every subpage (benefits.html, faq.html, etc. all showed
-  # a tall run of meaningless wavy lines). Keep at most one divider
-  # immediately before and one immediately after target_sec; drop the rest.
-  wave_divs=list(main.find_all('div',class_=re.compile(r'\bhm-wave\b')))
+  # design 21's honeycomb/wave <div class="hm-wave">, design 20's
+  # <div class="hn-drip">) that sat between consecutive sections on the
+  # full homepage — once every section but target_sec is removed, every
+  # divider that used to separate two now-gone sections has nothing left
+  # to divide, so several of them end up stacked back-to-back on every
+  # subpage (benefits.html, faq.html, etc. all showed a run of meaningless
+  # dividers). Keep at most one divider immediately before and one
+  # immediately after target_sec; drop the rest.
+  wave_divs=list(main.find_all('div',class_=re.compile(r'\bhm-wave\b|\bhn-drip\b')))
   if wave_divs:
    keep=set()
    if target_sec is not None:
@@ -6824,7 +6825,17 @@ def page_variant(base_soup,data,domain,affiliate,images,design,filename,kind,sit
  page_labels={'what-is':'What Is {brand}?','how-it-works':'How {brand} Works',
               'ingredients':'{brand} Ingredients','benefits':'{brand} Benefits',
               'reviews':'{brand} Reviews','faq':'{brand} FAQ'}
- header_tag=soup.find('header')
+ # Not every <header> on the page is the site's nav header — some designs
+ # (20, 21) mark up each review card as <article><header><img ...reviewer
+ # photo/><h3>Name</h3></header>...</article>. On reviews.html the reviews
+ # section is the one kept, so soup.find('header') below used to grab that
+ # FIRST review card's header instead of the real one, replacing a
+ # reviewer's photo+name with the page-title banner. Excluding headers
+ # inside <main> doesn't work either — design 2 has no <main> landmark at
+ # all, so "main" falls back to <body> and every header looks "inside
+ # main". Card headers are always nested inside an <article> (the review
+ # card); the real site header never is — use that instead.
+ header_tag=next((h for h in soup.find_all('header') if h.find_parent('article') is None),None)
  if header_tag and kind in page_labels:
   brand_name=data.get('brand','')
   label=page_labels[kind].replace('{brand}',brand_name)
