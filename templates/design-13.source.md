@@ -290,7 +290,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <h2>What Is __BRAND__?</h2>
 <p class="lead-p">__WHATIS_P1__</p>
 <div class="note mt-3">__WHATIS_CALLOUT__</div>
-<p class="mt-3"><a class="btn-out" href="what-is-product.html">Read The Full __BRAND__ Explainer <i class="bi bi-arrow-right"></i></a></p>
+<p class="mt-3"><a class="btn-out" href="what-is-product.html">Read The Full __BRAND__ Explainer <i class="bi bi-arrow-right"></i></a> <a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTER_WHATIS__</a></p>
 </div>
 </div>
 </div></section>
@@ -300,6 +300,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <ol class="steps">
 __HIW_CARD_TEMPLATE__
 </ol>
+<p class="text-center mt-4"><a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTER_HIW__</a></p>
 </div></section>
 
 <section class="sec" id="pricing"><div class="container">
@@ -319,6 +320,7 @@ __BONUS_SECTION__
 <div class="row g-4">
 __ING_CARD_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTER_INGREDIENTS__</a></p>
 </div></section>
 
 <section class="sec badges"><div class="container">
@@ -336,6 +338,7 @@ __ING_CARD_TEMPLATE__
 <div class="row justify-content-center"><div class="col-12 col-lg-10">
 __BENEFIT_CARD_TEMPLATE__
 </div></div>
+<p class="text-center mt-4"><a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTER_BENEFITS__</a></p>
 </div></section>
 
 <section class="sec"><div class="container">
@@ -361,6 +364,7 @@ __REVIEW_CARD_TEMPLATE__
 <div><b>__REVIEW_COUNT__</b><span>Verified Reviews</span></div>
 <div><b>60-Day</b><span>Guarantee</span></div>
 </div>
+<p class="text-center mt-4"><a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTERREVIEWS__</a></p>
 </div></section>
 
 <section class="sec"><div class="container">
@@ -397,6 +401,7 @@ __REVIEW_CARD_TEMPLATE__
 <div class="faq">
 __FAQ_ROW_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn btn-ember" href="__AFFILIATE__"><i class="bi bi-bag-check me-1"></i> __CTA_AFTERFAQ__</a></p>
 </div></section>
 
 <section class="sec paper"><div class="container">

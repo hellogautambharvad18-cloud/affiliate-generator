@@ -302,6 +302,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <p>__WHATIS_P1__</p>
 <div class="callout"><b>Straight talk:</b> __WHATIS_CALLOUT__</div>
 <div class="chiprow"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTER_WHATIS__</a></div>
 </div>
 </div></section>
 
@@ -310,6 +311,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <div class="grid g4">
 __HIW_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTER_HIW__</a></div>
 </div></section>
 
 <section id="ingredients"><div class="wrap">
@@ -317,6 +319,7 @@ __HIW_CARD_TEMPLATE__
 <div class="grid g3">
 __ING_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
 
 <section id="benefits"><div class="wrap">
@@ -324,6 +327,7 @@ __ING_CARD_TEMPLATE__
 <div class="grid g4">
 __BENEFIT_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTER_BENEFITS__</a></div>
 </div></section>
 
 <section class="trust"><div class="wrap">
@@ -350,6 +354,7 @@ __REVIEW_CARD_TEMPLATE__
 <div><b>__REVIEW_COUNT__</b><span>Verified Reviews</span></div>
 <div><b>60-Day</b><span>Money-Back Guarantee</span></div>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 
 <section id="blog-teaser"><div class="wrap">
@@ -384,6 +389,7 @@ __BONUS_SECTION__
 <div class="faq">
 __FAQ_ROW_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn-dark" href="__AFFILIATE__">__CTA_AFTERFAQ__</a></div>
 </div></section>
 
 <section><div class="wrap">

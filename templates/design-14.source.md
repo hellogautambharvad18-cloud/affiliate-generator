@@ -254,7 +254,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <h2 style="color:var(--primary);margin-bottom:18px">What Is __BRAND__?</h2>
 <p class="lead-p">__WHATIS_P1__</p>
 <div class="note mt-3">__WHATIS_CALLOUT__</div>
-<p class="mt-4"><a class="btn-cta" href="what-is-product.html">Read The Full __BRAND__ Explainer <i class="bi bi-chevron-right"></i></a></p>
+<p class="mt-4"><a class="btn-cta" href="what-is-product.html">Read The Full __BRAND__ Explainer <i class="bi bi-chevron-right"></i></a> <a class="btn-cta" href="__AFFILIATE__">__CTA_AFTER_WHATIS__ <i class="bi bi-arrow-right"></i></a></p>
 </div>
 </div>
 </div></section>
@@ -264,6 +264,7 @@ __SYMPTOM_CARD_TEMPLATE__
 <div class="steps">
 __HIW_CARD_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn-cta" href="__AFFILIATE__">__CTA_AFTER_HIW__ <i class="bi bi-arrow-right"></i></a></p>
 </div></section>
 
 <section class="sec" id="benefits"><div class="container">
@@ -271,6 +272,7 @@ __HIW_CARD_TEMPLATE__
 <div class="grid g4">
 __BENEFIT_CARD_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn-cta" href="__AFFILIATE__">__CTA_AFTER_BENEFITS__ <i class="bi bi-arrow-right"></i></a></p>
 </div></section>
 
 <section class="sec soft" id="ingredients"><div class="container">
@@ -278,6 +280,7 @@ __BENEFIT_CARD_TEMPLATE__
 <div class="grid g3" id="ing-grid">
 __ING_CARD_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn-cta" href="__AFFILIATE__">__CTA_AFTER_INGREDIENTS__ <i class="bi bi-arrow-right"></i></a></p>
 </div></section>
 
 <section class="sec" id="pricing"><div class="container">
@@ -313,6 +316,7 @@ __BAL_PROS_TEMPLATE__
 <div class="grid g3">
 __REVIEW_CARD_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn-cta" href="__AFFILIATE__">__CTA_AFTERREVIEWS__ <i class="bi bi-arrow-right"></i></a></p>
 </div></section>
 
 <section class="sec soft"><div class="container">
@@ -331,6 +335,7 @@ __REVIEW_CARD_TEMPLATE__
 <div class="faq">
 __FAQ_ROW_TEMPLATE__
 </div>
+<p class="text-center mt-4"><a class="btn-cta" href="__AFFILIATE__">__CTA_AFTERFAQ__ <i class="bi bi-arrow-right"></i></a></p>
 </div></section>
 
 <section class="final"><div class="container">

@@ -253,6 +253,7 @@ footer p{margin-bottom:10px;color:rgba(255,255,255,.55);font-size:.76rem;line-he
 <div class="factchip">
 <span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
 
 <section id="ingredients"><div class="wrap">
@@ -260,15 +261,17 @@ footer p{margin-bottom:10px;color:rgba(255,255,255,.55);font-size:.76rem;line-he
 <div class="ing-list" id="ing-grid">
 __ING_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
 
-<section><div class="wrap">
+<section id="how-it-works"><div class="wrap">
 <div class="timeline">
 <div class="head"><span class="eyebrow">The Mechanism</span><h2>How __BRAND__ Actually Works</h2><p>__HIW_INTRO__</p></div>
 <div class="tl-list" id="hiw-grid">
 __HIW_CARD_TEMPLATE__
 </div>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_HIW__</a></div>
 </div></section>
 
 <section class="whatis-band" id="benefits"><div class="wrap">
@@ -276,6 +279,7 @@ __HIW_CARD_TEMPLATE__
 <div class="benefit-list" id="benefits-grid">
 __BENEFIT_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_BENEFITS__</a></div>
 </div></section>
 
 <section id="reviews"><div class="wrap">
@@ -288,6 +292,7 @@ __REVIEW_CARD_TEMPLATE__
 <div><b>__REVIEW_COUNT__</b><span>Customer Reviews</span></div>
 <div><b>60-Day</b><span>Money-Back Guarantee</span></div>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 
 <section id="blog-teaser" class="whatis-band"><div class="wrap">
@@ -333,6 +338,7 @@ __BONUS_SECTION__
 <div class="faq" id="faq-list">
 __FAQ_ROW_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTERFAQ__</a></div>
 </div></section>
 
 <section class="whatis-band"><div class="wrap">

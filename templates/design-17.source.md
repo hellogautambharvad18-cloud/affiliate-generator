@@ -492,28 +492,32 @@ body:has(.lu-burger[aria-pressed="true"]){overflow:hidden}
 <div data-in><img class="lu-roundimg" src="assets/images/feature-shot.png" width="1000" height="1000" alt="__BRAND__ overview" loading="lazy"></div>
 <div data-in><span class="lu-eyebrow">What is __BRAND__</span><h2>A plain-English overview</h2>
 <p>__WHATIS_P1__</p><p>__WHATIS_CALLOUT__</p>
-<p class="lu-link"><a href="how-it-works.html">See how it works</a></p></div>
+<p class="lu-link"><a href="how-it-works.html">See how it works</a></p>
+<p style="margin-top:16px"><a class="lu-go" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_WHATIS__</a></p></div>
 </div></div></section>
 <svg class="lu-breath" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path class="w1" d="M0 28 L0 28.0 L24 36.2 L48 41.3 L72 41.3 L96 36.2 L120 28.0 L144 19.8 L168 14.7 L192 14.7 L216 19.8 L240 28.0 L264 36.2 L288 41.3 L312 41.3 L336 36.2 L360 28.0 L384 19.8 L408 14.7 L432 14.7 L456 19.8 L480 28.0 L504 36.2 L528 41.3 L552 41.3 L576 36.2 L600 28.0 L624 19.8 L648 14.7 L672 14.7 L696 19.8 L720 28.0 L744 36.2 L768 41.3 L792 41.3 L816 36.2 L840 28.0 L864 19.8 L888 14.7 L912 14.7 L936 19.8 L960 28.0 L984 36.2 L1008 41.3 L1032 41.3 L1056 36.2 L1080 28.0 L1104 19.8 L1128 14.7 L1152 14.7 L1176 19.8 L1200 28.0 L1224 36.2 L1248 41.3 L1272 41.3 L1296 36.2 L1320 28.0 L1344 19.8 L1368 14.7 L1392 14.7 L1416 19.8 L1440 28.0"/><path class="w2" d="M0 28 L0 28.0 L24 22.1 L48 18.5 L72 18.5 L96 22.1 L120 28.0 L144 33.9 L168 37.5 L192 37.5 L216 33.9 L240 28.0 L264 22.1 L288 18.5 L312 18.5 L336 22.1 L360 28.0 L384 33.9 L408 37.5 L432 37.5 L456 33.9 L480 28.0 L504 22.1 L528 18.5 L552 18.5 L576 22.1 L600 28.0 L624 33.9 L648 37.5 L672 37.5 L696 33.9 L720 28.0 L744 22.1 L768 18.5 L792 18.5 L816 22.1 L840 28.0 L864 33.9 L888 37.5 L912 37.5 L936 33.9 L960 28.0 L984 22.1 L1008 18.5 L1032 18.5 L1056 22.1 L1080 28.0 L1104 33.9 L1128 37.5 L1152 37.5 L1176 33.9 L1200 28.0 L1224 22.1 L1248 18.5 L1272 18.5 L1296 22.1 L1320 28.0 L1344 33.9 L1368 37.5 L1392 37.5 L1416 33.9 L1440 28.0"/></svg>
 <section class="lu-sec lu-ice" id="ingredients"><div class="lu-wrap">
 <div class="lu-head2" data-in><span class="lu-eyebrow">The ingredients</span><h2>__ING_HEADING__</h2><p>Every ingredient is listed individually, with what it is and why it is in the formula.</p></div>
 <ul class="lu-herbs">__ING_CARD_TEMPLATE__</ul>
+<p style="text-align:center;margin-top:20px"><a class="lu-go" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_INGREDIENTS__</a></p>
 </div></section>
 
 <section class="lu-sec" id="how-it-works"><div class="lu-wrap">
 <div class="lu-head2" data-in><span class="lu-eyebrow">How it works</span><h2>How __BRAND__ is designed to work</h2><p>__HIW_INTRO__</p></div>
 <ol class="lu-routine">__HIW_CARD_TEMPLATE__</ol>
+<p style="text-align:center;margin-top:20px"><a class="lu-go" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_HIW__</a></p>
 </div></section>
 <svg class="lu-breath" viewBox="0 0 1440 56" preserveAspectRatio="none" aria-hidden="true"><path class="w1" d="M0 28 L0 28.0 L24 36.2 L48 41.3 L72 41.3 L96 36.2 L120 28.0 L144 19.8 L168 14.7 L192 14.7 L216 19.8 L240 28.0 L264 36.2 L288 41.3 L312 41.3 L336 36.2 L360 28.0 L384 19.8 L408 14.7 L432 14.7 L456 19.8 L480 28.0 L504 36.2 L528 41.3 L552 41.3 L576 36.2 L600 28.0 L624 19.8 L648 14.7 L672 14.7 L696 19.8 L720 28.0 L744 36.2 L768 41.3 L792 41.3 L816 36.2 L840 28.0 L864 19.8 L888 14.7 L912 14.7 L936 19.8 L960 28.0 L984 36.2 L1008 41.3 L1032 41.3 L1056 36.2 L1080 28.0 L1104 19.8 L1128 14.7 L1152 14.7 L1176 19.8 L1200 28.0 L1224 36.2 L1248 41.3 L1272 41.3 L1296 36.2 L1320 28.0 L1344 19.8 L1368 14.7 L1392 14.7 L1416 19.8 L1440 28.0"/><path class="w2" d="M0 28 L0 28.0 L24 22.1 L48 18.5 L72 18.5 L96 22.1 L120 28.0 L144 33.9 L168 37.5 L192 37.5 L216 33.9 L240 28.0 L264 22.1 L288 18.5 L312 18.5 L336 22.1 L360 28.0 L384 33.9 L408 37.5 L432 37.5 L456 33.9 L480 28.0 L504 22.1 L528 18.5 L552 18.5 L576 22.1 L600 28.0 L624 33.9 L648 37.5 L672 37.5 L696 33.9 L720 28.0 L744 22.1 L768 18.5 L792 18.5 L816 22.1 L840 28.0 L864 33.9 L888 37.5 L912 37.5 L936 33.9 L960 28.0 L984 22.1 L1008 18.5 L1032 18.5 L1056 22.1 L1080 28.0 L1104 33.9 L1128 37.5 L1152 37.5 L1176 33.9 L1200 28.0 L1224 22.1 L1248 18.5 L1272 18.5 L1296 22.1 L1320 28.0 L1344 33.9 L1368 37.5 L1392 37.5 L1416 33.9 L1440 28.0"/></svg>
 <section class="lu-sec lu-warm" id="benefits"><div class="lu-wrap">
 <div class="lu-head2" data-in><span class="lu-eyebrow">Benefits</span><h2>What __BRAND__ is made to support</h2><p>The areas this formula is designed to support as part of a daily routine.</p></div>
 <div class="lu-gains">__BENEFIT_CARD_TEMPLATE__</div>
+<p style="text-align:center;margin-top:20px"><a class="lu-go" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_BENEFITS__</a></p>
 </div></section>
 
 <section class="lu-sec lu-fresh" id="reviews"><div class="lu-wrap">
 <div class="lu-head2 lu-mid" data-in><span class="lu-eyebrow">Customer reviews</span><h2>What __BRAND__ customers say</h2><p>Experiences shared by people using __BRAND__ daily.</p></div>
 <div class="lu-voices">__REVIEW_CARD_TEMPLATE__</div>
-<div class="lu-cta2" data-in><h3>Ready to start your own routine?</h3><a class="lu-go lu-xl" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTERFAQ__</a></div>
+<div class="lu-cta2" data-in><h3>Ready to start your own routine?</h3><a class="lu-go lu-xl" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 
 <section class="lu-sec" id="pricing"><div class="lu-wrap">
@@ -533,6 +537,7 @@ __BONUS_SECTION__
 <section class="lu-sec lu-ice" id="faq"><div class="lu-wrap">
 <div class="lu-head2" data-in><span class="lu-eyebrow">FAQ</span><h2>__BRAND__ questions, answered</h2><p>Clear answers to what people ask most.</p></div>
 <div class="lu-qa" data-in>__FAQ_ROW_TEMPLATE__</div>
+<p style="text-align:center;margin-top:20px"><a class="lu-go" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTERFAQ__</a></p>
 </div></section>
 
 <section class="lu-close"><div class="lu-wrap"><div class="lu-cgrid">

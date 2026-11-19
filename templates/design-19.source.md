@@ -210,16 +210,19 @@ footer a:hover{color:var(--cta);text-decoration:underline}
 <p style="font-size:1.15rem;max-width:820px;margin:0 auto 16px;text-align:center">__WHATIS_P1__</p>
 <div class="callout" style="max-width:820px;margin:0 auto">__WHATIS_CALLOUT__</div>
 <div class="chips" style="justify-content:center"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
+<div style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
 <section class="sec" id="how-it-works"><div class="wrap">
 <div class="head"><span class="eyebrow">Simple by design</span><h2>How __BRAND__ Works, Step by Step</h2><p>__HIW_INTRO__</p></div>
 <div style="text-align:center;margin-bottom:28px"><img src="assets/images/feature-shot.png" alt="How __BRAND__ works" style="max-width:680px;border-radius:20px;box-shadow:0 14px 34px rgba(120,72,0,.14)"></div>
 <div class="grid g2">__HIW_CARD_TEMPLATE__</div>
+<div style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
 </div></section>
 <section class="sec soft" id="benefits"><div class="wrap">
 <div class="head"><span class="eyebrow">Why people choose it</span><h2>Small Daily Wins That Add Up</h2><p>Real, everyday support — no hype, no promises it cannot keep.</p></div>
 <div class="grid g3">__BENEFIT_CARD_TEMPLATE__</div>
 <ul style="max-width:720px;margin:28px auto 0;font-weight:700;line-height:2">__BAL_PROS_TEMPLATE__</ul>
+<div style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_BENEFITS__</a></div>
 </div></section>
 <section class="sec soft" id="compare"><div class="wrap">
 <div class="head"><span class="eyebrow">An honest comparison</span><h2>__BRAND__ vs The Alternatives</h2><p>Decide with the facts in front of you — no hype.</p></div>
@@ -235,6 +238,7 @@ footer a:hover{color:var(--cta);text-decoration:underline}
 <section class="sec" id="ingredients"><div class="wrap">
 <div class="head"><span class="eyebrow">Inside every serving</span><h2>__ING_HEADING__</h2><p>Every ingredient, explained plainly. Serving: __SERVING_DAILY__ · Per bottle: __SERVING_PER_BOTTLE__.</p></div>
 <div class="grid g3" id="ing-grid">__ING_CARD_TEMPLATE__</div>
+<div style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
 <section class="sec soft" id="pricing"><div class="wrap">
 <div class="head"><span class="eyebrow">Choose your package</span><h2>Pick the Best Value for You</h2><p>__PRICING_NOTE__</p></div>
@@ -245,6 +249,7 @@ __BONUS_SECTION__
 <section class="sec" id="reviews"><div class="wrap">
 <div class="head"><span class="eyebrow">Verified reviews</span><h2>What Customers Say</h2><p>★★★★★ __REVIEW_COUNT__ reviews and counting.</p></div>
 <div class="grid g3">__REVIEW_CARD_TEMPLATE__</div>
+<div style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 <section class="sec soft"><div class="wrap"><div class="guarantee">
 <img src="assets/images/guarantee.png" alt="60-day money-back guarantee" loading="lazy">

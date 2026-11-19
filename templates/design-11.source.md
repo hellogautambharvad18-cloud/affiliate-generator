@@ -269,6 +269,7 @@ footer p{margin-bottom:12px;font-size:.78rem;line-height:1.7}
 <div class="factchip">
 <span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_WHATIS__</a></div>
 </div>
 </div></section>
 
@@ -277,6 +278,7 @@ footer p{margin-bottom:12px;font-size:.78rem;line-height:1.7}
 <div class="grid g3" id="ing-grid">
 __ING_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
 
 <section class="section-alt" id="how-it-works"><div class="wrap">
@@ -284,6 +286,7 @@ __ING_CARD_TEMPLATE__
 <div class="grid g4" id="hiw-grid">
 __HIW_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_HIW__</a></div>
 </div></section>
 
 <section id="benefits"><div class="wrap">
@@ -291,6 +294,7 @@ __HIW_CARD_TEMPLATE__
 <div class="grid g4" id="benefits-grid">
 __BENEFIT_CARD_TEMPLATE__
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTER_BENEFITS__</a></div>
 </div></section>
 
 <section class="section-alt" id="reviews"><div class="wrap">
@@ -303,6 +307,7 @@ __REVIEW_CARD_TEMPLATE__
 <div><b>__REVIEW_COUNT__</b><span>Customer Reviews</span></div>
 <div><b>60-Day</b><span>Money-Back Guarantee</span></div>
 </div>
+<div style="text-align:center;margin-top:28px"><a class="btn" href="__AFFILIATE__">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 
 <section id="blog-teaser"><div class="wrap">

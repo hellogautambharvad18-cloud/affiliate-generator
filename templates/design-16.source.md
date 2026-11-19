@@ -334,6 +334,7 @@ __SYMPTOM_CARD_TEMPLATE__
     <div class="benefit-grid">
 __BENEFIT_CARD_TEMPLATE__
     </div>
+    <div style="text-align:center;margin-top:30px;"><a class="btn btn-primary" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_BENEFITS__</a></div>
   </div>
 </section>
 
@@ -344,6 +345,7 @@ __BENEFIT_CARD_TEMPLATE__
 __REVIEW_CARD_TEMPLATE__
     </div>
     <p class="rev-note">Individual experiences shared with the brand. Results vary, and nothing here is a guarantee of outcome.</p>
+    <div style="text-align:center;margin-top:20px;"><a class="btn btn-primary" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTERREVIEWS__</a></div>
   </div>
 </section>
 
@@ -365,6 +367,7 @@ __REVIEW_CARD_TEMPLATE__
     <div class="ing-list">
 __ING_CARD_TEMPLATE__
     </div>
+    <div style="text-align:center;margin-top:30px;"><a class="btn btn-primary" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_INGREDIENTS__</a></div>
   </div>
 </section>
 
@@ -432,6 +435,7 @@ __SCI_P__
   <div class="purple-heading-bar"><h2>How Does __BRAND__ Work?</h2></div>
   <div class="container" style="max-width:1200px;">
 __HIW_CARD_TEMPLATE__
+    <div style="text-align:center;margin-top:30px;"><a class="btn btn-primary" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTER_HIW__</a></div>
   </div>
 </section>
 
@@ -489,6 +493,7 @@ __PLAN_CARD_TEMPLATE__
     <div class="faq-list">
 __FAQ_ROW_TEMPLATE__
     </div>
+    <div style="text-align:center;margin-top:30px;"><a class="btn btn-primary" href="__AFFILIATE__" target="_blank" rel="noopener sponsored">__CTA_AFTERFAQ__</a></div>
   </div>
 </section>
 
