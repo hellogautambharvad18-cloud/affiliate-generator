@@ -1443,6 +1443,7 @@ CRITICAL: Generate content ONLY for "{product}". Do NOT use content from other p
 - The product name alone can be misleading (e.g. a name mentioning wood/plants doesn't imply a digestive or dental product) — verify the actual category from search results or the publisher's description above before writing content
 - If uncertain of the category from the name, prioritize the publisher-provided description block above
 - Match the product category exactly to what "{product}" actually is; do not default to a generic "digestive health" or "gut wellness" framing unless that is confirmed
+- If you cannot find or recall any real, verifiable product actually sold under the name "{product}" (and no publisher description was given above), do NOT invent a complete, specific-sounding ingredient list and formulation and present it as researched fact — that reads as confident but is fabricated. Instead, say so plainly in source_notes (e.g. "Could not verify a real product named '{product}'; the category and ingredients below are a best-guess based on the name alone and should be confirmed against the actual official product before publishing"), and keep ingredient/mechanism claims general enough that they don't overstate certainty you don't have.
 
 Use web research when available. Never invent prices, ingredients, guarantees, certifications, or reviewer identities/names tied to real people. Do not claim FDA approval unless explicitly verified. Use careful general wellness language; avoid disease treatment/cure claims.
 
@@ -6387,10 +6388,33 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
  # page showed the same paragraph twice. Subpages replace the header with a
  # banner, so only the home page (and legal/blog pages built from it) needs a
  # different what-is lead.
+ whatis_short=(f'{brand} is a {category} formulated with {n_ing} named ingredients.' if n_ing
+               else f'{brand} is formulated to support {_support_phrase(category)} as part of a daily routine.')
  whatis_p1=description
  if page_kind=='index' and description and '__HERO_DESC__' in tpl:
-  whatis_p1=(f'{brand} is a {category} formulated with {n_ing} named ingredients.' if n_ing
-             else f'{brand} is formulated to support {_support_phrase(category)} as part of a daily routine.')
+  whatis_p1=whatis_short
+ elif page_kind not in ('index',''):
+  # This is the standalone what-is-product.html page. Its header is the plain
+  # banner (no __HERO_DESC__ here), but the home page's <header> hero already
+  # shows this exact `description` paragraph verbatim — reusing the same text
+  # here would put the identical paragraph on two separately-indexed pages.
+  # Build this page's lead from structured facts instead (serving, ingredient
+  # count, guarantee) rather than the hero's free-text description, so the
+  # wording is genuinely different while staying accurate to this product.
+  whatis_p1=(f'{whatis_short} It is taken as {_serving_per_day_label(serving)}, with every ingredient '
+             f'listed individually below so you can see exactly what you are getting, backed by a '
+             f'{GUARANTEE_DAYS}-day money-back guarantee.')
+
+ # Same cross-page duplication as __WHATIS_P1__ above: the home page's How It
+ # Works section and the standalone how-it-works.html page both render
+ # __HIW_INTRO__ from the same `how_it_works_intro`, so a visitor who lands on
+ # one and then the other sees the identical sentence. Keep the AI-written
+ # version (it is the more specific, product-grounded one) on the standalone
+ # page, and give the home page section a short structural line instead.
+ hiw_intro_full=data.get('how_it_works_intro') or f'{brand} combines its ingredients to work together as part of a daily {category} routine.'
+ hiw_intro=hiw_intro_full
+ if page_kind=='index':
+  hiw_intro=f'{n_ing} named ingredient{"s" if n_ing!=1 else ""}, each doing its own job as part of a daily {category} routine.' if n_ing else f'A simple daily routine built around {_support_phrase(category)}.'
 
  replacements={
   '__TITLE__':data.get('seo',{}).get('title',f'{brand} Reviews'),
@@ -6419,7 +6443,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   '__CHIP1__':chips[0],'__CHIP2__':chips[1],'__CHIP3__':chips[2],'__CHIP4__':chips[3],
   '__ING_HEADING__':f'What Are The Ingredients In {brand}?',
   '__ING_CARD_TEMPLATE__':ing_html,
-  '__HIW_INTRO__':data.get('how_it_works_intro') or f'{brand} combines its ingredients to work together as part of a daily {category} routine.',
+  '__HIW_INTRO__':hiw_intro,
   '__HIW_CARD_TEMPLATE__':hiw_html,
   '__BENEFIT_CARD_TEMPLATE__':benefit_html,
   '__REVIEW_CARD_TEMPLATE__':rev_html,
