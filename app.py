@@ -1456,10 +1456,20 @@ def save_uploaded(files,dest):
   out.append('assets/images/'+saved.name)
  return out
 
-def serp_images(product,key,num=20):
+_OFF_CATEGORY_PHRASES=['weight loss','fat burner','fat burning','diet pill','appetite suppress','slimming','metabolism booster','male enhancement','testosterone booster','hair growth','hair loss','skin whitening','blood sugar','diabetes support','libido boost','erectile']
+
+def serp_images(product,key,num=20,category=''):
  if not key:return []
  try:
   out=[]
+  # A generated brand name can coincidentally collide with an unrelated real
+  # product of the same name (e.g. a fictional hydration supplement named the
+  # same as a real weight-loss pill) — the product-name whole-word match below
+  # still lets that photo through since the name itself matches. Drop images
+  # whose title announces a totally different supplement vertical than this
+  # product's own category, unless that vertical IS the actual category.
+  cat_l=(category or '').lower()
+  conflict_phrases=[p for p in _OFF_CATEGORY_PHRASES if p not in cat_l]
   queries=[f'"{product}" supplement bottle official',f'{product} bottle supplement',f'{product} official product']
   pwords=[w.lower() for w in re.findall(r'[a-zA-Z]+',product) if len(w)>2]
   for q in queries:
@@ -1478,6 +1488,7 @@ def serp_images(product,key,num=20):
      # through; treat auto-fetched images as a best-effort default, not a
      # verified match, and prefer manually-supplied photos when accuracy matters.
      if pwords and not any(re.search(r'\b'+re.escape(w)+r'\b',title) for w in pwords):continue
+     if any(p in title for p in conflict_phrases):continue
      u=x.get('original') or x.get('thumbnail')
      if u and u.startswith('http') and u not in out:out.append(u)
      if len(out)>=num:break
@@ -8340,7 +8351,7 @@ def generate():
   work=Path(tempfile.mkdtemp(prefix='aff_v9_'))
   site=work/'site';imgdir=site/'assets/images';imgdir.mkdir(parents=True)
   manual=save_uploaded(request.files.getlist('images'),imgdir) if mode in ('manual','both') else []
-  serp_urls=serp_images(product,serp_key) if mode in ('serp','both') and serp_key and mode!='none' else []
+  serp_urls=serp_images(product,serp_key,category=data.get('category','')) if mode in ('serp','both') and serp_key and mode!='none' else []
   serp_dl=download_images(serp_urls,imgdir)
   images=manual+[s for s in serp_dl if s not in manual]
   data['images']=images
