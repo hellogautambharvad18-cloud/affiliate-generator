@@ -6368,6 +6368,7 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   return (f'<div class="rev-card"><div class="rev-head">{img_tag}<div>'
           f'<div class="rev-name">{html.escape(name)}</div><div class="rev-sub">Verified purchase</div></div></div>'
           f'<div class="rev-stars">★★★★★</div><p>{html.escape(text)}</p></div>')
+ _used_plan_imgs=[]
  def plan_card(pkg,i,sorted_pricing):
   bottles=pkg.get('bottles',i+1)
   _cta=cta_texts(brand,category)
@@ -6375,6 +6376,18 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
   slot_by_count={1:'bottle-2',2:'bottle-2',3:'bottle-3',6:'bottle-6'}
   slot=slot_by_count.get(bottles,f'bottle-{bottles}')
   img=_get_img(images,slot,i)
+  if img and img in _used_plan_imgs:
+   # _get_img's fallback_idx clamps to the last available photo when there
+   # are fewer distinct real product shots than pricing tiers (common with
+   # SerpAPI results), so two different bottle-count cards can end up with
+   # the exact same photo — and that photo's own pixels sometimes already
+   # have a DIFFERENT pack's "Most Popular"/promo ribbon baked into them,
+   # so showing it twice reads as a mismatched duplicate. The hero shot
+   # carries no such baked-in claim, so prefer it over repeating a sibling
+   # card's photo.
+   hero_img=_get_img(images,'hero',0)
+   if hero_img and hero_img not in _used_plan_imgs:img=hero_img
+  if img:_used_plan_imgs.append(img)
   prices=[(p.get('bottles',0),_price_num(p.get('price_per_bottle',''))) for p in sorted_pricing]
   is_best_value=bottles==max((b for b,_ in prices),default=bottles)
   is_middle=len(sorted_pricing)==3 and bottles==sorted(b for b,_ in prices)[1]
