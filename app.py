@@ -103,6 +103,13 @@ TEMPLATES={
  '20':{'name':'Design 20 — HoneyHarmony Structured','source':'design-20.source.md','old':'HoneyHarmony','old_domains':['honeyharmonny.com']},
  '21':{'name':'Design 21 — HoneyHarmony Daily Arc','source':'design-21.source.md','old':'HoneyHarmony','old_domains':['honeyharrmony.com']},
  '22':{'name':'Design 22 — AlphaSteel Vitality','source':'design-22.source.md','old':'AlphaSteel','old_domains':['alphasteell.us']},
+ # Design 23 is not a reference clone — fully original layout/CSS, built
+ # from scratch to the user's explicit "stop cloning real sites, make
+ # something nobody else has" request. Dark glassmorphic theme with a
+ # cyan/glow accent, conic-gradient ring number badges, and an SVG "pulse"
+ # section divider — distinct from every other native/legacy design's
+ # light-background, serif/neo-brutalist/bootstrap aesthetics.
+ '23':{'name':'Design 23 — Midnight Pulse (Native, Auto-Themed)','source':'design-23.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony','AlphaSteel']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
