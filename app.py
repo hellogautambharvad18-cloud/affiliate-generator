@@ -98,6 +98,7 @@ TEMPLATES={
  '15':{'name':'Design 15 — Dynamic Unique (Native, Auto-Themed)','source':'design-15.source.md','old':None,'old_domains':[],'native':True},
  '16':{'name':'Design 16 — Editorial (Native, Auto-Themed)','source':'design-16.source.md','old':None,'old_domains':[],'native':True},
  '17':{'name':'Design 17 — Airy (Native, Auto-Themed)','source':'design-17.source.md','old':None,'old_domains':[],'native':True},
+ '18':{'name':'Design 18 — Bold High-Converting (Native, Auto-Themed)','source':'design-18.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -1802,6 +1803,17 @@ def canonical_links(soup):
 
 FOREIGN_VERIFICATION_META={'google-site-verification','msvalidate.01','yandex-verification',
  'p:domain_verify','facebook-domain-verification','norton-safeweb-site-verification','alexaverifyid'}
+
+def extract_verification_code(raw):
+ """Google/Bing tell publishers to paste a whole <meta .../> snippet into their
+ <head>, so the verification form field often receives that full tag instead of
+ just the content token. Pull the token back out so it isn't double-escaped into
+ content="&lt;meta ... /&gt;" (which makes Google/Bing site-verification fail)."""
+ raw=(raw or '').strip()
+ if '<meta' in raw.lower():
+  m=re.search(r'content\s*=\s*["\']([^"\']+)["\']',raw,re.I)
+  if m:return m.group(1).strip()
+ return raw
 
 def rebuild_metadata(soup,data,canonical,images,domain):
  if not soup.head:soup.insert(0,soup.new_tag('head'))
@@ -8073,8 +8085,8 @@ def generate():
   if design=='15':data['_d15']=design15.new_recipe()
   data['tracking']={
    'ga_id':request.form.get('ga_id','').strip(),
-   'gsc_verify':request.form.get('gsc_verify','').strip(),
-   'bing_verify':request.form.get('bing_verify','').strip(),
+   'gsc_verify':extract_verification_code(request.form.get('gsc_verify','')),
+   'bing_verify':extract_verification_code(request.form.get('bing_verify','')),
   }
   work=Path(tempfile.mkdtemp(prefix='aff_v9_'))
   site=work/'site';imgdir=site/'assets/images';imgdir.mkdir(parents=True)
