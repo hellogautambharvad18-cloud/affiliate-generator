@@ -102,8 +102,9 @@ TEMPLATES={
  '19':{'name':'Design 19 — Warm Honey Editorial (Native, Auto-Themed)','source':'design-19.source.md','old':None,'old_domains':[],'native':True},
  '20':{'name':'Design 20 — HoneyHarmony Structured','source':'design-20.source.md','old':'HoneyHarmony','old_domains':['honeyharmonny.com']},
  '21':{'name':'Design 21 — HoneyHarmony Daily Arc','source':'design-21.source.md','old':'HoneyHarmony','old_domains':['honeyharrmony.com']},
+ '22':{'name':'Design 22 — AlphaSteel Vitality','source':'design-22.source.md','old':'AlphaSteel','old_domains':['alphasteell.us']},
 }
-ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony']
+ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony','AlphaSteel']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
 ALL_OLD_DOMAINS=[d for t in TEMPLATES.values() for d in t['old_domains']]
 

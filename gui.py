@@ -49,6 +49,7 @@ DESIGNS = [
     ('19','Design 19 — Warm Honey Editorial (Auto-Themed)','Native'),
     ('20','Design 20 — HoneyHarmony Structured','Reference'),
     ('21','Design 21 — HoneyHarmony Daily Arc','Reference'),
+    ('22','Design 22 — AlphaSteel Vitality','Reference'),
 ]
 
 # A small color per design just so the picker cards aren't all identical —
@@ -57,7 +58,7 @@ _SWATCH = {
     '1':'#8B5CF6','2':'#7C3AED','3':'#0EA5E9','4':'#3B82F6','5':'#EC4899',
     '6':'#10B981','7':'#6366F1','8':'#06B6D4','9':'#F97316','10':'#F43F5E',
     '11':'#8B5CF6','12':'#65A30D','13':'#0F766E','14':'#0F6E7E','15':'#D946EF','16':'#007953','17':'#2747C9','18':'#FF6A00','19':'#B8690A',
-    '20':'#3A5F8F','21':'#b8690a',
+    '20':'#3A5F8F','21':'#b8690a','22':'#7a1620',
 }
 
 # ── Image slot requirements, shared across every design — every design's
