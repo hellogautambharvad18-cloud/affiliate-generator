@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup,NavigableString,Comment
 import rcssmin,rjsmin
 from design2_fixes import (seo_images,scrub_image_alts,strip_third_party_fa_kit,
  retheme_reference_css,retheme_html_inline,make_fda_registered_badge,
- make_usa_badge,make_gmp_badge,make_natural_badge,
+ make_usa_badge,make_gmp_badge,make_natural_badge,make_initials_avatar,
  is_non_product_image,reviewer_photo_slot)
 
 app=Flask(__name__)
@@ -8398,6 +8398,50 @@ def generate():
     _badge_path=imgdir/f'{_slot}.png'
     _maker(_badge_path)
     images.append(f'assets/images/{_badge_path.name}')
+   except Exception:pass
+  # Reviewer-photo fallback — same gap as the badges above: a template
+  # whose reviewer-photo <img> is a literal "assets/images/reviewer-N.png"
+  # placeholder with no data-orig-stem never gets touched by either the
+  # scrape-classification pipeline or build_native_page's own replacements,
+  # so it stayed broken with no upload. Generate the same neutral initials
+  # avatar used elsewhere (_initials_avatar_data_uri) as a real file under
+  # that exact name whenever no real uploaded photo fills the slot.
+  _reviewer_names_for_avatars=data.get('reviewer_names') or []
+  for _i in range(4):
+   _rslot=f'reviewer-{_i+1}'
+   if any(Path(p).stem.lower()==_rslot for p in images):continue
+   try:
+    _rname=_reviewer_names_for_avatars[_i] if _i<len(_reviewer_names_for_avatars) else f'Verified Buyer {_i+1}'
+    _avatar_path=imgdir/f'{_rslot}.png'
+    make_initials_avatar(_avatar_path,_rname)
+    images.append(f'assets/images/{_avatar_path.name}')
+   except Exception:pass
+  # Final-CTA bottle-photo fallback — "final.png" has the same gap: no
+  # data-orig-stem, so it's never replaced even when a real product photo
+  # was uploaded/fetched. Reuse whichever real photo _get_img would pick
+  # for the hero slot (never a badge/avatar/how-it-works image — see its
+  # own seo_images()-based guarantee) so the page's last CTA still shows
+  # the product instead of a broken image.
+  if not (imgdir/'final.png').exists():
+   try:
+    _final_rel=_get_img(images,'hero',0)
+    if _final_rel:
+     _final_disk=Path(_final_rel) if Path(_final_rel).is_absolute() else site/_final_rel
+     if _final_disk.exists():
+      # Save as a real "final.png" — the placeholder's literal expected
+      # name/extension — regardless of the source photo's own format
+      # (manual uploads are saved as .webp), so the file this exact
+      # <img src="assets/images/final.png"> is looking for actually exists.
+      # Deliberately NOT appended to `images`: that list feeds several
+      # other fallback-selection helpers (_get_product_img's serp filter
+      # among them) that key off MANUAL_SLOTS membership rather than
+      # is_non_product_image(), so this copy would get cycled into an
+      # unrelated bottle-pack slot instead of staying put as this one
+      # placeholder's fix. The literal "assets/images/final.png" src is
+      # never rewritten by any other code, so the file alone is enough.
+      from PIL import Image as _PILImage
+      with _PILImage.open(_final_disk) as _fim:
+       _fim.convert('RGB').save(imgdir/'final.png','PNG')
    except Exception:pass
   blog_articles=_blog_articles(data,domain,affiliate)
   if TEMPLATES[design].get('native'):

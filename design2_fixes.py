@@ -24,7 +24,11 @@ _NON_PRODUCT_KW = ('badge', 'card', 'credit', 'guarantee', 'seal', 'bonus', 'rev
                    # reviewer / testimonial portraits under custom names ("vapocept-customer-1")
                    'customer', 'testimonial', 'review', 'avatar', 'member',
                    # bundle mock-ups, trust strips, badge art, feature/screen shots
-                   'pack', 'trust', 'gmp', 'natural', 'shot')
+                   'pack', 'trust', 'gmp', 'natural', 'shot',
+                   # the generated "reuse the hero photo for the final CTA" copy —
+                   # a distinct file so it must never be treated as a second real
+                   # product photo and get cycled into an unrelated bottle slot
+                   'final')
 
 _REVIEWER_KW = re.compile(r'customer|testimonial|review|avatar|member')
 _BOTTLE_N = re.compile(r'(?:bottles?[-_]?(\d+)|(\d+)[-_]?bottles?)')
@@ -302,3 +306,32 @@ def make_gmp_badge(path, size=420):
 
 def make_natural_badge(path, size=420):
     _seal_badge(path, ['100%', 'NATURAL'], size)
+
+
+def make_initials_avatar(path, name, size=192):
+    """Real PNG file version of the data-URI neutral initials avatar used
+    elsewhere (_initials_avatar_data_uri in app.py) — for a template whose
+    reviewer-photo <img> is a literal assets/images/reviewer-N.png
+    placeholder with no data-orig-stem, so neither the scrape-classification
+    pipeline nor the native pipeline's own replacements ever touch it,
+    leaving a broken image whenever no reviewer photo was uploaded."""
+    from PIL import Image, ImageDraw, ImageFont
+    initials = ''.join(w[:1] for w in re.split(r'\s+', (name or '').strip()) if w)[:2].upper() or '?'
+    hues = [(107, 114, 128), (100, 116, 139), (120, 113, 108), (115, 115, 115), (109, 104, 117), (91, 100, 114)]
+    bg = hues[sum(ord(c) for c in initials) % len(hues)]
+    S = size
+    im = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse((0, 0, S, S), fill=bg)
+    def font(px):
+        for f in ('DejaVuSans-Bold.ttf', 'arialbd.ttf', 'Arial Bold.ttf'):
+            try:
+                return ImageFont.truetype(f, px)
+            except Exception:
+                pass
+        return ImageFont.load_default()
+    f = font(int(S * 0.4))
+    bbox = d.textbbox((0, 0), initials, font=f)
+    w, h = bbox[2] - bbox[0], bbox[3] - bbox[1]
+    d.text(((S - w) / 2 - bbox[0], (S - h) / 2 - bbox[1]), initials, font=f, fill=(255, 255, 255, 255))
+    im.save(path)
