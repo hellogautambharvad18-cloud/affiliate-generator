@@ -4318,8 +4318,13 @@ def populate(soup,data,design='1',domain='',affiliate=''):
  # unbounded substring match grabs whichever payment/social icon happens
  # to come first in the document and stuffs the brand name as literal
  # text into it, while the real logo elsewhere is left untouched.
- logo=soup.find(class_=re.compile(r'\blogo\b|\bbrand\b',re.I))
- if logo:
+ # Some designs (e.g. 20) repeat the exact same logo markup in both the
+ # header and the footer — both carry the same 'logo'/'brand' class, so
+ # using find() here fixed only whichever one came first in the document
+ # and left the other showing the raw unreplaced placeholder text (e.g.
+ # a literal "BrandName" sitting right next to the correctly-replaced
+ # header logo). Loop over every match instead of just the first.
+ for logo in soup.find_all(class_=re.compile(r'\blogo\b|\bbrand\b',re.I)):
   full_txt=logo.get_text()
   trademark='®' if '®' in full_txt else ('™' if '™' in full_txt else '')
   logo_target=logo.find(['h1','h2','h3','h4','h5'])
@@ -4426,9 +4431,15 @@ def populate(soup,data,design='1',domain='',affiliate=''):
     p.decompose()
   if di>0 and desc_lines[0]==description:_desc_used[0]=True
   # Benefit bullet list (e.g. <ul class="benefits-lists"><li><b>Title</b> — text</li></ul>)
-  # not already covered by the chip/check/facts patterns below.
+  # not already covered by the chip/check/facts/stat patterns below. A plain
+  # stat strip like <ul class="hn-stats"><li><b>4.8 / 5</b><span>Our editorial
+  # rating</span></li>...</ul> also has a <b> inside each <li>, so without
+  # excluding it here too it matches this generic test and gets overwritten
+  # with benefit title/description text instead of staying as its own
+  # rating/guarantee figures.
   for ul in hero.find_all('ul'):
-   if ul.find_parent(class_=re.compile('chip|check|facts|pills|tags',re.I)):continue
+   if re.search('chip|check|facts|pills|tags|stat',' '.join(ul.get('class') or []),re.I):continue
+   if ul.find_parent(class_=re.compile('chip|check|facts|pills|tags|stat',re.I)):continue
    lis=ul.find_all('li')
    if not lis or not any(li.find(['b','strong']) for li in lis):continue
    for i,li in enumerate(lis):
