@@ -111,6 +111,28 @@ TEMPLATES={
  # section divider — distinct from every other native/legacy design's
  # light-background, serif/neo-brutalist/bootstrap aesthetics.
  '23':{'name':'Design 23 — Midnight Pulse (Native, Auto-Themed)','source':'design-23.source.md','old':None,'old_domains':[],'native':True},
+ # Design 24 is original layout/CSS (no reference-site clone) — a calm,
+ # light "editorial clinical" theme (serif headings, soft rounded cards,
+ # warm off-white palette) with a structure inspired by the common
+ # 3-tier-pricing-shown-twice / comparison-table / accordion-FAQ pattern
+ # seen across many real supplement funnels, but built from scratch with
+ # its own original wording, CSS and section flow — no scraped HTML/CSS,
+ # no copied copy. Uses the same default (non-design-specific) card
+ # markup as designs 6/8/9/11/12/14/15/18/23, so it needs no extra
+ # per-design branches in build_native_page().
+ '24':{'name':'Design 24 — Clearline (Native, Auto-Themed)','source':'design-24.source.md','old':None,'old_domains':[],'native':True},
+ # Design 25 is original layout/CSS (no reference-site clone) — visually
+ # INSPIRED by the warm cream/antique-gold aesthetic common across one
+ # family of "Nerve Honey"-style affiliate sites (Sora+Inter font pairing,
+ # deep-ink text on cream, gold accent buttons/badges, pill-shaped quick
+ # facts, a left-gold-accent card style), but every line of HTML/CSS/copy
+ # here was written fresh — no scraped markup, no copied wording. Adds one
+ # new original element not found in any other design: a horizontal
+ # guarantee "timeline bar" (refund-window vs remaining-supply segments).
+ # Reuses the exact same default card markup (.plan/.ing-card/.step-card/
+ # .rev-card/.faq-row/.card) as designs 6/8/9/11/12/14/15/18/23/24, so it
+ # needed no extra per-design branches in build_native_page().
+ '25':{'name':'Design 25 — Amberline (Native, Auto-Themed)','source':'design-25.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony','AlphaSteel']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
@@ -267,7 +289,7 @@ SCHEMA={'type':'object','properties':{
  'faqs':{'type':'array','items':{'type':'object','properties':{'q':{'type':'string'},'a':{'type':'string'}},'required':['q','a'],'additionalProperties':False},'description':'If any FAQ answer states how much/how often to take this product, it MUST quote the exact same number as serving_info.daily_serving below — never a different capsule/serving count than that field.'},
  'pricing':{'type':'array','items':{'type':'object','properties':{'bottles':{'type':'integer'},'price_per_bottle':{'type':'string'},'total':{'type':'string'},'shipping':{'type':'string'},'label':{'type':'string'}},'required':['bottles','price_per_bottle','total','shipping','label'],'additionalProperties':False}},
  'seo':{'type':'object','properties':{'title':{'type':'string'},'description':{'type':'string'},'keywords':{'type':'array','items':{'type':'string'}}},'required':['title','description','keywords'],'additionalProperties':False},
- 'reviews_note':{'type':'string','description':'A short, generic, public-safe disclaimer shown directly on the live site under the reviews section (e.g. "Individual experiences vary. These reflect personal opinions, not guaranteed outcomes."). This is READ BY SITE VISITORS — never mention that the reviews are placeholders, fictional, or need to be replaced; that reminder belongs in source_notes instead.'},
+ 'reviews_note':{'type':'string','description':'A short, public-safe disclaimer shown directly on the live site under the reviews section. Favor an honest "illustrative" framing over implying these are verified real customers — e.g. "These reflect common, illustrative feedback themes for this kind of product, not verified customer quotes. Individual results vary." This is READ BY SITE VISITORS — never mention that the reviews are placeholders, fictional, or need to be replaced; that reminder belongs in source_notes instead.'},
  'sample_reviews':{'type':'array','items':{'type':'string'},'description':'3 short, varied, plausible customer review sentences (fictional placeholder style, each different)'},
  'reviewer_names':{'type':'array','items':{'type':'string'},'description':'3 plausible first names for reviewers, demographically appropriate for who actually buys/uses this specific product (e.g. mostly male names for a male-targeted product, mostly female for a female-targeted product, mixed for general wellness)'},
  'bonuses':{'type':'array','items':{'type':'object','properties':{'title':{'type':'string'},'description':{'type':'string'}},'required':['title','description'],'additionalProperties':False},'description':'Any free bonus items, guides or extras that come with larger orders of this product, if genuinely offered. Return an empty array if the product has no known bonus offers — never invent fake bonuses.'},
@@ -477,6 +499,17 @@ def inject_img_css(soup):
 # it works identically across every design (native and reference) without
 # hand-editing 13 different template files. ──
 GUARANTEE_DAYS=60
+
+# Blocks third-party backlink/rank-tracking crawlers (the tools competitors
+# use to see a site's backlink graph and keyword rankings) while leaving
+# every search/AI crawler (Googlebot, Bingbot, GPTBot, ClaudeBot,
+# PerplexityBot, etc.) untouched under the blanket "Allow: /" above them —
+# a widely-used real-world pattern, seen on several independently-run
+# competitor sites researched for this. No comment text is written into the
+# actual robots.txt output, since an identical comment on every generated
+# site would itself be a fingerprint tying the whole network together.
+_BACKLINK_BOT_BLOCK=''.join(f'User-agent: {b}\nDisallow: /\n' for b in
+ ('AhrefsBot','SemrushBot','MJ12bot','DotBot','BLEXBot','DataForSeoBot','SeekportBot','MegaIndex'))
 
 def cta_texts(brand,category='',aggressive=True):
  """aggressive=True (the native/auto-themed pipeline's default) writes
@@ -1527,8 +1560,21 @@ def _extract_json(text):
   if m:return json.loads(m.group(0))
   raise ValueError('Invalid JSON from AI provider.')
 
-def _content_prompt(product,affiliate,domain,product_hint=''):
+def _content_prompt(product,affiliate,domain,product_hint='',is_admin=True):
  schema_json=json.dumps(SCHEMA,ensure_ascii=False,separators=(',',':'))
+ # The expanded seo.keywords tier list and the guaranteed "where to buy"/
+ # "is it legit" FAQ questions are admin-only for now (owner's own request) —
+ # friends' generated sites keep the simpler pre-existing prompt behavior.
+ _admin_seo_faq_block=('''
+For seo.keywords: most visitors to this site already know the brand name and search it directly — there's no way to know in advance which exact phrase a given visitor types, so return a LONG, thorough list (30-40 phrases) covering every one of these buyer-search tiers with the real brand/category/problem substituted in, not a trimmed-down selection:
+Tier 1 — ready to buy (highest-converting): "buy {brand}", "{brand} buy online", "order {brand}", "{brand} for sale", "{brand} price", "{brand} cost", "how much is {brand}", "{brand} discount", "{brand} coupon code", "{brand} promo code", "{brand} deal", "{brand} cheapest price", "{brand} best price", "{brand} where to buy", "where can I buy {brand}", "{brand} near me", "{brand} official website", "{brand} official site", "{brand} buy now", "{brand} free shipping", "{brand} in stock"
+Tier 2 — comparing/deciding: "best {category}", "top 10 {category}", "{brand} reviews", "{brand} review 2026", "{brand} results", "{brand} before and after", "does {brand} work", "is {brand} worth it", "{brand} vs [plausible real competitor]", "{brand} alternatives", "{brand} pros and cons", "{brand} benefits", "{brand} dosage", "how to take {brand}", "{brand} ingredients", "{brand} for {problem}"
+Tier 3 — trust check (converts doubtful buyers): "{brand} scam", "is {brand} legit or scam", "{brand} real or fake", "{brand} complaints", "{brand} side effects", "{brand} testimonials", "{brand} Amazon", "{brand} Reddit", "{brand} FDA approved", "{brand} money back guarantee", "{brand} shark tank" (US-market products only)
+Plus 1-2 extra modifiers where natural: current year ("2026"), audience ("for men"/"for women"), or specific problem ("for brain fog", "for joint pain").
+Only drop a phrase that is clearly inapplicable to this specific product (e.g. skip subscription-cancel phrasing for a one-time-purchase product). Never just repeat the seo.title string itself as a keyword entry.
+
+For faqs: most visitors already know the brand and are deciding whether to trust/buy it, so among the questions you return, always include one phrased close to "Where should I buy {brand}?" or "Where can I buy {brand}?" (answer: only through the official order page — a marketplace listing or lookalike domain isn\'t guaranteed genuine and the guarantee may not apply) and one phrased close to "Is {brand} legit or a scam?" (answer with verifiable specifics — the published ingredient list, the stated guarantee, the official checkout — never a bare "no it\'s not a scam"). Fill the remaining questions with real product-specific questions (dosage, timing, who should avoid it, what\'s in it, guarantee details) — never generic filler.
+''' if is_admin else '')
  hint_block=''
  if product_hint.strip():
   hint_block=f"""
@@ -1582,7 +1628,7 @@ CRITICAL — the benefit phrase must match THIS product's actual category, not a
 - (apply the same real-keyword logic to whatever category this product actually is)
 
 Keep the full title under 65 characters. Mention the product form (capsules, powder, gummies, drops) when it fits naturally and you know it. Vary structure, separator (| vs —) and exact phrasing each time you generate — never repeat the same template mechanically.
-
+{_admin_seo_faq_block}
 For symptoms: list the real, specific problems/discomforts someone who needs {product} would recognize in themselves, grounded in its actual category — not a generic wellness checklist and never symptoms borrowed from a different category of product.
 
 For whatis_callout, how_it_works_intro, pricing_note, guarantee_text, final_cta_text: write these fresh, in your own natural phrasing, specific to {product}'s actual ingredients/category. Do not reuse stock phrases like "combines its ingredients to work together" or "join thousands who have already added" — write like a different person wrote it each time.
@@ -1820,8 +1866,8 @@ def gender_match_reviewer_names(images,site_root,reviewer_names,product,provider
    reviewer_names[i]=_NEUTRAL_US_REVIEWER_NAMES[i%len(_NEUTRAL_US_REVIEWER_NAMES)]
  return reviewer_names
 
-def get_content(product,affiliate,domain,provider='auto',openai_key='',deepseek_key='',anthropic_key='',product_hint=''):
- prompt=_content_prompt(product,affiliate,domain,product_hint)
+def get_content(product,affiliate,domain,provider='auto',openai_key='',deepseek_key='',anthropic_key='',product_hint='',is_admin=True):
+ prompt=_content_prompt(product,affiliate,domain,product_hint,is_admin)
  provider=(provider or 'auto').lower()
  openai_key=(openai_key or os.getenv('OPENAI_API_KEY','')).strip()
  deepseek_key=(deepseek_key or os.getenv('DEEPSEEK_API_KEY','')).strip()
@@ -6075,6 +6121,42 @@ def _bonus_section_html(bonuses,images,design=None):
   f'Get {count_word} Free!</div>'
   '<div style="border-radius:0 0 10px 10px;overflow:hidden;">'+''.join(rows)+'</div></section>')
 
+def _buying_guide_html(data,brand,category,pricing,affiliate):
+ """Short 'Buying Guide & Common Questions' block auto-appended near the end
+ of every native design's real homepage (after FAQ, before the footer) —
+ modeled on a pattern seen on several real top-ranking affiliate pages: a
+ small, clearly-separate block that puts brand+buying/trust search phrases
+ (where to buy, price, legit, side effects, refund) directly into H3s,
+ answered with verifiable specifics rather than a blunt denial. Reuses each
+ design's own shared .card class so it needs no new per-design CSS."""
+ esc=html.escape
+ brand_e=esc(brand)
+ cat=category or 'supplement'
+ cheapest=None
+ for p in (pricing or []):
+  try:amt=float(re.sub(r'[^\d.]','',str(p.get('price_per_bottle','')))or 0)
+  except ValueError:amt=0
+  if amt and (cheapest is None or amt<cheapest[0]):cheapest=(amt,p)
+ if cheapest:
+  price_line=(f'{brand_e} is sold in multi-bottle packs — the more bottles per order, the lower the '
+              f'per-bottle price, down to {esc(str(cheapest[1].get("price_per_bottle","")))} per bottle on the largest pack.')
+ else:
+  price_line=f'{brand_e} pricing is tiered by pack size, with a lower per-bottle cost on larger packs.'
+ guarantee=esc(data.get('guarantee_text') or f'{brand} orders are covered by a {GUARANTEE_DAYS}-day money-back guarantee.')
+ items=[
+  (f'Where to Buy {brand_e}',f'The only place to buy genuine {brand_e} is through its official order page linked on this site — a different marketplace listing or a lookalike domain can\'t guarantee you a genuine bottle or the guarantee below.'),
+  (f'{brand_e} Price &amp; Best Value',price_line),
+  (f'Is {brand_e} Legit?',f'{brand_e} lists its ingredients and amounts on this page, is made in a GMP-certified, FDA-registered facility, and every order is backed by its stated guarantee — details you can check before buying.'),
+  (f'{brand_e} Side Effects &amp; Safety',f'{brand_e} is formulated from the ingredients listed on this page. As with any {esc(cat)}, check the label against any medication you take, and talk to a doctor first if you are pregnant, nursing, or managing a medical condition.'),
+  (f'{brand_e} Refund Policy',guarantee),
+ ]
+ cards=''.join(f'<div class="card"><h3>{t}</h3><p>{d}</p></div>' for t,d in items)
+ return (
+  '<section class="sec" id="buying-guide"><div class="container">'
+  f'<h2>{brand_e} Buying Guide &amp; Common Questions</h2>'
+  '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:24px">'
+  f'{cards}</div></div></section>')
+
 def _design16_extras(data,brand,category,ingredients,benefits,symptoms,how_it_works,pricing,serving,bonuses,price_low,price_high):
  """Text blocks for Design 16's extra sections (pros & cons, who should buy,
  worth-it, independent testing, scientific background, buy-now walkthrough,
@@ -6225,7 +6307,7 @@ def _design17_extras(data,brand,category,ingredients,palette):
   '__COLOR_ACCENT__':_d17_accent(palette['primary']),
  }
 
-def build_native_page(data,domain,affiliate,images,filename,page_kind='index',design='8',site_root=None):
+def build_native_page(data,domain,affiliate,images,filename,page_kind='index',design='8',site_root=None,is_admin=True):
  """Build native (auto-themed, own template) pages via reliable string-template
  replacement. page_kind: 'index' (full page) or a subpage kind. design: which
  native template file to use (e.g. '8', '9')."""
@@ -6704,6 +6786,32 @@ def build_native_page(data,domain,affiliate,images,filename,page_kind='index',de
    if whatis_sec:
     _section_wrap(whatis_sec).append(
      BeautifulSoup(quick_facts_html(data,_reuse_panel_class(whatis_sec)),'html.parser'))
+  # Buying Guide & Common Questions — real homepage only (not legal/blog
+  # pages, which reuse this same page_kind=='index' branch), after FAQ.
+  # Admin-only for now, per owner's request.
+  if filename=='index.html' and is_admin:
+   bg_html=_buying_guide_html(data,brand,category,data.get('pricing',[]),affiliate)
+   faq_sec=soup.find('section',id='faq')
+   if faq_sec:
+    faq_sec.insert_after(BeautifulSoup(bg_html,'html.parser'))
+   else:
+    footer_tag=soup.find('footer')
+    if footer_tag:footer_tag.insert_before(BeautifulSoup(bg_html,'html.parser'))
+   # Visible "Content last reviewed" freshness date — matched and bumped
+   # weekly by scripts/weekly_freshness_refresh.py (by its own text, not a
+   # class name — a custom class like "freshness-note" repeated identically
+   # across every generated site would be a greppable fingerprint tying the
+   # whole network together, the exact PBN-footprint risk cross_link_network.py
+   # already avoids). So a brand-new site shows a current date from day one
+   # instead of only getting one after its first weekly refresh run. Real
+   # competitor pages show this same kind of date, and Bing/Google surface it
+   # directly in the search snippet (confirmed against thehorsefil.com and
+   # horsefilstore.com).
+   freshness_html=('<p style="font-size:.78rem;opacity:.65;text-align:center;'
+                    f'margin:10px 0 0">Content last reviewed: {date.today().strftime("%B %Y")} '
+                    f'— reviewed by the {html.escape(brand)} Research Team</p>')
+   footer_tag=soup.find('footer')
+   if footer_tag:footer_tag.insert_before(BeautifulSoup(freshness_html,'html.parser'))
 
  # ── Unique <title>/meta description per subpage ──
  # rebuild_metadata() always wrote the same site-wide data['seo']['title'] on
@@ -7173,14 +7281,17 @@ def make_legal_page(base_soup,data,domain,affiliate,images,design,filename,site_
  if _theme_rgb and _base_css_text:html_out=retheme_html_inline(html_out,_theme_rgb,_base_css_text)
  return html_out
 
-def write_robots_sitemap(site,domain,page_defs,lastmod_overrides=None):
- # robots.txt stays a blanket "allow everything, disallow nothing" — that
- # includes AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended):
- # none of them are ever named here, so none of them are blocked.
+def write_robots_sitemap(site,domain,page_defs,lastmod_overrides=None,is_admin=True):
+ # robots.txt stays a blanket "allow everything, disallow nothing" for
+ # search/AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended):
+ # none of them are ever named here, so none of them are blocked. Only
+ # backlink/rank-tracking bots (_BACKLINK_BOT_BLOCK) are disallowed — and
+ # only for the admin, for now, per owner's request.
  today=date.today().isoformat()
  lastmod_overrides=lastmod_overrides or {}
  sitemap_url=domain.rstrip('/')+'/sitemap.xml'
- (site/'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {sitemap_url}\n',encoding='utf-8')
+ _bot_block=_BACKLINK_BOT_BLOCK if is_admin else ''
+ (site/'robots.txt').write_text(f'User-agent: *\nAllow: /\n\n{_bot_block}\nSitemap: {sitemap_url}\n',encoding='utf-8')
  files=['index.html']+[x[0] for x in page_defs]
  body=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
  for fn in files:
@@ -7597,7 +7708,7 @@ def _article_closing_html(brand,category,affiliate):
          f'style="display:inline-block;background:var(--primary,#2563EB);color:#fff;font-weight:700;'
          f'padding:14px 24px;border-radius:10px;text-decoration:none">{html.escape(cta)}</a>')
 
-def _blog_articles(data,domain,affiliate):
+def _blog_articles(data,domain,affiliate,is_admin=True):
  """Real, per-product blog content — one article per topic, built from this
  product's own ingredients/pricing/guarantee/FAQ data rather than generic
  filler, so every generated site's blog text actually differs. Returns a
@@ -7840,6 +7951,171 @@ def _blog_articles(data,domain,affiliate):
   ),
  })
 
+ # 7 — {product} Price: What Each Package Actually Costs
+ price_rows=(''.join(f'<li>{p.get("bottles","")} bottle{"s" if p.get("bottles",0)!=1 else ""} — '
+                      f'{html.escape(str(p.get("price_per_bottle","")))} per bottle, total {html.escape(str(p.get("total","")))}, '
+                      f'{html.escape(str(p.get("shipping","")))}</li>' for p in pricing)
+             or '<li>See the official order page for current package pricing.</li>')
+ articles.append({
+  'slug':f'{slugify(brand)}-price','h1':f'{brand} Price: What Each Package Actually Costs',
+  'title':f'{brand} Price: What Each Package Costs | {brand} Blog'[:60],
+  'meta_desc':(f'A plain breakdown of every {brand} package price, the per-bottle cost, and shipping — '
+               f'so you know exactly what you would pay before ordering.')[:155],
+  'body_html':(
+   f'<p>Here is exactly what {html.escape(brand)} costs, package by package, straight from the official '
+   f'order page — no guessing at the per-bottle price.</p>'
+   f'<h2>Every {html.escape(brand)} Package, Side By Side</h2><ul>{price_rows}</ul>'
+   f'<h2>Why The Per-Bottle Price Drops On Larger Packs</h2>'
+   f'<p>{html.escape(pricing_note)}</p>'
+   f'<h2>What The Price Includes</h2>'
+   f'<p>{html.escape(guarantee_text)} Confirm the current price and any shipping charge on the official '
+   f'order page before completing checkout, since pricing can change.</p>'
+  ),
+ })
+
+ # 8 — Is {product} Legit?
+ articles.append({
+  'slug':f'is-{slugify(brand)}-legit','h1':f'Is {brand} Legit? What We Checked',
+  'title':f'Is {brand} Legit? What We Checked | {brand} Blog'[:60],
+  'meta_desc':(f'Is {brand} legit? Here is what we checked — the ingredient list, the guarantee, and '
+               f'where it is actually sold — before answering that.')[:155],
+  'body_html':(
+   f'<p>Before recommending {html.escape(brand)}, here is what we actually looked at.</p>'
+   f'<h2>The Ingredient List Is Public</h2>'
+   f'<p>{html.escape(brand)} lists {n_ing} named ingredient{"s" if n_ing!=1 else ""} on its label rather '
+   f'than hiding behind a vague "proprietary formula" claim alone'
+   +(': '+', '.join(html.escape(i.get('name','')) for i in ingredients[:6])+'.' if ingredients else '.')
+   +f'</p><h2>The Guarantee Is Real And Specific</h2>'
+   f'<p>{html.escape(guarantee_text)} A product backed by a clear, time-boxed refund policy carries less '
+   f'risk than one with no guarantee at all.</p>'
+   f'<h2>Where It Is Actually Sold</h2>'
+   f'<p>{html.escape(brand)} is sold through its own official order page, not through unrelated '
+   f'marketplace listings or lookalike domains — buying anywhere else means the guarantee above may not '
+   f'apply, and the bottle may not be genuine.</p>'
+   f'<h2>Our Take</h2>'
+   f'<p>{html.escape(whatis)} That is the honest baseline for deciding whether {html.escape(brand)} is '
+   f'worth trying for yourself.</p>'
+  ),
+ })
+
+ # 9 — Where To Buy {product} (And Where Not To)
+ articles.append({
+  'slug':f'where-to-buy-{slugify(brand)}','h1':f'Where To Buy {brand} (And Where Not To)',
+  'title':f'Where To Buy {brand} (And Where Not To) | {brand} Blog'[:60],
+  'meta_desc':(f'Where to actually buy {brand}, and why a marketplace listing or lookalike domain is not '
+               f'the same as ordering from the official page.')[:155],
+  'body_html':(
+   f'<p>The short answer: order {html.escape(brand)} through its own official order page — not a '
+   f'marketplace listing, and not a domain that merely sounds similar to the real one.</p>'
+   f'<h2>Why That Matters</h2>'
+   f'<p>{html.escape(guarantee_text)} That guarantee, and the manufacturer\'s own quality claims, only '
+   f'apply to orders placed through the official page — a third-party reseller or a lookalike site can\'t '
+   f'honor either one.</p>'
+   f'<h2>What To Check Before You Click Buy</h2>'
+   f'<ul><li>Does the domain match the brand name exactly, with no extra or swapped letters?</li>'
+   f'<li>Does the checkout mention the same {html.escape(str(GUARANTEE_DAYS))}-day guarantee stated on this page?</li>'
+   f'<li>Are the package sizes and prices the same as listed here?</li></ul>'
+   f'<h2>Package Options</h2><ul>{price_rows}</ul>'
+  ),
+ })
+
+ # 10 — {product} Side Effects
+ articles.append({
+  'slug':f'{slugify(brand)}-side-effects','h1':f'{brand} Side Effects: What To Know Before You Start',
+  'title':f'{brand} Side Effects: What To Know | {brand} Blog'[:60],
+  'meta_desc':(f'What to know about {brand} before you start — its ingredients, who should talk to a '
+               f'doctor first, and how to watch for any reaction.')[:155],
+  'body_html':(
+   f'<p>{html.escape(brand)} is formulated from the ingredients listed on its own label'
+   +(': '+', '.join(html.escape(i.get('name','')) for i in ingredients[:8])+'.' if ingredients else '.')
+   +f'</p><h2>A Sensible Way To Start</h2>'
+   f'<p>As with any new {html.escape(category)}, starting at the labeled serving '
+   f'({html.escape(str(serving.get("daily_serving","the amount listed on the label")))}) and watching how '
+   f'you respond over the first few days is more sensible than assuming nothing could go wrong.</p>'
+   f'<h2>Who Should Talk To A Doctor First</h2>'
+   f'<p>Anyone who is pregnant or nursing, taking prescription medication, or managing a medical condition '
+   f'should check with a healthcare provider before trying {html.escape(brand)} or any other '
+   f'{html.escape(category)} — especially if any ingredient above overlaps with something already '
+   f'being taken.</p>'
+   f'<h2>This Is Not Medical Advice</h2>'
+   f'<p>{html.escape(brand)} is a dietary supplement, not a drug, and has not been evaluated by the FDA to '
+   f'diagnose, treat, cure or prevent any disease. This page is general information, not a substitute for '
+   f'advice from your own doctor or pharmacist.</p>'
+  ),
+ })
+
+ # 11 — {product} Complaints: What Buyers Actually Report
+ articles.append({
+  'slug':f'{slugify(brand)}-complaints','h1':f'{brand} Complaints: What Buyers Actually Report',
+  'title':f'{brand} Complaints: What Buyers Report | {brand} Blog'[:60],
+  'meta_desc':(f'The honest, common friction points buyers run into with {brand} — and how the '
+               f'guarantee is meant to handle them.')[:155],
+  'body_html':(
+   f'<p>No product works identically for every single buyer, and {html.escape(brand)} is no exception. '
+   f'Here are the honest, common points worth knowing about upfront, rather than only hearing about '
+   f'after you order.</p>'
+   f'<h2>Results Take Time, Not One Dose</h2>'
+   f'<p>{html.escape(brand)} is meant to be taken consistently as part of a routine, not as a one-time '
+   f'fix — a single serving on day one is not a fair test of whether it works.</p>'
+   f'<h2>Package Size Confusion</h2>'
+   f'<p>{html.escape(pricing_note)} Double-check the bottle count and per-bottle price before ordering so '
+   f'the package you receive matches what you expected.</p>'
+   f'<h2>If Something Genuinely Goes Wrong</h2>'
+   f'<p>{html.escape(guarantee_text)} That guarantee exists specifically to handle the case where '
+   f'{html.escape(brand)} does not work out for you — contact official support and use it rather than '
+   f'simply writing the purchase off.</p>'
+  ),
+ })
+
+ # 12 — Can You Buy {product} On Amazon Or Walmart?
+ articles.append({
+  'slug':f'can-you-buy-{slugify(brand)}-on-amazon','h1':f'Can You Buy {brand} On Amazon Or Walmart?',
+  'title':f'Can You Buy {brand} On Amazon Or Walmart? | {brand} Blog'[:60],
+  'meta_desc':(f'Is {brand} sold on Amazon or Walmart, or only through its own official order page? '
+               f'Here is the straight answer.')[:155],
+  'body_html':(
+   f'<p>Most direct-to-consumer brands, {html.escape(brand)} included, sell only through their own '
+   f'official order page rather than through general marketplaces.</p>'
+   f'<h2>Why Not Just List It On Amazon?</h2>'
+   f'<p>{html.escape(guarantee_text)} A guarantee like that is simplest to honor when every order runs '
+   f'through the brand\'s own checkout — a marketplace listing (genuine or not) sits outside that system '
+   f'entirely, which is also why counterfeit or expired stock shows up on open marketplaces for products '
+   f'like this.</p>'
+   f'<h2>Where To Actually Order It</h2>'
+   f'<p>Use the official order page linked on this site. {html.escape(whatis)}</p>'
+  ),
+ })
+
+ # 13 — {product} Alternatives: What To Compare Before Switching
+ articles.append({
+  'slug':f'{slugify(brand)}-alternatives','h1':f'{brand} Alternatives: What To Compare Before Switching',
+  'title':f'{brand} Alternatives: What To Compare | {brand} Blog'[:60],
+  'meta_desc':(f'Thinking about {brand} alternatives? Here is what actually matters to compare — '
+               f'ingredient transparency, the guarantee, and price per serving — before switching.')[:155],
+  'body_html':(
+   f'<p>If you are weighing {html.escape(brand)} against other options in the same '
+   f'{html.escape(category)} category, here is what is actually worth comparing — not just the price '
+   f'on the label.</p>'
+   f'<h2>Ingredient Transparency</h2>'
+   f'<p>{html.escape(brand)} lists {n_ing} named ingredient{"s" if n_ing!=1 else ""} rather than hiding '
+   f'behind a single "proprietary blend" line'
+   +(': '+', '.join(html.escape(i.get('name','')) for i in ingredients[:6])+'.' if ingredients else '.')
+   +f' Any alternative that will not disclose individual amounts is harder to evaluate honestly.</p>'
+   f'<h2>The Guarantee</h2>'
+   f'<p>{html.escape(guarantee_text)} Check whether an alternative offers a comparably clear, time-boxed '
+   f'refund policy — a vague or missing guarantee is a real difference, not a minor detail.</p>'
+   f'<h2>Price Per Serving, Not Just Price Per Bottle</h2>'
+   f'<p>{html.escape(pricing_note)} Divide any alternative\'s total price by its actual servings per '
+   f'bottle before assuming it is cheaper than {html.escape(brand)}.</p>'
+   f'<h2>Red Flags In Any Alternative</h2>'
+   f'<ul><li>No individual ingredient amounts listed anywhere</li>'
+   f'<li>No guarantee, or one that is vague about the window or process</li>'
+   f'<li>Sold only through third-party marketplace listings, with no official order page</li></ul>'
+   f'<h2>Bottom Line</h2>'
+   f'<p>{html.escape(whatis)} Compare any alternative against that same standard before switching.</p>'
+  ),
+ })
+
  for a in articles:
   takeaways=re.findall(r'<h2>(.*?)</h2>',a['body_html'])[:3]
   takeaways_html=''
@@ -7849,7 +8125,9 @@ def _blog_articles(data,domain,affiliate):
                     f'background:#f0f9ff;border-left:4px solid var(--primary,#2563EB);border-radius:6px">'
                     f'<b>Key Takeaways</b><ul style="margin-top:8px">{items}</ul></div>')
   a['body_html']=takeaways_html+a['body_html']+close
- return articles[:6]
+ # Articles 7-13 (price/is-legit/where-to-buy/side-effects/complaints/
+ # amazon/alternatives) are admin-only for now, per owner's request.
+ return articles[:13] if is_admin else articles[:6]
 
 def _blog_article_extras(brand,slug,title,all_articles):
  """Breadcrumb, 2-3 internal links and a related-articles block for one
@@ -8010,7 +8288,7 @@ def _legal_pages_content(brand,domain,category):
 
  today=date.today().isoformat()
  sitemap_url=domain.rstrip('/')+'/sitemap.xml'
- (site/'robots.txt').write_text(f'User-agent: *\nAllow: /\nSitemap: {sitemap_url}\n',encoding='utf-8')
+ (site/'robots.txt').write_text(f'User-agent: *\nAllow: /\n\n{_BACKLINK_BOT_BLOCK}\nSitemap: {sitemap_url}\n',encoding='utf-8')
  files=['index.html']+[x[0] for x in page_defs]
  body=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
  for fn in files:
@@ -8175,7 +8453,7 @@ def generate_content():
   _cfg=_load_cfg()
   _serp_key,openai_key,deepseek_key,anthropic_key=_resolve_keys(_cfg)
   product_hint=_request_hint()
-  data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint)
+  data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint,auth.is_admin())
   data['brand']=data.get('brand') or product
   return jsonify(data)
  except Exception as e:
@@ -8355,11 +8633,16 @@ def generate():
   content_json=request.form.get('content_json','').strip()
   if content_json:
    try:data=json.loads(content_json)
-   except Exception:data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint)
+   except Exception:data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint,auth.is_admin())
   else:
-   data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint)
+   data=get_content(product,affiliate,domain,provider,openai_key,deepseek_key,anthropic_key,product_hint,auth.is_admin())
   data['brand']=data.get('brand') or product
   data=ensure_core_faqs(data)
+  # Today's newer additions (Buying Guide section, extra keyword-targeted
+  # blog articles, visible freshness date, robots.txt backlink-bot block)
+  # are admin-only for now, per owner's request — computed once here and
+  # threaded through every call below instead of re-checking per call site.
+  _is_admin=auth.is_admin()
   # Design 15 gets a fresh random look for every site; every page built below
   # reads it from `data`, so the whole site shares one consistent recipe.
   if design=='15':data['_d15']=design15.new_recipe()
@@ -8504,12 +8787,12 @@ def generate():
       with _PILImage.open(_b3_disk) as _b3im:
        _b3im.convert('RGB').save(imgdir/'bottle-3.png','PNG')
    except Exception:pass
-  blog_articles=_blog_articles(data,domain,affiliate)
+  blog_articles=_blog_articles(data,domain,affiliate,_is_admin)
   if TEMPLATES[design].get('native'):
-   (site/'index.html').write_text(build_native_page(data,domain,affiliate,images,'index.html','index',design,site),encoding='utf-8')
+   (site/'index.html').write_text(build_native_page(data,domain,affiliate,images,'index.html','index',design,site,_is_admin),encoding='utf-8')
    defs=[('what-is-product.html','what-is'),('how-it-works.html','how-it-works'),('ingredients.html','ingredients'),('benefits.html','benefits'),('reviews.html','reviews'),('faq.html','faq')]
    for fn,kind in defs:
-    (site/fn).write_text(build_native_page(data,domain,affiliate,images,fn,kind,design,site),encoding='utf-8')
+    (site/fn).write_text(build_native_page(data,domain,affiliate,images,fn,kind,design,site,_is_admin),encoding='utf-8')
    # Real blog: one page per article (min 4, built from this product's own
    # ingredients/pricing/guarantee/FAQ data), plus an index that actually
    # links to each one — replaces the old 3 inert teaser cards with no
@@ -8519,7 +8802,7 @@ def generate():
      (site/_pick_hero(images)) if images else None))
    for a in blog_articles:
     fn=f'blog/{a["slug"]}.html'
-    article_html=build_native_page(data,domain,affiliate,images,fn,'index',design,site)
+    article_html=build_native_page(data,domain,affiliate,images,fn,'index',design,site,_is_admin)
     asoup=BeautifulSoup(article_html,'html.parser')
     for sec in asoup.find_all('section'):sec.decompose()
     if asoup.title:asoup.title.string=a['title']
@@ -8548,7 +8831,7 @@ def generate():
     f'<a class="card" href="../blog/{a["slug"]}.html" style="display:block;text-decoration:none;color:inherit">'
     f'<h4>{html.escape(a["h1"])}</h4><p>{html.escape(_truncate_words(a["meta_desc"],140))}</p>'
     f'<span style="font-weight:700">Read more &rarr;</span></a>' for a in blog_articles)
-   blog_html=build_native_page(data,domain,affiliate,images,'blog/index.html','index',design,site)
+   blog_html=build_native_page(data,domain,affiliate,images,'blog/index.html','index',design,site,_is_admin)
    bsoup=BeautifulSoup(blog_html,'html.parser')
    for sec in bsoup.find_all('section'):sec.decompose()
    blog_seo_title=f'{data["brand"]} Blog | {data["brand"]}'
@@ -8612,7 +8895,7 @@ def generate():
   for fn,(page_title,body_html) in legal_pages.items():
    if TEMPLATES[design].get('native'):
     # Reuse the native index page's nav/footer chrome for legal pages too
-    legal_html=build_native_page(data,domain,affiliate,images,fn,'index',design,site)
+    legal_html=build_native_page(data,domain,affiliate,images,fn,'index',design,site,_is_admin)
     lsoup=BeautifulSoup(legal_html,'html.parser')
     for sec in lsoup.find_all('section'):sec.decompose()
     # Unique <title>/meta description per legal page — build_native_page()
@@ -8675,7 +8958,7 @@ def generate():
     '<li style="margin-bottom:8px"><a href="reviews.html">Reviews</a></li>'
     '<li style="margin-bottom:8px"><a href="blog/index.html">Blog</a></li></ul>')
   if TEMPLATES[design].get('native'):
-   nf_html=build_native_page(data,domain,affiliate,images,'404.html','index',design,site)
+   nf_html=build_native_page(data,domain,affiliate,images,'404.html','index',design,site,_is_admin)
    nfsoup=BeautifulSoup(nf_html,'html.parser')
    for sec in nfsoup.find_all('section'):sec.decompose()
    if nfsoup.title:nfsoup.title.string=f'Page Not Found | {data["brand"]}'
@@ -8722,7 +9005,7 @@ def generate():
   write_robots_sitemap(site,domain,defs+[('blog/index.html','blog')]
                         +[(f'blog/{a["slug"]}.html','') for a in blog_articles]
                         +[(fn,'') for fn in legal_pages.keys()],
-                        lastmod_overrides=_blog_lastmod)
+                        lastmod_overrides=_blog_lastmod,is_admin=_is_admin)
   write_htaccess(site,domain)
   write_indexnow(site,domain)
   write_llms_txt(site,domain,data,blog_articles,
