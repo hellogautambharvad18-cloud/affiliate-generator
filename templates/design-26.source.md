@@ -13,8 +13,8 @@
 <style>
 :root{--primary:__COLOR_PRIMARY__;--primary-dark:__COLOR_DARK__;--primary-light:__COLOR_LIGHT__;--accent:__COLOR_ACCENT__;--on-primary:__COLOR_ON_PRIMARY__;--ink:#0F2A2E;--ink-soft:#4E6B6E;--bg:#F3FAFA;--surface:#fff;--surface-alt:#E3F3F2;--line:rgba(15,42,46,.12);--good:#1E8F6B;--radius:18px;--shadow:0 18px 40px -20px rgba(15,42,46,.25)}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;font-size:17px}
+html{scroll-behavior:smooth;font-size:112.5%}
+body{margin:0;font-family:'IBM Plex Sans',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.65;overflow-x:hidden;font-size:18px}
 h1,h2,h3,h4{font-family:'Outfit',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-weight:700;line-height:1.22;margin:0;color:var(--ink)}
 a{color:var(--primary-dark)}
 img{max-width:100%;height:auto;display:block}
@@ -46,12 +46,13 @@ header.hero{padding:40px 0 0;background:radial-gradient(1000px 440px at 88% -12%
 .glm-answer p{margin:0;color:var(--ink-soft);font-size:.98rem}
 .hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .hero-media{display:flex;justify-content:center}
-.glm-hero-card{background:var(--surface-alt);border:1px solid var(--line);border-radius:28px;padding:26px;width:100%;max-width:300px;box-shadow:var(--shadow);text-align:center}
-.glm-hero-card img{max-width:200px;margin:0 auto 12px}
+.glm-hero-card{background:transparent;border:0;border-radius:0;padding:0;width:100%;max-width:340px;box-shadow:none;text-align:center}
+.glm-hero-card img{max-width:290px;margin:0 auto 16px;filter:drop-shadow(0 22px 34px rgba(15,42,46,.25))}
+.glm-hero-rating{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 18px;margin:0;font-weight:700;font-size:.9rem;box-shadow:var(--shadow)}
 /* Section head */
-.sec{padding:60px 0}
+.sec{padding:84px 0}
 .sec.alt{background:var(--surface-alt)}
-.head{max-width:700px;margin:0 auto 34px;text-align:center}
+.head{max-width:700px;margin:0 auto 40px;text-align:center}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--primary-dark);font-weight:800;font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:11px}
 .head h2{font-size:1.85rem;margin:0 0 12px}
 .head p{color:var(--ink-soft);font-size:1.02rem;margin:0}
@@ -83,6 +84,10 @@ section.trust .t-item{display:flex;align-items:center;gap:9px;font-weight:700;fo
 section.trust img{width:32px;height:32px;object-fit:contain}
 /* Callout reused by Quick Facts auto-box */
 .glm-callout{background:var(--surface-alt);border-left:4px solid var(--primary-dark);border-radius:14px;padding:20px 22px;font-weight:500;color:var(--ink)}
+.glm-honesty{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-top:16px;display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.glm-honesty div b{display:block;font-family:'Outfit',sans-serif;font-size:.82rem;letter-spacing:.03em;text-transform:uppercase;color:var(--primary-dark);margin-bottom:6px}
+.glm-honesty div p{margin:0;color:var(--ink-soft);font-size:.92rem}
+@media(max-width:620px){.glm-honesty{grid-template-columns:1fr}}
 .glm-chips{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
 .glm-chips span{background:var(--surface-alt);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:700;font-size:.8rem;color:var(--ink)}
 /* Benefits feature block */
@@ -94,11 +99,11 @@ section.trust img{width:32px;height:32px;object-fit:contain}
    up, right under the hero, instead of mid-page, as part of this design's reordered flow. */
 .glm-readout{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:center}
 .glm-ring{text-align:center}
-.glm-ring svg{width:100px;height:100px}
+.glm-ring svg{width:122px;height:122px}
 .glm-ring .trk{fill:none;stroke:var(--surface-alt);stroke-width:10}
 .glm-ring .val{fill:none;stroke:var(--primary-dark);stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:56px 56px}
-.glm-ring .num{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.2rem;fill:var(--ink)}
-.glm-ring .lbl{margin-top:8px;font-weight:700;font-size:.84rem;color:var(--ink-soft)}
+.glm-ring .num{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.3rem;fill:var(--ink)}
+.glm-ring .lbl{margin-top:10px;font-weight:700;font-size:.9rem;color:var(--ink-soft)}
 .glm-readout-cap{grid-column:1/-1;text-align:center;font-size:.76rem;color:var(--ink-soft);opacity:.8;font-style:italic;margin-top:2px}
 /* Spec Sidebar shell — this design's structural identity: a persistent, sticky
    left-hand spec sheet running alongside every content section from Pricing
@@ -116,18 +121,18 @@ section.trust img{width:32px;height:32px;object-fit:contain}
 .glm-side-badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .glm-side-badges img{width:26px;height:26px;object-fit:contain}
 .glm-main{min-width:0}
-.glm-main .sec{padding:44px 0}
+.glm-main .sec{padding:64px 0}
 .glm-main .wrap{max-width:none;padding:0}
 /* Pricing presented as a horizontal comparison strip, not a 3-col grid */
 .plans{display:flex;gap:18px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
 .plans>*{flex:0 0 240px;scroll-snap-align:start}
 .plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column}
 .plan.top{border:2px solid var(--primary-dark);box-shadow:var(--shadow)}
-.plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--primary-dark);color:var(--on-primary);border-radius:999px;padding:6px 16px;font-weight:800;font-size:.75rem;white-space:nowrap}
+.plan-badge{position:absolute;top:-15px;left:50%;transform:translateX(-50%);background:var(--primary-dark);color:var(--on-primary);border-radius:999px;padding:7px 18px;font-weight:800;font-size:.8rem;white-space:nowrap;box-shadow:var(--shadow)}
 .plan img{max-width:140px;margin:4px auto 12px}
 .plan-ttl{font-size:1.15rem}
 .plan-sub{font-weight:600;color:var(--ink-soft);font-size:.82rem}
-.plan-price{font-size:2rem;margin:12px 0 4px;font-family:'Outfit',sans-serif;font-weight:700}
+.plan-price{font-size:2.3rem;margin:12px 0 4px;font-family:'Outfit',sans-serif;font-weight:800}
 .plan-price small{font-size:.88rem;color:var(--ink-soft);font-weight:600}
 .plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.83rem}
 .plan-ship{color:var(--good)}
@@ -209,7 +214,7 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <div class="hero-media">
 <div class="glm-hero-card reveal">
 <img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="200" height="200" fetchpriority="high">
-<p style="margin:0;font-weight:700;font-size:.9rem">★ 4.8 / 5 · __REVIEW_COUNT__ reviews</p>
+<p class="glm-hero-rating">★ 4.8 / 5 · __REVIEW_COUNT__ reviews</p>
 </div>
 </div>
 </div></header>
@@ -254,6 +259,7 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Clear, Straight Answer</h2></div>
 <p class="reveal" style="font-size:1.04rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
 <div class="glm-callout reveal" style="max-width:760px;margin:0 auto">__WHATIS_CALLOUT__</div>
+<div class="glm-honesty reveal" style="max-width:760px;margin-left:auto;margin-right:auto"><div><b>What This Page Can Tell You</b><p>The ingredients, the pricing, and what __BRAND__ is formulated to support — all laid out plainly so you can read the label before you buy.</p></div><div><b>What Only You Can Confirm</b><p>How your own body responds. That's between you, your results, and your doctor — not something any page on the internet can promise you in advance.</p></div></div>
 <div class="glm-chips reveal" style="justify-content:center"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
 <div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
