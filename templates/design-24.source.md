@@ -200,10 +200,10 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 </div></header>
 <section class="trust"><div class="wrap">
-<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="36" height="36" loading="lazy"> Made in USA</div>
-<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="36" height="36" loading="lazy"> GMP Certified</div>
-<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="36" height="36" loading="lazy"> FDA-Registered Facility</div>
-<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="36" height="36" loading="lazy"> 100% Natural</div>
+<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="36" height="36" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="36" height="36" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="36" height="36" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="36" height="36" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></section>
 <section class="sec"><div class="wrap">
 <div class="info-strip">
@@ -284,10 +284,10 @@ __FAQ_ROW_TEMPLATE__
 <h2 style="font-size:1.8rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
 <p style="color:var(--muted);max-width:640px;margin:0 auto 20px">__GUARANTEE_TEXT__</p>
 <div style="display:flex;gap:26px;justify-content:center;flex-wrap:wrap">
-<img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy">
-<img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy">
-<img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy">
-<img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy">
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--muted);margin-top:4px">Strict quality control standards</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--muted);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--muted);margin-top:4px">Produced in a registered facility</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--muted);margin-top:4px">No artificial fillers or additives</figcaption></figure>
 </div>
 </div></div></section>
 <section class="sec final"><div class="wrap">

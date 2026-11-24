@@ -204,10 +204,10 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.75}
 </div></header>
 <div class="pulse-divider" aria-hidden="true"><svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0 20 H380 L410 6 L440 34 L470 20 H700 L730 2 L760 38 L790 20 H1200" fill="none" stroke="#22d3ee" stroke-width="2" opacity=".45"/></svg></div>
 <section class="trust"><div class="wrap">
-<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="38" height="38" loading="lazy"> Made in USA</div>
-<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="38" height="38" loading="lazy"> GMP Certified</div>
-<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="38" height="38" loading="lazy"> FDA-Registered Facility</div>
-<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="38" height="38" loading="lazy"> 100% Natural</div>
+<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="38" height="38" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="38" height="38" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="38" height="38" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="38" height="38" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></section>
 <section class="sec" id="symptoms"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Sound familiar?</span><h2>Here's What Usually Gets In The Way</h2><p>If any of this feels familiar, __BRAND__ was built with exactly this in mind.</p></div>

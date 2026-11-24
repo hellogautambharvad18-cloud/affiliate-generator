@@ -239,10 +239,10 @@ footer p{margin-bottom:10px;color:rgba(255,255,255,.55);font-size:.76rem;line-he
 </header>
 
 <div class="trust-strip"><div class="wrap trust-row">
-<div class="trust-item"><img src="assets/images/badge-usa.png" alt="USA">Made In The USA</div>
-<div class="trust-item"><img src="assets/images/badge-fda.png" alt="FDA">Registered Facility</div>
-<div class="trust-item"><img src="assets/images/badge-gmp.png" alt="GMP">GMP Certified</div>
-<div class="trust-item"><img src="assets/images/badge-natural.png" alt="Natural">Naturally Sourced</div>
+<div class="trust-item"><img src="assets/images/badge-usa.png" alt="USA"><span><b>Made In The USA</b><br><small style="font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="trust-item"><img src="assets/images/badge-fda.png" alt="FDA"><span><b>Registered Facility</b><br><small style="font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="trust-item"><img src="assets/images/badge-gmp.png" alt="GMP"><span><b>GMP Certified</b><br><small style="font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="trust-item"><img src="assets/images/badge-natural.png" alt="Natural"><span><b>Naturally Sourced</b><br><small style="font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></div>
 
 <section class="whatis-band" id="what-is"><div class="wrap whatis-inner">

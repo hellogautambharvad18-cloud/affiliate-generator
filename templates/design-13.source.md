@@ -326,10 +326,10 @@ __ING_CARD_TEMPLATE__
 <section class="sec badges"><div class="container">
 <div class="head"><span class="kick">Quality You Can Trust</span><h2>Made To A Higher Standard</h2></div>
 <div class="row g-4 justify-content-center text-center">
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-usa.png" alt="Made in the USA" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Made In The USA</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-natural.png" alt="Natural ingredients" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Natural Ingredients</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-gmp.png" alt="GMP certified" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">GMP Certified</div></div>
-<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">FDA-Registered Facility</div></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-usa.png" alt="Made in the USA" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Made In The USA</div><p style="color:var(--muted);font-size:.82rem;font-weight:500;margin:4px 0 0">Manufactured under strict quality control standards.</p></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-natural.png" alt="Natural ingredients" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">Natural Ingredients</div><p style="color:var(--muted);font-size:.82rem;font-weight:500;margin:4px 0 0">No artificial fillers or synthetic additives.</p></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-gmp.png" alt="GMP certified" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">GMP Certified</div><p style="color:var(--muted);font-size:.82rem;font-weight:500;margin:4px 0 0">Made under Good Manufacturing Practice procedures.</p></div>
+<div class="col-6 col-lg-3 badge-tile"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" class="badge-img" width="90" height="90" loading="lazy"><div class="badge-cap">FDA-Registered Facility</div><p style="color:var(--muted);font-size:.82rem;font-weight:500;margin:4px 0 0">Produced in an FDA-registered facility.</p></div>
 </div>
 </div></section>
 

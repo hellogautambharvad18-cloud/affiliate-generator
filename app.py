@@ -133,6 +133,39 @@ TEMPLATES={
  # .rev-card/.faq-row/.card) as designs 6/8/9/11/12/14/15/18/23/24, so it
  # needed no extra per-design branches in build_native_page().
  '25':{'name':'Design 25 — Amberline (Native, Auto-Themed)','source':'design-25.source.md','old':None,'old_domains':[],'native':True},
+ # Designs 26-30 are five more fully original native themes (no reference-
+ # site clones), each with its own distinct palette/font pairing AND its
+ # own distinctive visual component beyond plain text+cards — all reuse the
+ # exact same default card markup (.plan/.ing-card/.step-card/.rev-card/
+ # .faq-row/.card) as the other default-path native designs, so none needed
+ # extra per-design branches in build_native_page().
+ # Design 26 — cool mint/teal clinical-minimal (Outfit+IBM Plex Sans).
+ # Distinctive element: a "Lab Readout" panel of 3 circular SVG progress
+ # rings (ingredients/serving/guarantee), built from existing fact tokens.
+ '26':{'name':'Design 26 — Glacial Mint (Native, Auto-Themed)','source':'design-26.source.md','old':None,'old_domains':[],'native':True},
+ # Design 27 — earthy terracotta/sage botanical (Cormorant Garamond+Nunito
+ # Sans). Distinctive element: a "Sourcing Trail" — a dotted path with
+ # leaf-shaped nodes naming what's on the label, built from the existing
+ # __ORBIT1-4__ ingredient-name tokens other designs already use.
+ '27':{'name':'Design 27 — Terracotta Trail (Native, Auto-Themed)','source':'design-27.source.md','old':None,'old_domains':[],'native':True},
+ # Design 28 — dark vibrant violet with a neon-lime static accent
+ # (Unbounded+Hanken Grotesk). Distinctive element: a 4-stage glowing
+ # "Momentum Stages" habit-journey graphic. Dark-background safety follows
+ # the same pattern already established by Design 23 (a static accent var,
+ # not the bottle-themed __COLOR_DARK__, drives links/accents so a dark
+ # uploaded product photo can never make text/buttons unreadable).
+ '28':{'name':'Design 28 — Volt Pulse (Native, Auto-Themed)','source':'design-28.source.md','old':None,'old_domains':[],'native':True},
+ # Design 29 — dark gold luxury editorial (Cinzel+Jost), sharp low-radius
+ # corners. Distinctive element: a "Formula Profile" 3-ring radial donut
+ # chart (ingredient transparency / manufacturing standard / guarantee
+ # coverage), labeled illustrative. Same static-gold-accent dark-background
+ # safety pattern as Design 28.
+ '29':{'name':'Design 29 — Porcelain Luxe (Native, Auto-Themed)','source':'design-29.source.md','old':None,'old_domains':[],'native':True},
+ # Design 30 — playful pastel pink/coral (Fredoka+Nunito), rounded corners.
+ # Distinctive element: a "Match Card" — a good-fit checkmark badge plus a
+ # plain-language fit checklist, framed honestly (no fabricated % match
+ # score) per the session's conservative-copy guidance.
+ '30':{'name':'Design 30 — Petal Match (Native, Auto-Themed)','source':'design-30.source.md','old':None,'old_domains':[],'native':True},
 }
 ALL_OLD_BRANDS=['BloodPril','JellyTide','VapoCept','BreathiZen','Gelagen','MemoVolt','HoneyHarmony','AlphaSteel']
 OLD_REVIEWER_NAMES=['Dr. Lena Kessler','Tobias Engel']
