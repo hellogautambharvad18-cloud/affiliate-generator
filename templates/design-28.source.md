@@ -35,8 +35,8 @@ nav.navbar .wrap{display:flex;align-items:center;gap:24px;padding:15px 24px}
 .btn-ghost{background:transparent!important;color:var(--ink)!important;border:2px solid var(--line)!important;box-shadow:none!important}
 .btn-big{padding:16px 30px;font-size:1.03rem}
 .nav-cta{padding:9px 18px!important;font-size:.86rem;box-shadow:none}
-/* Hero */
-header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -12%,var(--surface-alt) 0%,transparent 60%),var(--bg)}
+/* Hero — includes an inline static trend-chart graphic beside the product card */
+header.hero{padding:44px 0 14px;background:radial-gradient(1000px 440px at 88% -12%,var(--surface-alt) 0%,transparent 60%),var(--bg)}
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start}
 .vlt-pill{display:inline-block;background:var(--surface-alt);color:var(--neon);font-weight:800;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;padding:7px 15px;border-radius:999px;border:1px solid var(--line)}
 .hero h1{font-size:2.3rem;margin:16px 0 4px;letter-spacing:-.01em}
@@ -44,35 +44,39 @@ header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -
 .vlt-answer{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
 .vlt-answer .tag{display:inline-block;background:var(--neon);color:#0F0A1E;font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:8px;margin-bottom:9px}
 .vlt-answer p{margin:0;color:var(--ink-soft);font-size:.98rem}
-.vlt-facts{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}
-.vlt-facts li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--ink)}
 .hero-checks{display:grid;gap:10px;margin:18px 0 24px;font-weight:600;font-size:.95rem}
 .hero-checks div{display:flex;gap:10px;align-items:flex-start;color:var(--ink-soft)}
 .hero-checks div:before{content:"✓";flex:none;width:21px;height:21px;border-radius:50%;background:var(--good);color:#06120c;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-.hero-media{display:flex;justify-content:center}
-.vlt-hero-card{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:28px;width:100%;max-width:380px;box-shadow:var(--shadow);text-align:center}
-.vlt-hero-card img{max-width:260px;margin:0 auto 14px}
-.vlt-hero-card .vlt-facts{justify-content:center}
+.hero-media{display:flex;flex-direction:column;gap:16px;align-items:center}
+.vlt-hero-card{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:26px;width:100%;max-width:340px;box-shadow:var(--shadow);text-align:center}
+.vlt-hero-card img{max-width:220px;margin:0 auto 14px}
+.vlt-hero-card ul{display:flex;justify-content:center;gap:9px;list-style:none;margin:0;padding:0}
+.vlt-hero-card li{background:var(--surface-alt);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13px;font-weight:700}
+.vlt-chart{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.vlt-chart-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.vlt-chart-top b{font-family:'Unbounded',sans-serif;font-size:.78rem;color:var(--ink-soft);letter-spacing:.04em;text-transform:uppercase}
+.vlt-chart-top span{color:var(--neon);font-weight:800;font-size:.85rem}
+.vlt-chart svg{width:100%;height:56px;display:block}
 /* Section head */
-.sec{padding:70px 0}
+.sec{padding:60px 0}
 .sec.alt{background:var(--surface-alt)}
-.head{max-width:700px;margin:0 auto 38px;text-align:center}
+.head{max-width:700px;margin:0 auto 34px;text-align:center}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--neon);font-weight:800;font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:11px}
-.head h2{font-size:1.9rem;margin:0 0 12px}
+.head h2{font-size:1.85rem;margin:0 0 12px}
 .head p{color:var(--ink-soft);font-size:1.02rem;margin:0}
-.grid{display:grid;gap:20px}
+.grid{display:grid;gap:18px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 /* Shared card markup (from build_native_page's default card builders) */
-.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.05rem;font-family:'Unbounded',sans-serif}
-.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.94rem}
+.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.02rem;font-family:'Unbounded',sans-serif}
+.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.93rem}
 .ing-card{display:flex;gap:16px;border-left:3px solid var(--neon)}
-.ing-num,.step-num{flex:none;width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.9rem;color:#0F0A1E;background:var(--neon)}
+.ing-num,.step-num{flex:none;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.86rem;color:#0F0A1E;background:var(--neon)}
 .step-card{border-left:3px solid var(--neon)}
 .step-card .step-num{margin-bottom:14px}
 .pcard{text-align:left}
@@ -83,68 +87,82 @@ header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -
 .rev-sub{font-size:.78rem;color:var(--ink-soft)}
 .rev-stars{color:var(--neon);font-size:1rem;letter-spacing:.1em;margin-bottom:8px}
 /* Trust strip */
-section.trust{padding:20px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+section.trust{padding:16px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 section.trust .wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center}
 section.trust .t-item{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.87rem;color:var(--ink-soft)}
-section.trust img{width:34px;height:34px;object-fit:contain;filter:brightness(1.3)}
+section.trust img{width:32px;height:32px;object-fit:contain;filter:brightness(1.3)}
 /* Callout reused by Quick Facts auto-box */
 .vlt-callout{background:var(--surface);border-left:4px solid var(--neon);border-radius:14px;padding:20px 22px;font-weight:500;color:var(--ink)}
 .vlt-chips{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
 .vlt-chips span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:700;font-size:.8rem;color:var(--ink)}
 /* Benefits feature block */
-.feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;margin-bottom:44px}
+.feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:center;margin-bottom:40px}
 .feature img{border-radius:var(--radius);box-shadow:var(--shadow)}
-.feature h3{font-size:1.3rem;margin:0 0 12px}
+.feature h3{font-size:1.25rem;margin:0 0 12px}
 .feature p{color:var(--ink-soft)}
-/* Momentum Stages — original distinctive component: 4-stage glowing journey */
+/* Momentum Stages — original distinctive component: 4-stage glowing journey.
+   Moved up directly under the hero as part of this design's reordered flow. */
 .vlt-stages{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
 .vlt-stages:before{content:"";position:absolute;top:19px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--neon),var(--primary))}
 .vlt-stage{text-align:center;position:relative;padding:0 8px}
 .vlt-stage .node{width:38px;height:38px;margin:0 auto 14px;border-radius:50%;background:var(--bg);border:3px solid var(--neon);box-shadow:0 0 16px -2px var(--neon);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-weight:700;color:var(--neon);font-size:.8rem;position:relative;z-index:1}
 .vlt-stage b{display:block;font-family:'Unbounded',sans-serif;font-size:.92rem;color:var(--ink);margin-bottom:4px}
 .vlt-stage span{display:block;font-size:.82rem;color:var(--ink-soft)}
+/* Full-bleed dark divider panels — this design's structural identity:
+   original decorative stat bands used between major sections instead of a
+   plain background-color switch. */
+.vlt-panel{background:linear-gradient(120deg,#0C0718,#1B1033 60%,#0C0718);padding:30px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vlt-panel .wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center;text-align:center}
+.vlt-panel-stat{min-width:120px}
+.vlt-panel-stat b{display:block;font-family:'Unbounded',sans-serif;font-size:1.5rem;color:var(--neon)}
+.vlt-panel-stat span{display:block;font-size:.78rem;color:var(--ink-soft);letter-spacing:.03em;text-transform:uppercase;margin-top:2px}
 /* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
-.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 24px;text-align:center;display:flex;flex-direction:column}
-.plan.top{border:2px solid var(--neon);box-shadow:var(--shadow);transform:translateY(-8px)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px 22px;text-align:center;display:flex;flex-direction:column}
+.plan.top{border:2px solid var(--neon);box-shadow:var(--shadow);transform:translateY(-6px)}
 .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--neon);color:#0F0A1E;border-radius:999px;padding:6px 16px;font-weight:800;font-size:.75rem;white-space:nowrap}
-.plan img{max-width:160px;margin:4px auto 14px}
-.plan-ttl{font-size:1.2rem}
-.plan-sub{font-weight:600;color:var(--ink-soft);font-size:.84rem}
-.plan-price{font-size:2.05rem;margin:14px 0 4px;font-family:'Unbounded',sans-serif;font-weight:700;color:var(--neon)}
-.plan-price small{font-size:.8rem;color:var(--ink-soft);font-weight:600}
-.plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.85rem}
+.plan img{max-width:150px;margin:4px auto 12px}
+.plan-ttl{font-size:1.15rem}
+.plan-sub{font-weight:600;color:var(--ink-soft);font-size:.82rem}
+.plan-price{font-size:1.95rem;margin:12px 0 4px;font-family:'Unbounded',sans-serif;font-weight:700;color:var(--neon)}
+.plan-price small{font-size:.78rem;color:var(--ink-soft);font-weight:600}
+.plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.83rem}
 .plan-ship{color:var(--good)}
-.plan ul{list-style:none;padding:0;margin:16px 0;text-align:left}
-.plan ul li{padding:6px 0 6px 24px;position:relative;font-weight:500;font-size:.89rem;color:var(--ink-soft)}
+.plan ul{list-style:none;padding:0;margin:14px 0;text-align:left}
+.plan ul li{padding:5px 0 5px 24px;position:relative;font-weight:500;font-size:.87rem;color:var(--ink-soft)}
 .plan ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 .plan .btn{margin-top:auto;width:100%}
 /* Guarantee */
-.vlt-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:40px;text-align:center}
-.vlt-guarantee img{max-width:140px;margin:0 auto;filter:brightness(1.2)}
+.vlt-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px;text-align:center}
+.vlt-guarantee img{max-width:130px;margin:0 auto;filter:brightness(1.2)}
 /* FAQ accordion */
 .faq-row{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;background:var(--surface);overflow:hidden}
-.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:18px 20px;font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
+.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:16px 18px;font-family:'Unbounded',sans-serif;font-size:.92rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
 .faq-btn:after{content:"+";font-size:1.3rem;font-weight:700;color:var(--neon);transition:transform .2s ease}
 .faq-row.open .faq-btn:after{transform:rotate(45deg)}
-.faq-body{display:none;padding:0 20px 18px;color:var(--ink-soft)}
+.faq-body{display:none;padding:0 18px 16px;color:var(--ink-soft)}
 .faq-row.open .faq-body{display:block}
 /* Compare */
 .compare{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.compare th,.compare td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);font-weight:500;font-size:.92rem;color:var(--ink)}
-.compare th{background:var(--surface-alt);font-family:'Unbounded',sans-serif;font-size:.84rem}
+.compare th,.compare td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-weight:500;font-size:.9rem;color:var(--ink)}
+.compare th{background:var(--surface-alt);font-family:'Unbounded',sans-serif;font-size:.8rem}
 .compare td:first-child{font-weight:700}
 .compare .yes{color:var(--neon);font-weight:700}
 .compare .no{color:#E0708C;font-weight:700}
+/* Reviews — stat-summary row above the photo cards, this design's variant
+   presentation of the reviews section */
+.vlt-rev-stats{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;text-align:center}
+.vlt-rev-stats div b{display:block;font-family:'Unbounded',sans-serif;font-size:1.5rem;color:var(--neon)}
+.vlt-rev-stats div span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:2px}
 /* References */
 .refs{columns:2;column-gap:40px}
-.refs li{font-size:.87rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
-.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 26px}
+.refs li{font-size:.86rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
+.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 24px}
 .refs-wrap.collapsed .refs li:nth-child(n+7){display:none}
 .refs-more{display:block;text-align:center;margin-top:18px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink)}
 /* Final CTA — contrasting light panel against the dark body */
 section.final{text-align:center;background:linear-gradient(160deg,#F1EEFF,#E4DCFF);border-radius:28px;margin:0 24px;padding:4px}
-section.final .wrap{padding:56px 24px}
+section.final .wrap{padding:52px 24px}
 section.final .head h2{color:#17102C}
 section.final .head p{color:#4B3F6B;max-width:620px;margin:0 auto}
 section.final .plan{background:rgba(23,16,44,.05);border-color:rgba(23,16,44,.14)}
@@ -182,11 +200,6 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <span class="vlt-pill">__PILL_TEXT__</span>
 <h1>__HERO_H1__</h1>
 <div class="vlt-answer reveal"><span class="tag">In Short</span><p>__HERO_DESC__</p></div>
-<ul class="vlt-facts reveal">
-<li>__FACT1_NUM__ __FACT1_LABEL__</li>
-<li>__FACT2_NUM__ Per Day</li>
-<li>__FACT3_NUM__ __FACT3_LABEL__</li>
-</ul>
 <div class="hero-checks"><div>__CHECK1__</div><div>__CHECK2__</div><div>__CHECK3__</div></div>
 <div class="hero-cta-row">
 <a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_HERO__</a>
@@ -195,28 +208,47 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 <div class="hero-media">
 <div class="vlt-hero-card reveal">
-<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="260" height="260" fetchpriority="high">
-<ul class="vlt-facts"><li>★ 4.8 / 5</li><li>__REVIEW_COUNT__ reviews</li></ul>
+<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="220" height="220" fetchpriority="high">
+<ul><li>★ 4.8 / 5</li><li>__REVIEW_COUNT__ reviews</li></ul>
+</div>
+<div class="vlt-chart reveal">
+<div class="vlt-chart-top"><b>Daily Consistency Trend</b><span>▲ Illustrative</span></div>
+<svg viewBox="0 0 300 56" preserveAspectRatio="none" aria-hidden="true"><polyline points="0,48 40,40 80,42 120,28 160,30 200,16 240,18 300,6" fill="none" stroke="var(--neon)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline></svg>
 </div>
 </div>
 </div></header>
 <section class="trust"><div class="wrap">
-<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></section>
+<section class="sec"><div class="wrap">
+<div class="head reveal"><span class="eyebrow">Building the habit</span><h2>Your Momentum, Stage By Stage</h2><p>A simple way to picture staying consistent with __BRAND__.</p></div>
+<div class="vlt-stages reveal">
+<div class="vlt-stage"><div class="node">1</div><b>Day 1</b><span>Start your daily routine</span></div>
+<div class="vlt-stage"><div class="node">2</div><b>Week 2</b><span>Stay consistent, day by day</span></div>
+<div class="vlt-stage"><div class="node">3</div><b>Month 1</b><span>Keep the habit going</span></div>
+<div class="vlt-stage"><div class="node">4</div><b>Month 3</b><span>Reassess and reorder</span></div>
+</div>
+</div></section>
+<div class="vlt-panel"><div class="wrap">
+<div class="vlt-panel-stat"><b>__FACT1_NUM__</b><span>__FACT1_LABEL__</span></div>
+<div class="vlt-panel-stat"><b>__FACT2_NUM__</b><span>Per Day</span></div>
+<div class="vlt-panel-stat"><b>__FACT3_NUM__</b><span>__FACT3_LABEL__</span></div>
+<div class="vlt-panel-stat"><b>__REVIEW_COUNT__</b><span>Reviews</span></div>
+</div></div>
 <section class="sec alt" id="pricing"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Choose your package</span><h2>Pick The __BRAND__ Package That Fits You</h2><p>__PRICING_NOTE__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<p class="reveal" style="text-align:center;font-weight:600;margin-top:22px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
+<p class="reveal" style="text-align:center;font-weight:600;margin-top:18px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
 </div></section>
 <section class="sec" id="what-is"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Straightforward Answer</h2></div>
-<p class="reveal" style="font-size:1.05rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
+<p class="reveal" style="font-size:1.03rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
 <div class="vlt-callout reveal" style="max-width:760px;margin:0 auto">__WHATIS_CALLOUT__</div>
 <div class="vlt-chips reveal" style="justify-content:center"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
-<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
 <section class="sec alt" id="benefits"><div class="wrap">
 <div class="feature reveal">
@@ -229,37 +261,41 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 <div class="head reveal"><span class="eyebrow">Why people choose it</span><h2>What You Can Expect To Notice</h2><p>Real, everyday support — no overpromising.</p></div>
 <div class="grid g3">__BENEFIT_CARD_TEMPLATE__</div>
-<ul class="reveal" style="max-width:720px;margin:30px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
+<ul class="reveal" style="max-width:720px;margin:28px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
 </div></section>
+<div class="vlt-panel"><div class="wrap">
+<div class="vlt-panel-stat" style="max-width:640px;text-align:center"><span style="text-transform:none;font-size:.95rem;color:var(--ink);letter-spacing:0;font-weight:600">One simple daily habit — __FACT2_NUM__ per day, built around __FACT1_NUM__ named ingredients.</span></div>
+</div></div>
 <section class="sec" id="how-it-works"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">How it works</span><h2>From Bottle To Daily Habit</h2><p>__HIW_INTRO__</p></div>
 <div class="grid g2">__HIW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:32px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
+<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
 </div></section>
-<section class="sec alt"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">Building the habit</span><h2>Your Momentum, Stage By Stage</h2><p>A simple way to picture staying consistent with __BRAND__.</p></div>
-<div class="vlt-stages reveal">
-<div class="vlt-stage"><div class="node">1</div><b>Day 1</b><span>Start your daily routine</span></div>
-<div class="vlt-stage"><div class="node">2</div><b>Week 2</b><span>Stay consistent, day by day</span></div>
-<div class="vlt-stage"><div class="node">3</div><b>Month 1</b><span>Keep the habit going</span></div>
-<div class="vlt-stage"><div class="node">4</div><b>Month 3</b><span>Reassess and reorder</span></div>
-</div>
-</div></section>
-<section class="sec" id="ingredients"><div class="wrap">
+<section class="sec alt" id="ingredients"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Inside every serving</span><h2>__ING_HEADING__</h2><p>Every ingredient, explained plainly. Serving: __SERVING_DAILY__ · Per bottle: __SERVING_PER_BOTTLE__.</p></div>
 <div class="grid g3">__ING_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
+__BONUS_SECTION__
 <section class="sec alt" id="pricing-again"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Still deciding?</span><h2>Get __BRAND__ Today</h2><p>Current package pricing, while supplies last.</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:22px;font-weight:600;color:var(--ink-soft)"><a href="#reviews">Read Reviews</a> &nbsp;|&nbsp; <a href="#faq">View FAQs</a></div>
+<div class="reveal" style="text-align:center;margin-top:20px;font-weight:600;color:var(--ink-soft)"><a href="#reviews">Read Reviews</a> &nbsp;|&nbsp; <a href="#faq">View FAQs</a></div>
 </div></section>
-__BONUS_SECTION__
+<div class="vlt-panel"><div class="wrap">
+<div class="vlt-panel-stat"><b>★ 4.8</b><span>Average Rating</span></div>
+<div class="vlt-panel-stat"><b>__REVIEW_COUNT__</b><span>Verified Reviews</span></div>
+<div class="vlt-panel-stat"><b>__FACT3_NUM__</b><span>__FACT3_LABEL__</span></div>
+</div></div>
 <section class="sec" id="reviews"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Verified reviews</span><h2>What Customers Say</h2><p>★★★★★ __REVIEW_COUNT__ reviews and counting.</p></div>
+<div class="vlt-rev-stats reveal">
+<div><b>★ 4.8 / 5</b><span>Average rating</span></div>
+<div><b>__REVIEW_COUNT__</b><span>Verified reviews</span></div>
+<div><b>__FACT1_NUM__</b><span>Named ingredients</span></div>
+</div>
 <div class="grid g3">__REVIEW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 <section class="sec alt" id="compare"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">An honest look</span><h2>__BRAND__ vs The Alternatives</h2><p>Decide with the facts in front of you.</p></div>
@@ -274,23 +310,23 @@ __BONUS_SECTION__
 <section class="sec" id="faq"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Got questions?</span><h2>Frequently Asked Questions</h2></div>
 __FAQ_ROW_TEMPLATE__
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap"><div class="vlt-guarantee reveal">
 <img src="assets/images/guarantee.png" alt="60-day money-back guarantee" loading="lazy">
-<h2 style="font-size:1.6rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
+<h2 style="font-size:1.5rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
 <p style="color:var(--ink-soft);max-width:640px;margin:0 auto 20px">__GUARANTEE_TEXT__</p>
-<div style="display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
+<div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
 </div>
 </div></div></section>
 <section class="sec final"><div class="wrap">
 <div class="head reveal"><h2>Ready To Start Today?</h2><p>__FINAL_TEXT__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
+<div class="reveal" style="margin-top:24px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Background reading</span><h2>Research Behind These Ingredients</h2></div>

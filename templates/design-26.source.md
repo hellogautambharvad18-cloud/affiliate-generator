@@ -35,44 +35,38 @@ nav.navbar .wrap{display:flex;align-items:center;gap:24px;padding:15px 24px}
 .btn-ghost{background:transparent!important;color:var(--ink)!important;border:2px solid var(--ink)!important;box-shadow:none!important}
 .btn-big{padding:16px 30px;font-size:1.03rem}
 .nav-cta{padding:9px 18px!important;font-size:.86rem;box-shadow:none}
-/* Hero */
-header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -12%,var(--surface-alt) 0%,transparent 60%),var(--bg)}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start}
+/* Hero — compact, feeds the spec sidebar below */
+header.hero{padding:40px 0 0;background:radial-gradient(1000px 440px at 88% -12%,var(--surface-alt) 0%,transparent 60%),var(--bg)}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:44px;align-items:start}
 .glm-pill{display:inline-block;background:var(--surface-alt);color:var(--primary-dark);font-weight:700;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;padding:7px 15px;border-radius:999px}
-.hero h1{font-size:2.6rem;margin:16px 0 4px;letter-spacing:-.01em}
+.hero h1{font-size:2.5rem;margin:16px 0 4px;letter-spacing:-.01em}
 .hero h1 em{font-style:normal;color:var(--primary-dark)}
 .glm-answer{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
 .glm-answer .tag{display:inline-block;background:var(--primary-dark);color:var(--on-primary);font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:8px;margin-bottom:9px}
 .glm-answer p{margin:0;color:var(--ink-soft);font-size:.98rem}
-.glm-facts{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}
-.glm-facts li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--ink)}
-.hero-checks{display:grid;gap:10px;margin:18px 0 24px;font-weight:600;font-size:.95rem}
-.hero-checks div{display:flex;gap:10px;align-items:flex-start;color:var(--ink-soft)}
-.hero-checks div:before{content:"✓";flex:none;width:21px;height:21px;border-radius:50%;background:var(--good);color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .hero-media{display:flex;justify-content:center}
-.glm-hero-card{background:var(--surface-alt);border:1px solid var(--line);border-radius:28px;padding:28px;width:100%;max-width:380px;box-shadow:var(--shadow);text-align:center}
-.glm-hero-card img{max-width:260px;margin:0 auto 14px}
-.glm-hero-card .glm-facts{justify-content:center}
+.glm-hero-card{background:var(--surface-alt);border:1px solid var(--line);border-radius:28px;padding:26px;width:100%;max-width:300px;box-shadow:var(--shadow);text-align:center}
+.glm-hero-card img{max-width:200px;margin:0 auto 12px}
 /* Section head */
-.sec{padding:70px 0}
+.sec{padding:60px 0}
 .sec.alt{background:var(--surface-alt)}
-.head{max-width:700px;margin:0 auto 38px;text-align:center}
+.head{max-width:700px;margin:0 auto 34px;text-align:center}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--primary-dark);font-weight:800;font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:11px}
-.head h2{font-size:2rem;margin:0 0 12px}
+.head h2{font-size:1.85rem;margin:0 0 12px}
 .head p{color:var(--ink-soft);font-size:1.02rem;margin:0}
-.grid{display:grid;gap:20px}
+.grid{display:grid;gap:18px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 /* Shared card markup (from build_native_page's default card builders) */
-.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.08rem}
-.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.94rem}
+.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.05rem}
+.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.93rem}
 .ing-card{display:flex;gap:16px;border-top:3px solid var(--primary-dark)}
-.ing-num,.step-num{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:.98rem;color:var(--on-primary);background:var(--primary-dark)}
+.ing-num,.step-num{flex:none;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;color:var(--on-primary);background:var(--primary-dark)}
 .step-card{border-top:3px solid var(--primary-dark)}
 .step-card .step-num{margin-bottom:14px}
 .pcard{text-align:left}
@@ -83,70 +77,93 @@ header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -
 .rev-sub{font-size:.78rem;color:var(--ink-soft)}
 .rev-stars{color:var(--primary-dark);font-size:1rem;letter-spacing:.1em;margin-bottom:8px}
 /* Trust strip */
-section.trust{padding:20px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+section.trust{padding:16px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 section.trust .wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center}
 section.trust .t-item{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.87rem;color:var(--ink-soft)}
-section.trust img{width:34px;height:34px;object-fit:contain}
+section.trust img{width:32px;height:32px;object-fit:contain}
 /* Callout reused by Quick Facts auto-box */
 .glm-callout{background:var(--surface-alt);border-left:4px solid var(--primary-dark);border-radius:14px;padding:20px 22px;font-weight:500;color:var(--ink)}
 .glm-chips{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
 .glm-chips span{background:var(--surface-alt);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:700;font-size:.8rem;color:var(--ink)}
 /* Benefits feature block */
-.feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;margin-bottom:44px}
+.feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:center;margin-bottom:40px}
 .feature img{border-radius:var(--radius);box-shadow:var(--shadow)}
-.feature h3{font-size:1.45rem;margin:0 0 12px}
+.feature h3{font-size:1.35rem;margin:0 0 12px}
 .feature p{color:var(--ink-soft)}
-/* Lab Readout — original distinctive component: 3 circular SVG progress rings */
-.glm-readout{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:center}
+/* Lab Readout — original distinctive component: 3 circular SVG progress rings. Moved
+   up, right under the hero, instead of mid-page, as part of this design's reordered flow. */
+.glm-readout{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:center}
 .glm-ring{text-align:center}
-.glm-ring svg{width:112px;height:112px}
+.glm-ring svg{width:100px;height:100px}
 .glm-ring .trk{fill:none;stroke:var(--surface-alt);stroke-width:10}
 .glm-ring .val{fill:none;stroke:var(--primary-dark);stroke-width:10;stroke-linecap:round;transform:rotate(-90deg);transform-origin:56px 56px}
-.glm-ring .num{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.3rem;fill:var(--ink)}
-.glm-ring .lbl{margin-top:10px;font-weight:700;font-size:.88rem;color:var(--ink-soft)}
-.glm-readout-cap{grid-column:1/-1;text-align:center;font-size:.78rem;color:var(--ink-soft);opacity:.8;font-style:italic;margin-top:4px}
-/* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
-.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 24px;text-align:center;display:flex;flex-direction:column}
-.plan.top{border:2px solid var(--primary-dark);box-shadow:var(--shadow);transform:translateY(-8px)}
+.glm-ring .num{font-family:'Outfit',sans-serif;font-weight:800;font-size:1.2rem;fill:var(--ink)}
+.glm-ring .lbl{margin-top:8px;font-weight:700;font-size:.84rem;color:var(--ink-soft)}
+.glm-readout-cap{grid-column:1/-1;text-align:center;font-size:.76rem;color:var(--ink-soft);opacity:.8;font-style:italic;margin-top:2px}
+/* Spec Sidebar shell — this design's structural identity: a persistent, sticky
+   left-hand spec sheet running alongside every content section from Pricing
+   onward. The aside sits outside every <section id="..."> so it is never
+   removed by build_native_page()'s subpage-stripping loop — it stays visible
+   on every subpage too, alongside whichever single section remains there. */
+.glm-shell{max-width:1160px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:260px 1fr;gap:36px;align-items:start}
+.glm-side{position:sticky;top:84px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.glm-side h3{font-size:1rem;margin:0 0 14px}
+.glm-spec{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:10px}
+.glm-spec li{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.glm-spec li b{color:var(--ink)}
+.glm-spec li span{color:var(--ink-soft)}
+.glm-side .btn{width:100%;padding:12px 16px;font-size:.92rem}
+.glm-side-badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.glm-side-badges img{width:26px;height:26px;object-fit:contain}
+.glm-main{min-width:0}
+.glm-main .sec{padding:44px 0}
+.glm-main .wrap{max-width:none;padding:0}
+/* Pricing presented as a horizontal comparison strip, not a 3-col grid */
+.plans{display:flex;gap:18px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.plans>*{flex:0 0 240px;scroll-snap-align:start}
+.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px 20px;text-align:center;display:flex;flex-direction:column}
+.plan.top{border:2px solid var(--primary-dark);box-shadow:var(--shadow)}
 .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--primary-dark);color:var(--on-primary);border-radius:999px;padding:6px 16px;font-weight:800;font-size:.75rem;white-space:nowrap}
-.plan img{max-width:160px;margin:4px auto 14px}
-.plan-ttl{font-size:1.25rem}
-.plan-sub{font-weight:600;color:var(--ink-soft);font-size:.84rem}
-.plan-price{font-size:2.15rem;margin:14px 0 4px;font-family:'Outfit',sans-serif;font-weight:700}
-.plan-price small{font-size:.9rem;color:var(--ink-soft);font-weight:600}
-.plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.85rem}
+.plan img{max-width:140px;margin:4px auto 12px}
+.plan-ttl{font-size:1.15rem}
+.plan-sub{font-weight:600;color:var(--ink-soft);font-size:.82rem}
+.plan-price{font-size:2rem;margin:12px 0 4px;font-family:'Outfit',sans-serif;font-weight:700}
+.plan-price small{font-size:.88rem;color:var(--ink-soft);font-weight:600}
+.plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.83rem}
 .plan-ship{color:var(--good)}
-.plan ul{list-style:none;padding:0;margin:16px 0;text-align:left}
-.plan ul li{padding:6px 0 6px 24px;position:relative;font-weight:500;font-size:.89rem;color:var(--ink-soft)}
+.plan ul{list-style:none;padding:0;margin:14px 0;text-align:left}
+.plan ul li{padding:5px 0 5px 24px;position:relative;font-weight:500;font-size:.87rem;color:var(--ink-soft)}
 .plan ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 .plan .btn{margin-top:auto;width:100%}
 /* Guarantee */
-.glm-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:40px;text-align:center}
-.glm-guarantee img{max-width:140px;margin:0 auto}
+.glm-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px;text-align:center}
+.glm-guarantee img{max-width:130px;margin:0 auto}
 /* FAQ accordion */
 .faq-row{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;background:var(--surface);overflow:hidden}
-.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:18px 20px;font-family:'Outfit',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
+.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:16px 18px;font-family:'Outfit',sans-serif;font-size:.98rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
 .faq-btn:after{content:"+";font-size:1.3rem;font-weight:700;color:var(--primary-dark);transition:transform .2s ease}
 .faq-row.open .faq-btn:after{transform:rotate(45deg)}
-.faq-body{display:none;padding:0 20px 18px;color:var(--ink-soft)}
+.faq-body{display:none;padding:0 18px 16px;color:var(--ink-soft)}
 .faq-row.open .faq-body{display:block}
 /* Compare */
 .compare{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.compare th,.compare td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);font-weight:500;font-size:.92rem}
-.compare th{background:var(--surface-alt);font-family:'Outfit',sans-serif;font-size:.9rem}
+.compare th,.compare td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-weight:500;font-size:.9rem}
+.compare th{background:var(--surface-alt);font-family:'Outfit',sans-serif;font-size:.88rem}
 .compare td:first-child{font-weight:700}
 .compare .yes{color:var(--good);font-weight:700}
 .compare .no{color:#B0523F;font-weight:700}
+/* Reviews — horizontal scroll-snap carousel, not a 3-col grid */
+.rev-strip{display:flex;gap:18px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+.rev-strip>*{flex:0 0 280px;scroll-snap-align:start}
 /* References */
 .refs{columns:2;column-gap:40px}
-.refs li{font-size:.87rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
-.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 26px}
+.refs li{font-size:.86rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
+.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 24px}
 .refs-wrap.collapsed .refs li:nth-child(n+7){display:none}
 .refs-more{display:block;text-align:center;margin-top:18px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink)}
 /* Final CTA — contrasting deep teal panel */
 section.final{text-align:center;background:linear-gradient(160deg,#0F2A2E,#144C4C);border-radius:28px;margin:0 24px;padding:4px}
-section.final .wrap{padding:56px 24px}
+section.final .wrap{padding:52px 24px}
 section.final .head h2{color:#fff}
 section.final .head p{color:#BFE3DD;max-width:620px;margin:0 auto}
 section.final .plan{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
@@ -158,7 +175,8 @@ footer a:hover{color:var(--primary-dark)}
 footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 .auto-sticky-cta{background:var(--surface)!important;border-top:1px solid var(--line)!important}
 .auto-sticky-cta-btn{background:var(--primary-dark)!important;color:var(--on-primary)!important;border-radius:999px!important}
-@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero-media{order:-1}.hero h1{font-size:2.05rem}.g3,.g2,.plans,.feature{grid-template-columns:1fr}.plan.top{transform:none}.feature img{max-width:340px;margin:0 auto}.refs{columns:1}.glm-readout{grid-template-columns:1fr}}
+@media(max-width:980px){.glm-shell{grid-template-columns:1fr}.glm-side{position:static}}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero-media{order:-1}.hero h1{font-size:2.05rem}.g3,.g2,.feature{grid-template-columns:1fr}.feature img{max-width:340px;margin:0 auto}.refs{columns:1}.glm-readout{grid-template-columns:1fr}}
 @media(max-width:760px){.nav-links{position:fixed;top:60px;left:0;right:0;background:var(--bg);flex-direction:column;align-items:flex-start;padding:18px 24px;gap:16px;display:none;border-bottom:1px solid var(--line)}.nav-links.open{display:flex}.nav-toggle{display:block}}
 </style>
 </head>
@@ -183,12 +201,6 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <span class="glm-pill">__PILL_TEXT__</span>
 <h1>__HERO_H1__</h1>
 <div class="glm-answer reveal"><span class="tag">In Short</span><p>__HERO_DESC__</p></div>
-<ul class="glm-facts reveal">
-<li>__FACT1_NUM__ __FACT1_LABEL__</li>
-<li>__FACT2_NUM__ Per Day</li>
-<li>__FACT3_NUM__ __FACT3_LABEL__</li>
-</ul>
-<div class="hero-checks"><div>__CHECK1__</div><div>__CHECK2__</div><div>__CHECK3__</div></div>
 <div class="hero-cta-row">
 <a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_HERO__</a>
 <a class="btn btn-big btn-ghost" href="#how-it-works">See How It Works</a>
@@ -196,28 +208,54 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 <div class="hero-media">
 <div class="glm-hero-card reveal">
-<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="260" height="260" fetchpriority="high">
-<ul class="glm-facts"><li>★ 4.8 / 5</li><li>__REVIEW_COUNT__ reviews</li></ul>
+<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="200" height="200" fetchpriority="high">
+<p style="margin:0;font-weight:700;font-size:.9rem">★ 4.8 / 5 · __REVIEW_COUNT__ reviews</p>
 </div>
 </div>
 </div></header>
 <section class="trust"><div class="wrap">
-<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></section>
+<div class="sec" style="padding-top:44px"><div class="glm-readout reveal wrap">
+<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="40"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT1_NUM__</text></svg><div class="lbl">__FACT1_LABEL__</div></div>
+<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="70"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT2_NUM__</text></svg><div class="lbl">Daily Serving</div></div>
+<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="15"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT3_NUM__</text></svg><div class="lbl">__FACT3_LABEL__</div></div>
+<p class="glm-readout-cap">Illustrative panel — for the full label and current terms, see the official order page.</p>
+</div></div>
+<div class="glm-shell">
+<aside class="glm-side">
+<h3>__BRAND__ At A Glance</h3>
+<ul class="glm-spec">
+<li><span>Category</span><b>__CATEGORY__</b></li>
+<li><span>Ingredients</span><b>__FACT1_NUM__</b></li>
+<li><span>Serving</span><b>__SERVING_DAILY__</b></li>
+<li><span>Per bottle</span><b>__SERVING_PER_BOTTLE__</b></li>
+<li><span>Guarantee</span><b>__FACT3_NUM__</b></li>
+<li><span>From</span><b>__PRICE_FROM__ / bottle</b></li>
+</ul>
+<a class="btn" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_HERO__</a>
+<div class="glm-side-badges">
+<img src="assets/images/badge-usa.png" alt="Made in USA" width="26" height="26" loading="lazy">
+<img src="assets/images/badge-gmp.png" alt="GMP certified" width="26" height="26" loading="lazy">
+<img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="26" height="26" loading="lazy">
+<img src="assets/images/badge-natural.png" alt="Natural ingredients" width="26" height="26" loading="lazy">
+</div>
+</aside>
+<div class="glm-main">
 <section class="sec alt" id="pricing"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Choose your package</span><h2>Pick The __BRAND__ Package That Fits You</h2><p>__PRICING_NOTE__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<p class="reveal" style="text-align:center;font-weight:600;margin-top:22px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
+<p class="reveal" style="text-align:center;font-weight:600;margin-top:18px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
 </div></section>
 <section class="sec" id="what-is"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Clear, Straight Answer</h2></div>
-<p class="reveal" style="font-size:1.06rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
+<p class="reveal" style="font-size:1.04rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
 <div class="glm-callout reveal" style="max-width:760px;margin:0 auto">__WHATIS_CALLOUT__</div>
 <div class="glm-chips reveal" style="justify-content:center"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
-<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
 <section class="sec alt" id="benefits"><div class="wrap">
 <div class="feature reveal">
@@ -229,38 +267,24 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 </div>
 <div class="head reveal"><span class="eyebrow">Why people choose it</span><h2>What You Can Expect To Notice</h2><p>Real, everyday support — no overpromising.</p></div>
-<div class="grid g3">__BENEFIT_CARD_TEMPLATE__</div>
-<ul class="reveal" style="max-width:720px;margin:30px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
+<div class="grid g2">__BENEFIT_CARD_TEMPLATE__</div>
+<ul class="reveal" style="max-width:720px;margin:26px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
 </div></section>
 <section class="sec" id="how-it-works"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">How it works</span><h2>From Bottle To Daily Habit</h2><p>__HIW_INTRO__</p></div>
 <div class="grid g2">__HIW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:32px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
+<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
 </div></section>
-<section class="sec alt"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">At a glance</span><h2>The __BRAND__ Lab Readout</h2><p>The core numbers behind __BRAND__, in one quick panel.</p></div>
-<div class="glm-readout reveal">
-<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="40"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT1_NUM__</text></svg><div class="lbl">__FACT1_LABEL__</div></div>
-<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="70"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT2_NUM__</text></svg><div class="lbl">Daily Serving</div></div>
-<div class="glm-ring"><svg viewBox="0 0 112 112"><circle class="trk" cx="56" cy="56" r="46"></circle><circle class="val" cx="56" cy="56" r="46" stroke-dasharray="289" stroke-dashoffset="15"></circle><text class="num" x="56" y="62" text-anchor="middle">__FACT3_NUM__</text></svg><div class="lbl">__FACT3_LABEL__</div></div>
-<p class="glm-readout-cap">Illustrative panel — for the full label and current terms, see the official order page.</p>
-</div>
-</div></section>
-<section class="sec" id="ingredients"><div class="wrap">
+<section class="sec alt" id="ingredients"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Inside every serving</span><h2>__ING_HEADING__</h2><p>Every ingredient, explained plainly. Serving: __SERVING_DAILY__ · Per bottle: __SERVING_PER_BOTTLE__.</p></div>
-<div class="grid g3">__ING_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
-</div></section>
-<section class="sec alt" id="pricing-again"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">Still deciding?</span><h2>Get __BRAND__ Today</h2><p>Current package pricing, while supplies last.</p></div>
-<div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:22px;font-weight:600;color:var(--ink-soft)"><a href="#reviews">Read Reviews</a> &nbsp;|&nbsp; <a href="#faq">View FAQs</a></div>
+<div class="grid g2">__ING_CARD_TEMPLATE__</div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
 </div></section>
 __BONUS_SECTION__
 <section class="sec" id="reviews"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Verified reviews</span><h2>What Customers Say</h2><p>★★★★★ __REVIEW_COUNT__ reviews and counting.</p></div>
-<div class="grid g3">__REVIEW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
+<div class="rev-strip">__REVIEW_CARD_TEMPLATE__</div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 <section class="sec alt" id="compare"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">An honest look</span><h2>__BRAND__ vs The Alternatives</h2><p>Decide with the facts in front of you.</p></div>
@@ -275,23 +299,23 @@ __BONUS_SECTION__
 <section class="sec" id="faq"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Got questions?</span><h2>Frequently Asked Questions</h2></div>
 __FAQ_ROW_TEMPLATE__
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap"><div class="glm-guarantee reveal">
 <img src="assets/images/guarantee.png" alt="60-day money-back guarantee" loading="lazy">
-<h2 style="font-size:1.75rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
+<h2 style="font-size:1.6rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
 <p style="color:var(--ink-soft);max-width:640px;margin:0 auto 20px">__GUARANTEE_TEXT__</p>
-<div style="display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
+<div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
 </div>
 </div></div></section>
 <section class="sec final"><div class="wrap">
 <div class="head reveal"><h2>Ready To Start Today?</h2><p>__FINAL_TEXT__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
+<div class="reveal" style="margin-top:24px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Background reading</span><h2>Research Behind These Ingredients</h2></div>
@@ -314,6 +338,8 @@ __FAQ_ROW_TEMPLATE__
 </div>
 <button class="refs-more" type="button">Show More</button>
 </div></section>
+</div>
+</div>
 <footer><div class="wrap">
 <p><a href="index.html">Home</a> · <a href="what-is-product.html">What Is __BRAND__</a> · <a href="how-it-works.html">How It Works</a> · <a href="ingredients.html">Ingredients</a> · <a href="benefits.html">Benefits</a> · <a href="reviews.html">Reviews</a> · <a href="faq.html">FAQs</a> · <a href="blog/index.html">Blog</a></p>
 <p><a href="terms.html">Terms of Use</a> · <a href="privacy-policy.html">Privacy Policy</a> · <a href="disclaimer.html">Disclaimer</a> · <a href="refund-policy.html">Refund Policy</a> · <a href="about.html">About Us</a> · <a href="contact.html">Contact Us</a></p>

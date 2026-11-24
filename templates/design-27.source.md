@@ -18,12 +18,12 @@ body{margin:0;font-family:'Nunito Sans',system-ui,-apple-system,Segoe UI,Roboto,
 h1,h2,h3,h4{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;line-height:1.2;margin:0;color:var(--ink)}
 a{color:var(--primary-dark)}
 img{max-width:100%;height:auto;display:block}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
 /* Strip + nav */
 .trc-strip{background:var(--ink);color:#F6E6D6;font-size:13.5px;padding:9px 0;display:flex;gap:26px;justify-content:center;flex-wrap:wrap;text-align:center}
 .trc-strip b{color:var(--primary-light)}
 nav.navbar{position:sticky;top:0;z-index:200;background:rgba(251,243,234,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav.navbar .wrap{display:flex;align-items:center;gap:24px;padding:15px 24px}
+nav.navbar .wrap{display:flex;align-items:center;gap:24px;padding:15px 24px;max-width:1160px}
 .logo{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.5rem;text-decoration:none;color:var(--ink)}
 .logo em{font-style:normal;color:var(--primary-dark)}
 .nav-links{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap;align-items:center}
@@ -35,44 +35,37 @@ nav.navbar .wrap{display:flex;align-items:center;gap:24px;padding:15px 24px}
 .btn-ghost{background:transparent!important;color:var(--ink)!important;border:2px solid var(--ink)!important;box-shadow:none!important}
 .btn-big{padding:16px 30px;font-size:1.03rem}
 .nav-cta{padding:9px 18px!important;font-size:.86rem;box-shadow:none}
-/* Hero */
-header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -12%,var(--surface-alt) 0%,transparent 60%),var(--bg)}
-.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:start}
+/* Hero — single centered column, editorial masthead feel */
+header.hero{padding:56px 0 20px;background:radial-gradient(1000px 440px at 50% -20%,var(--surface-alt) 0%,transparent 60%),var(--bg);text-align:center}
+.hero .wrap{max-width:760px}
 .trc-pill{display:inline-block;background:var(--surface-alt);color:var(--primary-dark);font-weight:800;font-size:.78rem;letter-spacing:.03em;text-transform:uppercase;padding:7px 15px;border-radius:999px}
-.hero h1{font-size:2.8rem;margin:16px 0 4px;letter-spacing:-.01em}
+.hero h1{font-size:2.9rem;margin:18px 0 16px;letter-spacing:-.01em}
 .hero h1 em{font-style:normal;color:var(--primary-dark)}
-.trc-answer{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:18px 0}
-.trc-answer .tag{display:inline-block;background:var(--primary-dark);color:var(--on-primary);font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:8px;margin-bottom:9px;font-family:'Nunito Sans',sans-serif}
-.trc-answer p{margin:0;color:var(--ink-soft);font-size:1rem}
-.trc-facts{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}
-.trc-facts li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;color:var(--ink)}
-.hero-checks{display:grid;gap:10px;margin:18px 0 24px;font-weight:700;font-size:.95rem}
-.hero-checks div{display:flex;gap:10px;align-items:flex-start;color:var(--ink-soft)}
-.hero-checks div:before{content:"✓";flex:none;width:21px;height:21px;border-radius:50%;background:var(--good);color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px}
-.hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
-.hero-media{display:flex;justify-content:center}
-.trc-hero-card{background:var(--surface-alt);border:1px solid var(--line);border-radius:28px;padding:28px;width:100%;max-width:380px;box-shadow:var(--shadow);text-align:center}
-.trc-hero-card img{max-width:260px;margin:0 auto 14px}
-.trc-hero-card .trc-facts{justify-content:center}
+.hero-media{display:flex;justify-content:center;margin:14px 0 22px}
+.trc-hero-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px 26px;display:flex;align-items:center;gap:18px;box-shadow:var(--shadow)}
+.trc-hero-card img{max-width:96px}
+.trc-hero-card p{margin:0;font-weight:700;font-size:.92rem;text-align:left}
+.hero-lede{font-size:1.1rem;color:var(--ink-soft);max-width:620px;margin:0 auto 22px;font-style:italic}
+.hero-cta-row{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
 /* Section head */
-.sec{padding:70px 0}
+.sec{padding:64px 0}
 .sec.alt{background:var(--surface-alt)}
-.head{max-width:700px;margin:0 auto 38px;text-align:center}
+.head{max-width:680px;margin:0 auto 32px;text-align:center}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;color:var(--primary-dark);font-weight:800;font-size:.75rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:11px;font-family:'Nunito Sans',sans-serif}
-.head h2{font-size:2.2rem;margin:0 0 12px}
+.head h2{font-size:2.1rem;margin:0 0 12px}
 .head p{color:var(--ink-soft);font-size:1.02rem;margin:0}
-.grid{display:grid;gap:20px}
+.grid{display:grid;gap:18px}
 .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
 .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 /* Shared card markup (from build_native_page's default card builders) */
-.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.15rem;font-family:'Cormorant Garamond',serif}
-.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.94rem}
+.card,.pcard,.ing-card,.rev-card,.step-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.card h4,.ing-card h4,.step-card h4{margin:0 0 8px;font-size:1.1rem;font-family:'Cormorant Garamond',serif}
+.card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.93rem}
 .ing-card{display:flex;gap:16px;border-left:4px solid var(--good)}
-.ing-num,.step-num{flex:none;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.05rem;color:var(--on-primary);background:var(--primary-dark)}
+.ing-num,.step-num{flex:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1rem;color:var(--on-primary);background:var(--primary-dark)}
 .step-card{border-left:4px solid var(--good)}
 .step-card .step-num{margin-bottom:14px}
 .pcard{text-align:left}
@@ -83,82 +76,96 @@ header.hero{padding:48px 0 14px;background:radial-gradient(1000px 440px at 88% -
 .rev-sub{font-size:.78rem;color:var(--ink-soft)}
 .rev-stars{color:var(--primary-dark);font-size:1rem;letter-spacing:.1em;margin-bottom:8px}
 /* Trust strip */
-section.trust{padding:20px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-section.trust .wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center}
+section.trust{padding:18px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+section.trust .wrap{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center;max-width:1160px}
 section.trust .t-item{display:flex;align-items:center;gap:9px;font-weight:700;font-size:.87rem;color:var(--ink-soft)}
-section.trust img{width:34px;height:34px;object-fit:contain}
+section.trust img{width:32px;height:32px;object-fit:contain}
 /* Callout reused by Quick Facts auto-box */
 .trc-callout{background:var(--surface-alt);border-left:4px solid var(--primary-dark);border-radius:14px;padding:20px 22px;font-weight:600;color:var(--ink)}
 .trc-chips{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
 .trc-chips span{background:var(--surface-alt);border:1px solid var(--line);border-radius:999px;padding:7px 15px;font-weight:700;font-size:.8rem;color:var(--ink)}
-/* Benefits feature block */
-.feature{display:grid;grid-template-columns:.85fr 1.15fr;gap:44px;align-items:center;margin-bottom:44px}
-.feature img{border-radius:var(--radius);box-shadow:var(--shadow)}
-.feature h3{font-size:1.6rem;margin:0 0 12px}
-.feature p{color:var(--ink-soft)}
+/* Pull-quote — original editorial divider used between major sections */
+.trc-quote{max-width:720px;margin:0 auto;text-align:center;padding:10px 0}
+.trc-quote blockquote{margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.7rem;line-height:1.4;color:var(--ink)}
+.trc-quote blockquote:before{content:"“";color:var(--primary-dark)}
+.trc-quote blockquote:after{content:"”";color:var(--primary-dark)}
+.trc-quote cite{display:block;margin-top:14px;font-style:normal;font-weight:800;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+/* Benefits as a staggered editorial strip (zigzag offset), not a uniform grid —
+   this design's structural identity alongside the Sourcing Trail. */
+.trc-stagger{display:grid;gap:16px;max-width:860px;margin:0 auto}
+.trc-stagger>*{border-left:4px solid var(--good);border-right:none}
+.trc-stagger>*:nth-child(odd){margin-right:9%}
+.trc-stagger>*:nth-child(even){margin-left:9%;border-left:none;border-right:4px solid var(--primary-dark);text-align:right}
 /* Sourcing Trail — original distinctive component: dotted path with leaf-shaped origin nodes */
-.trc-trail{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:40px 32px}
+.trc-trail{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px 30px}
 .trc-trail-path{position:relative;display:flex;justify-content:space-between;gap:12px;padding-top:10px}
 .trc-trail-path:before{content:"";position:absolute;top:19px;left:24px;right:24px;height:2px;background:repeating-linear-gradient(90deg,var(--good) 0 8px,transparent 8px 16px)}
 .trc-leaf{flex:1;text-align:center;position:relative}
 .trc-leaf .dot{width:38px;height:38px;margin:0 auto 12px;border-radius:70% 0 70% 0;background:var(--good);border:3px solid var(--surface);box-shadow:0 0 0 2px var(--good);position:relative;z-index:1}
 .trc-leaf b{display:block;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--ink)}
 .trc-leaf span{display:block;font-size:.78rem;color:var(--ink-soft);margin-top:3px}
-.trc-trail-cap{text-align:center;font-size:.8rem;color:var(--ink-soft);opacity:.85;font-style:italic;margin-top:24px}
+.trc-trail-cap{text-align:center;font-size:.8rem;color:var(--ink-soft);opacity:.85;font-style:italic;margin-top:22px}
+/* Ingredients — single-column stacked editorial list with alternating tint,
+   instead of a card grid */
+.trc-ing-list{display:flex;flex-direction:column;max-width:780px;margin:0 auto;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.trc-ing-list .ing-card{border-radius:0;border-left:0;box-shadow:none;border-bottom:1px solid var(--line)}
+.trc-ing-list .ing-card:last-child{border-bottom:0}
+.trc-ing-list .ing-card:nth-child(even){background:var(--surface-alt)}
 /* Pricing */
-.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
-.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 24px;text-align:center;display:flex;flex-direction:column}
-.plan.top{border:2px solid var(--primary-dark);box-shadow:var(--shadow);transform:translateY(-8px)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px 22px;text-align:center;display:flex;flex-direction:column}
+.plan.top{border:2px solid var(--primary-dark);box-shadow:var(--shadow);transform:translateY(-6px)}
 .plan-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--primary-dark);color:var(--on-primary);border-radius:999px;padding:6px 16px;font-weight:800;font-size:.75rem;white-space:nowrap;font-family:'Nunito Sans',sans-serif}
-.plan img{max-width:160px;margin:4px auto 14px}
-.plan-ttl{font-size:1.4rem}
-.plan-sub{font-weight:700;color:var(--ink-soft);font-size:.84rem}
-.plan-price{font-size:2.2rem;margin:14px 0 4px;font-family:'Cormorant Garamond',serif;font-weight:700}
-.plan-price small{font-size:.9rem;color:var(--ink-soft);font-weight:600}
-.plan-tot,.plan-ship{font-weight:700;color:var(--ink-soft);font-size:.85rem}
+.plan img{max-width:150px;margin:4px auto 12px}
+.plan-ttl{font-size:1.3rem}
+.plan-sub{font-weight:700;color:var(--ink-soft);font-size:.83rem}
+.plan-price{font-size:2.1rem;margin:12px 0 4px;font-family:'Cormorant Garamond',serif;font-weight:700}
+.plan-price small{font-size:.88rem;color:var(--ink-soft);font-weight:600}
+.plan-tot,.plan-ship{font-weight:700;color:var(--ink-soft);font-size:.83rem}
 .plan-ship{color:var(--good)}
-.plan ul{list-style:none;padding:0;margin:16px 0;text-align:left}
-.plan ul li{padding:6px 0 6px 24px;position:relative;font-weight:600;font-size:.89rem;color:var(--ink-soft)}
+.plan ul{list-style:none;padding:0;margin:14px 0;text-align:left}
+.plan ul li{padding:5px 0 5px 24px;position:relative;font-weight:600;font-size:.87rem;color:var(--ink-soft)}
 .plan ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 .plan .btn{margin-top:auto;width:100%}
 /* Guarantee */
-.trc-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:40px;text-align:center}
-.trc-guarantee img{max-width:140px;margin:0 auto}
+.trc-guarantee{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:36px;text-align:center}
+.trc-guarantee img{max-width:130px;margin:0 auto}
 /* FAQ accordion */
 .faq-row{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;background:var(--surface);overflow:hidden}
-.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:18px 20px;font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
+.faq-btn{width:100%;text-align:left;background:transparent;border:0;padding:16px 18px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;color:var(--ink)}
 .faq-btn:after{content:"+";font-size:1.3rem;font-weight:700;color:var(--primary-dark);transition:transform .2s ease}
 .faq-row.open .faq-btn:after{transform:rotate(45deg)}
-.faq-body{display:none;padding:0 20px 18px;color:var(--ink-soft)}
+.faq-body{display:none;padding:0 18px 16px;color:var(--ink-soft)}
 .faq-row.open .faq-body{display:block}
 /* Compare */
 .compare{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.compare th,.compare td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line);font-weight:600;font-size:.92rem}
-.compare th{background:var(--surface-alt);font-family:'Cormorant Garamond',serif;font-size:1.05rem}
+.compare th,.compare td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);font-weight:600;font-size:.9rem}
+.compare th{background:var(--surface-alt);font-family:'Cormorant Garamond',serif;font-size:1rem}
 .compare td:first-child{font-weight:800}
 .compare .yes{color:var(--good);font-weight:800}
 .compare .no{color:#B0523F;font-weight:800}
 /* References */
 .refs{columns:2;column-gap:40px}
-.refs li{font-size:.87rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
-.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 26px}
+.refs li{font-size:.86rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
+.refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 24px}
 .refs-wrap.collapsed .refs li:nth-child(n+7){display:none}
 .refs-more{display:block;text-align:center;margin-top:18px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink)}
 /* Final CTA — contrasting deep cocoa panel */
 section.final{text-align:center;background:linear-gradient(160deg,#3B2A20,#5B4531);border-radius:28px;margin:0 24px;padding:4px}
-section.final .wrap{padding:56px 24px}
+section.final .wrap{padding:52px 24px;max-width:1160px}
 section.final .head h2{color:#fff}
 section.final .head p{color:#E3CBAE;max-width:620px;margin:0 auto}
 section.final .plan{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.18)}
 section.final .plan-ttl,section.final .plan-price{color:#fff}
 section.final .plan-sub,section.final .plan-tot{color:#E3CBAE}
 footer{background:var(--surface-alt);border-top:1px solid var(--line);padding:40px 0;text-align:center;color:var(--ink-soft)}
+footer .wrap{max-width:1160px}
 footer a{color:var(--ink);font-weight:700;text-decoration:none;margin:0 8px;font-size:.9rem}
 footer a:hover{color:var(--primary-dark)}
 footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 .auto-sticky-cta{background:var(--surface)!important;border-top:1px solid var(--line)!important}
 .auto-sticky-cta-btn{background:var(--primary-dark)!important;color:var(--on-primary)!important;border-radius:999px!important}
-@media(max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero-media{order:-1}.hero h1{font-size:2.2rem}.g3,.g2,.plans,.feature{grid-template-columns:1fr}.plan.top{transform:none}.feature img{max-width:340px;margin:0 auto}.refs{columns:1}.trc-trail-path{flex-direction:column;gap:22px}.trc-trail-path:before{display:none}}
+@media(max-width:900px){.hero h1{font-size:2.3rem}.g3,.g2,.feature{grid-template-columns:1fr}.refs{columns:1}.trc-trail-path{flex-direction:column;gap:22px}.trc-trail-path:before{display:none}.trc-stagger>*:nth-child(odd){margin-right:0}.trc-stagger>*:nth-child(even){margin-left:0;text-align:left;border-right:none;border-left:4px solid var(--primary-dark)}}
 @media(max-width:760px){.nav-links{position:fixed;top:60px;left:0;right:0;background:var(--bg);flex-direction:column;align-items:flex-start;padding:18px 24px;gap:16px;display:none;border-bottom:1px solid var(--line)}.nav-links.open{display:flex}.nav-toggle{display:block}}
 </style>
 </head>
@@ -179,63 +186,32 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 </div></nav>
 <header class="hero"><div class="wrap">
-<div>
 <span class="trc-pill">__PILL_TEXT__</span>
 <h1>__HERO_H1__</h1>
-<div class="trc-answer reveal"><span class="tag">In Short</span><p>__HERO_DESC__</p></div>
-<ul class="trc-facts reveal">
-<li>__FACT1_NUM__ __FACT1_LABEL__</li>
-<li>__FACT2_NUM__ Per Day</li>
-<li>__FACT3_NUM__ __FACT3_LABEL__</li>
-</ul>
-<div class="hero-checks"><div>__CHECK1__</div><div>__CHECK2__</div><div>__CHECK3__</div></div>
+<p class="hero-lede reveal">__HERO_DESC__</p>
+<div class="hero-media">
+<div class="trc-hero-card reveal">
+<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="96" height="96" fetchpriority="high">
+<p>★ 4.8 / 5<br>__REVIEW_COUNT__ reviews</p>
+</div>
+</div>
 <div class="hero-cta-row">
 <a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_HERO__</a>
 <a class="btn btn-big btn-ghost" href="#how-it-works">See How It Works</a>
 </div>
-</div>
-<div class="hero-media">
-<div class="trc-hero-card reveal">
-<img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="260" height="260" fetchpriority="high">
-<ul class="trc-facts"><li>★ 4.8 / 5</li><li>__REVIEW_COUNT__ reviews</li></ul>
-</div>
-</div>
 </div></header>
 <section class="trust"><div class="wrap">
-<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
-<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
-</div></section>
-<section class="sec alt" id="pricing"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">Choose your package</span><h2>Pick The __BRAND__ Package That Fits You</h2><p>__PRICING_NOTE__</p></div>
-<div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<p class="reveal" style="text-align:center;font-weight:700;margin-top:22px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
+<div class="t-item"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"> <span>Made in USA<small style="display:block;font-weight:500;opacity:.8">Manufactured under strict quality control standards.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"> <span>GMP Certified<small style="display:block;font-weight:500;opacity:.8">Made under Good Manufacturing Practice procedures.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"> <span>FDA-Registered Facility<small style="display:block;font-weight:500;opacity:.8">Produced in an FDA-registered facility.</small></span></div>
+<div class="t-item"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"> <span>100% Natural<small style="display:block;font-weight:500;opacity:.8">No artificial fillers or synthetic additives.</small></span></div>
 </div></section>
 <section class="sec" id="what-is"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Straightforward Answer</h2></div>
-<p class="reveal" style="font-size:1.1rem;max-width:760px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
-<div class="trc-callout reveal" style="max-width:760px;margin:0 auto">__WHATIS_CALLOUT__</div>
+<div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Clear, Straight Answer</h2></div>
+<p class="reveal" style="font-size:1.05rem;max-width:720px;margin:0 auto 18px;text-align:center;color:var(--ink-soft)">__WHATIS_P1__</p>
+<div class="trc-callout reveal" style="max-width:720px;margin:0 auto">__WHATIS_CALLOUT__</div>
 <div class="trc-chips reveal" style="justify-content:center"><span>__CHIP1__</span><span>__CHIP2__</span><span>__CHIP3__</span><span>__CHIP4__</span></div>
-<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
-</div></section>
-<section class="sec alt" id="benefits"><div class="wrap">
-<div class="feature reveal">
-<img src="assets/images/feature-shot.png" alt="Daily __BRAND__ routine" width="420" height="340" loading="lazy">
-<div>
-<h3>Daily Support, Built Into Your Routine</h3>
-<p>__HIW_INTRO__</p>
-<a class="btn" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_BENEFITS__</a>
-</div>
-</div>
-<div class="head reveal"><span class="eyebrow">Why people choose it</span><h2>What You Can Expect To Notice</h2><p>Real, everyday support — no overpromising.</p></div>
-<div class="grid g3">__BENEFIT_CARD_TEMPLATE__</div>
-<ul class="reveal" style="max-width:720px;margin:30px auto 0;font-weight:700;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
-</div></section>
-<section class="sec" id="how-it-works"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">How it works</span><h2>From Bottle To Daily Habit</h2><p>__HIW_INTRO__</p></div>
-<div class="grid g2">__HIW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:32px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_WHATIS__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Named on the label</span><h2>The __BRAND__ Sourcing Trail</h2><p>A quick walk through what's named on the label — tap any name for the full page.</p></div>
@@ -249,21 +225,39 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <p class="trc-trail-cap">A quick map of what's on the label — see the Ingredients section below for the full description of each.</p>
 </div>
 </div></section>
-<section class="sec" id="ingredients"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">Inside every serving</span><h2>__ING_HEADING__</h2><p>Every ingredient, explained plainly. Serving: __SERVING_DAILY__ · Per bottle: __SERVING_PER_BOTTLE__.</p></div>
-<div class="grid g3">__ING_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
+<div class="sec"><div class="trc-quote reveal wrap">
+<blockquote>A daily __CATEGORY__ routine should be simple enough to keep, and clear enough to trust.</blockquote>
+<cite>The __BRAND__ Editorial Note</cite>
+</div></div>
+<section class="sec alt" id="benefits"><div class="wrap">
+<div class="head reveal"><span class="eyebrow">Why people choose it</span><h2>What You Can Expect To Notice</h2><p>Real, everyday support — no overpromising.</p></div>
+<div class="trc-stagger">__BENEFIT_CARD_TEMPLATE__</div>
+<ul class="reveal" style="max-width:720px;margin:28px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
 </div></section>
-<section class="sec alt" id="pricing-again"><div class="wrap">
-<div class="head reveal"><span class="eyebrow">Still deciding?</span><h2>Get __BRAND__ Today</h2><p>Current package pricing, while supplies last.</p></div>
+<section class="sec" id="how-it-works"><div class="wrap">
+<div class="head reveal"><span class="eyebrow">How it works</span><h2>From Bottle To Daily Habit</h2><p>__HIW_INTRO__</p></div>
+<div class="grid g2">__HIW_CARD_TEMPLATE__</div>
+<div class="reveal" style="text-align:center;margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_HIW__</a></div>
+</div></section>
+<section class="sec alt" id="ingredients"><div class="wrap">
+<div class="head reveal"><span class="eyebrow">Inside every serving</span><h2>__ING_HEADING__</h2><p>Every ingredient, explained plainly. Serving: __SERVING_DAILY__ · Per bottle: __SERVING_PER_BOTTLE__.</p></div>
+<div class="trc-ing-list reveal">__ING_CARD_TEMPLATE__</div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTER_INGREDIENTS__</a></div>
+</div></section>
+<section class="sec" id="pricing"><div class="wrap">
+<div class="head reveal"><span class="eyebrow">Choose your package</span><h2>Pick The __BRAND__ Package That Fits You</h2><p>__PRICING_NOTE__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:22px;font-weight:700;color:var(--ink-soft)"><a href="#reviews">Read Reviews</a> &nbsp;|&nbsp; <a href="#faq">View FAQs</a></div>
+<p class="reveal" style="text-align:center;font-weight:700;margin-top:20px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
 </div></section>
 __BONUS_SECTION__
+<div class="sec alt"><div class="trc-quote reveal wrap">
+<blockquote>__FACT1_NUM__ named __FACT1_LABEL__, __FACT3_NUM__ to decide if it's right for you — nothing hidden behind a proprietary blend.</blockquote>
+<cite>What __BRAND__ Is — And Isn't</cite>
+</div></div>
 <section class="sec" id="reviews"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Verified reviews</span><h2>What Customers Say</h2><p>★★★★★ __REVIEW_COUNT__ reviews and counting.</p></div>
 <div class="grid g3">__REVIEW_CARD_TEMPLATE__</div>
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
 <section class="sec alt" id="compare"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">An honest look</span><h2>__BRAND__ vs The Alternatives</h2><p>Decide with the facts in front of you.</p></div>
@@ -278,23 +272,23 @@ __BONUS_SECTION__
 <section class="sec" id="faq"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Got questions?</span><h2>Frequently Asked Questions</h2></div>
 __FAQ_ROW_TEMPLATE__
-<div class="reveal" style="text-align:center;margin-top:30px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
+<div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERFAQ__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap"><div class="trc-guarantee reveal">
 <img src="assets/images/guarantee.png" alt="60-day money-back guarantee" loading="lazy">
-<h2 style="font-size:1.9rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
+<h2 style="font-size:1.6rem;margin:14px 0">__FACT3_NUM__ Money-Back __FACT3_LABEL__</h2>
 <p style="color:var(--ink-soft);max-width:640px;margin:0 auto 20px">__GUARANTEE_TEXT__</p>
-<div style="display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:8px">
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
-<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="34" height="34" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
+<div style="display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-usa.png" alt="Made in USA" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Strict quality control standards</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-gmp.png" alt="GMP certified" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Good Manufacturing Practice</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-fda.png" alt="FDA-registered facility" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">Produced in a registered facility</figcaption></figure>
+<figure style="margin:0;text-align:center;max-width:110px"><img src="assets/images/badge-natural.png" alt="Natural ingredients" width="32" height="32" loading="lazy"><figcaption style="font-size:.72rem;color:var(--ink-soft);margin-top:4px">No artificial fillers or additives</figcaption></figure>
 </div>
 </div></div></section>
 <section class="sec final"><div class="wrap">
 <div class="head reveal"><h2>Ready To Start Today?</h2><p>__FINAL_TEXT__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
-<div class="reveal" style="margin-top:28px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
+<div class="reveal" style="margin-top:24px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_CLOSING__</a></div>
 </div></section>
 <section class="sec alt"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Background reading</span><h2>Research Behind These Ingredients</h2></div>
