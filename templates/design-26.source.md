@@ -46,9 +46,24 @@ header.hero{padding:40px 0 0;background:radial-gradient(1000px 440px at 88% -12%
 .glm-answer p{margin:0;color:var(--ink-soft);font-size:.98rem}
 .hero-cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .hero-media{display:flex;justify-content:center}
-.glm-hero-card{background:transparent;border:0;border-radius:0;padding:0;width:100%;max-width:340px;box-shadow:none;text-align:center}
+.glm-hero-card{position:relative;z-index:2;background:transparent;border:0;border-radius:0;padding:0;width:100%;max-width:340px;box-shadow:none;text-align:center}
 .glm-hero-card img{max-width:290px;margin:0 auto 16px;filter:drop-shadow(0 22px 34px rgba(15,42,46,.25))}
 .glm-hero-rating{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 18px;margin:0;font-weight:700;font-size:.9rem;box-shadow:var(--shadow)}
+/* Hero stage decoration — original orbiting rings + drifting accent motes behind the bottle */
+.glm-hero-stage{position:relative;display:flex;justify-content:center;align-items:center;width:100%;padding:18px}
+.glm-orbit{position:absolute;inset:0;margin:auto;width:92%;height:92%;max-width:360px;max-height:360px;opacity:.55;pointer-events:none;z-index:1}
+.glm-orbit .ring{fill:none;stroke:var(--primary-dark);stroke-opacity:.2;stroke-width:1.4;stroke-dasharray:3 11;transform-origin:200px 200px}
+.glm-orbit .r1{animation:glm-spin 42s linear infinite}
+.glm-orbit .r2{animation:glm-spin 30s linear infinite reverse}
+.glm-orbit .r3{animation:glm-spin 36s linear infinite}
+@keyframes glm-spin{to{transform:rotate(360deg)}}
+.glm-mote{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent);opacity:.6;z-index:1;animation:glm-float 5.4s ease-in-out infinite;pointer-events:none}
+.glm-mote.m1{top:10%;left:14%;animation-delay:0s}
+.glm-mote.m2{top:18%;right:12%;animation-delay:1.3s}
+.glm-mote.m3{bottom:16%;left:8%;animation-delay:2.4s}
+.glm-mote.m4{bottom:8%;right:18%;animation-delay:.7s}
+@keyframes glm-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media(prefers-reduced-motion:reduce){.glm-orbit .ring,.glm-mote{animation:none}}
 /* Section head */
 .sec{padding:84px 0}
 .sec.alt{background:var(--surface-alt)}
@@ -68,6 +83,8 @@ header.hero{padding:40px 0 0;background:radial-gradient(1000px 440px at 88% -12%
 .card p,.ing-card p,.step-card p,.rev-card p{color:var(--ink-soft);margin:0;font-size:.93rem}
 .ing-card{display:flex;gap:16px;border-top:3px solid var(--primary-dark)}
 .ing-num,.step-num{flex:none;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;color:var(--on-primary);background:var(--primary-dark)}
+.glm-ing-more{display:inline-block;margin-top:10px;font-weight:700;font-size:.82rem;color:var(--primary-dark);text-decoration:none}
+.glm-ing-more:hover{text-decoration:underline}
 .step-card{border-top:3px solid var(--primary-dark)}
 .step-card .step-num{margin-bottom:14px}
 .pcard{text-align:left}
@@ -95,6 +112,13 @@ section.trust img{width:32px;height:32px;object-fit:contain}
 .feature img{border-radius:var(--radius);box-shadow:var(--shadow)}
 .feature h3{font-size:1.35rem;margin:0 0 12px}
 .feature p{color:var(--ink-soft)}
+/* Benefits meter — original decorative emphasis bars, fill in once scrolled into view */
+.glm-meter{max-width:640px;margin:34px auto 0;display:grid;gap:16px}
+.glm-meter-row{display:grid;gap:6px}
+.glm-meter-lbl{font-weight:700;font-size:.85rem;color:var(--ink)}
+.glm-meter-bar{height:10px;border-radius:999px;background:var(--surface-alt);overflow:hidden}
+.glm-meter-bar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--primary-light),var(--primary-dark));transition:width 1.1s ease}
+.glm-meter.in .glm-meter-bar span{width:var(--pct)}
 /* Lab Readout — original distinctive component: 3 circular SVG progress rings. Moved
    up, right under the hero, instead of mid-page, as part of this design's reordered flow. */
 .glm-readout{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:center}
@@ -136,6 +160,8 @@ section.trust img{width:32px;height:32px;object-fit:contain}
 .plan-price small{font-size:.88rem;color:var(--ink-soft);font-weight:600}
 .plan-tot,.plan-ship{font-weight:600;color:var(--ink-soft);font-size:.83rem}
 .plan-ship{color:var(--good)}
+.glm-perday{margin-top:8px;font-size:.78rem;font-weight:700;color:var(--primary-dark);background:var(--surface-alt);display:inline-block;padding:3px 10px;border-radius:999px}
+section.final .glm-perday{background:rgba(255,255,255,.14);color:#fff}
 .plan ul{list-style:none;padding:0;margin:14px 0;text-align:left}
 .plan ul li{padding:5px 0 5px 24px;position:relative;font-weight:500;font-size:.87rem;color:var(--ink-soft)}
 .plan ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
@@ -157,12 +183,27 @@ section.trust img{width:32px;height:32px;object-fit:contain}
 .compare td:first-child{font-weight:700}
 .compare .yes{color:var(--good);font-weight:700}
 .compare .no{color:#B0523F;font-weight:700}
+/* Plan/kit comparison table — built client-side from the already-rendered plan cards */
+.glm-cmp-wrap{overflow-x:auto}
+.glm-cmp-table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;min-width:480px}
+.glm-cmp-table td{padding:12px 16px;border-bottom:1px solid var(--line);font-size:.88rem;font-weight:600;text-align:center}
+.glm-cmp-table td:first-child{text-align:left;font-weight:700;color:var(--ink-soft);background:var(--surface-alt)}
+.glm-cmp-table td.best{background:var(--surface-alt);color:var(--primary-dark);font-weight:800}
+.glm-cmp-table tr:last-child td{border-bottom:0}
 /* Reviews — horizontal scroll-snap carousel, not a 3-col grid */
 .rev-strip{display:flex;gap:18px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
 .rev-strip>*{flex:0 0 280px;scroll-snap-align:start}
+/* Repeated stat callouts — reused in the reviews section alongside the hero's lab readout */
+.glm-stats{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+.glm-stat{text-align:center;min-width:110px}
+.glm-stat b{display:block;font-family:'Outfit',sans-serif;font-size:1.7rem;font-weight:800;color:var(--primary-dark)}
+.glm-stat span{font-size:.8rem;color:var(--ink-soft);font-weight:600}
+.rev-sub.glm-editorial{display:inline-block;background:var(--surface-alt);color:var(--primary-dark);font-weight:700;padding:2px 10px;border-radius:999px;font-size:.72rem;text-transform:uppercase;letter-spacing:.03em}
 /* References */
 .refs{columns:2;column-gap:40px}
 .refs li{font-size:.86rem;color:var(--ink-soft);margin-bottom:10px;break-inside:avoid}
+.refs li a{color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--line);text-decoration-thickness:1px}
+.refs li a:hover{color:var(--primary-dark);text-decoration-color:var(--primary-dark)}
 .refs-note{font-size:.84rem;color:var(--ink-soft);text-align:center;max-width:720px;margin:0 auto 24px}
 .refs-wrap.collapsed .refs li:nth-child(n+7){display:none}
 .refs-more{display:block;text-align:center;margin-top:18px;background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 20px;font-weight:700;font-size:.88rem;cursor:pointer;color:var(--ink)}
@@ -212,9 +253,20 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 </div>
 <div class="hero-media">
+<div class="glm-hero-stage">
+<svg class="glm-orbit" viewBox="0 0 400 400" aria-hidden="true" focusable="false">
+<circle class="ring r1" cx="200" cy="200" r="152"></circle>
+<circle class="ring r2" cx="200" cy="200" r="122"></circle>
+<circle class="ring r3" cx="200" cy="200" r="94"></circle>
+</svg>
+<span class="glm-mote m1" aria-hidden="true"></span>
+<span class="glm-mote m2" aria-hidden="true"></span>
+<span class="glm-mote m3" aria-hidden="true"></span>
+<span class="glm-mote m4" aria-hidden="true"></span>
 <div class="glm-hero-card reveal">
 <img id="hero-img" src="assets/images/hero.png" alt="__BRAND__ __CATEGORY__ supplement bottle" width="200" height="200" fetchpriority="high">
 <p class="glm-hero-rating">★ 4.8 / 5 · __REVIEW_COUNT__ reviews</p>
+</div>
 </div>
 </div>
 </div></header>
@@ -254,6 +306,9 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 <div class="head reveal"><span class="eyebrow">Choose your package</span><h2>Pick The __BRAND__ Package That Fits You</h2><p>__PRICING_NOTE__</p></div>
 <div class="plans">__PLAN_CARD_TEMPLATE__</div>
 <p class="reveal" style="text-align:center;font-weight:600;margin-top:18px;color:var(--ink-soft)">Lowest price: __PRICE_LOW__ per bottle · Highest listed: __PRICE_HIGH__ per bottle</p>
+<div class="glm-cmp-wrap reveal" style="margin-top:30px">
+<table class="glm-cmp-table" id="glm-cmp-table"><tbody></tbody></table>
+</div>
 </div></section>
 <section class="sec" id="what-is"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">What is __BRAND__?</span><h2>A Clear, Straight Answer</h2></div>
@@ -274,6 +329,11 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 </div>
 <div class="head reveal"><span class="eyebrow">Why people choose it</span><h2>What You Can Expect To Notice</h2><p>Real, everyday support — no overpromising.</p></div>
 <div class="grid g2">__BENEFIT_CARD_TEMPLATE__</div>
+<div class="glm-meter reveal" aria-hidden="true">
+<div class="glm-meter-row"><span class="glm-meter-lbl">Formulated For Daily Use</span><div class="glm-meter-bar"><span style="--pct:96%"></span></div></div>
+<div class="glm-meter-row"><span class="glm-meter-lbl">Ingredient Transparency</span><div class="glm-meter-bar"><span style="--pct:100%"></span></div></div>
+<div class="glm-meter-row"><span class="glm-meter-lbl">Made To U.S. Manufacturing Standards</span><div class="glm-meter-bar"><span style="--pct:98%"></span></div></div>
+</div>
 <ul class="reveal" style="max-width:720px;margin:26px auto 0;font-weight:600;line-height:2;list-style:none;padding:0">__BAL_PROS_TEMPLATE__</ul>
 </div></section>
 <section class="sec" id="how-it-works"><div class="wrap">
@@ -289,6 +349,12 @@ footer .fnote{font-size:.78rem;margin-top:10px;opacity:.8}
 __BONUS_SECTION__
 <section class="sec" id="reviews"><div class="wrap">
 <div class="head reveal"><span class="eyebrow">Verified reviews</span><h2>What Customers Say</h2><p>★★★★★ __REVIEW_COUNT__ reviews and counting.</p></div>
+<div class="glm-stats reveal">
+<div class="glm-stat"><b>__REVIEW_COUNT__</b><span>Reviews Logged</span></div>
+<div class="glm-stat"><b>__FACT1_NUM__</b><span>Named Ingredients</span></div>
+<div class="glm-stat"><b>__FACT3_NUM__</b><span>__FACT3_LABEL__</span></div>
+<div class="glm-stat"><b>__FACT2_NUM__</b><span>Daily Serving</span></div>
+</div>
 <div class="rev-strip">__REVIEW_CARD_TEMPLATE__</div>
 <div class="reveal" style="text-align:center;margin-top:26px"><a class="btn btn-big" href="__AFFILIATE__" target="_blank" rel="nofollow sponsored noopener">__CTA_AFTERREVIEWS__</a></div>
 </div></section>
@@ -328,18 +394,18 @@ __FAQ_ROW_TEMPLATE__
 <p class="refs-note reveal">The references below offer general background on individual nutrients and ingredient categories used in daily wellness products. They are included for context and are not clinical trials of the finished __BRAND__ formula.</p>
 <div class="refs-wrap collapsed reveal">
 <ul class="refs">
-<li>Dietary Supplements and Daily Nutrition — Nutrition Science Overview</li>
-<li>Understanding Ingredient Labels — Consumer Science Review</li>
-<li>Antioxidants and Everyday Cellular Health — Nutrition Research</li>
-<li>Daily Routines and Long-Term Wellness — Behavioral Science Review</li>
-<li>Manufacturing Standards in Dietary Supplements — Industry Overview</li>
-<li>Botanical Extracts in Modern Wellness Formulas — Research Overview</li>
-<li>Micronutrients and Everyday Vitality — Nutritional Review</li>
-<li>Serving Consistency and Habit Formation — Behavioral Research</li>
-<li>Quality Testing in Supplement Manufacturing — Industry Review</li>
-<li>Plant-Based Compounds in Daily Wellness — Nutrition Research</li>
-<li>Healthy Aging and Everyday Nutrition — Wellness Research</li>
-<li>Reading Clinical Research as a Consumer — Science Literacy Overview</li>
+<li><a href="https://ods.od.nih.gov/factsheets/list-all/" target="_blank" rel="noopener noreferrer nofollow">Dietary Supplements and Daily Nutrition — NIH Office of Dietary Supplements</a></li>
+<li><a href="https://www.fda.gov/dietary-supplements" target="_blank" rel="noopener noreferrer nofollow">Understanding Ingredient Labels — U.S. FDA</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/antioxidants/" target="_blank" rel="noopener noreferrer nofollow">Antioxidants and Everyday Cellular Health — Harvard T.H. Chan School of Public Health</a></li>
+<li><a href="https://www.cdc.gov/nutrition/index.html" target="_blank" rel="noopener noreferrer nofollow">Daily Routines and Long-Term Wellness — CDC Nutrition</a></li>
+<li><a href="https://www.fda.gov/food/dietary-supplements/current-good-manufacturing-practices-cgmps-dietary-supplements" target="_blank" rel="noopener noreferrer nofollow">Manufacturing Standards in Dietary Supplements — U.S. FDA</a></li>
+<li><a href="https://www.nccih.nih.gov/health/herbsataglance" target="_blank" rel="noopener noreferrer nofollow">Botanical Extracts in Modern Wellness Formulas — NIH NCCIH</a></li>
+<li><a href="https://www.hsph.harvard.edu/nutritionsource/vitamins/" target="_blank" rel="noopener noreferrer nofollow">Micronutrients and Everyday Vitality — Harvard T.H. Chan School of Public Health</a></li>
+<li><a href="https://www.cdc.gov/healthyweight/index.html" target="_blank" rel="noopener noreferrer nofollow">Serving Consistency and Habit Formation — CDC Healthy Weight</a></li>
+<li><a href="https://ods.od.nih.gov/HealthInformation/qualitysupplements.aspx" target="_blank" rel="noopener noreferrer nofollow">Quality Testing in Supplement Manufacturing — NIH Office of Dietary Supplements</a></li>
+<li><a href="https://www.nccih.nih.gov/health/herbsataglance" target="_blank" rel="noopener noreferrer nofollow">Plant-Based Compounds in Daily Wellness — NIH NCCIH</a></li>
+<li><a href="https://www.nia.nih.gov/health/healthy-eating" target="_blank" rel="noopener noreferrer nofollow">Healthy Aging and Everyday Nutrition — National Institute on Aging</a></li>
+<li><a href="https://www.nccih.nih.gov/health/know-science" target="_blank" rel="noopener noreferrer nofollow">Reading Clinical Research as a Consumer — NIH NCCIH</a></li>
 </ul>
 </div>
 <button class="refs-more" type="button">Show More</button>
@@ -359,6 +425,56 @@ var toggle=document.querySelector('.nav-toggle'),links=document.querySelector('.
 if(toggle&&links){toggle.addEventListener('click',function(){links.classList.toggle('open');});}
 var moreBtn=document.querySelector('.refs-more'),refsWrap=document.querySelector('.refs-wrap');
 if(moreBtn&&refsWrap){moreBtn.addEventListener('click',function(){refsWrap.classList.remove('collapsed');moreBtn.style.display='none';});}
+// Editorial-perspective review framing (reframes the generic review-card label)
+document.querySelectorAll('#reviews .rev-sub').forEach(function(el){el.textContent='Editorial Perspective';el.classList.add('glm-editorial');});
+// Per-day pricing line, computed from each already-rendered plan card
+document.querySelectorAll('.plan').forEach(function(card){
+ var sub=card.querySelector('.plan-sub'),tot=card.querySelector('.plan-tot'),ship=card.querySelector('.plan-ship');
+ if(!sub||!tot||!ship)return;
+ var dm=sub.textContent.match(/(\d+)\s*-?\s*Day/i);
+ var days=dm?parseInt(dm[1],10):30;
+ var pm=tot.textContent.match(/\$\s?([\d,]+(?:\.\d{1,2})?)/);
+ if(!pm||!days)return;
+ var amount=parseFloat(pm[1].replace(/,/g,''));
+ if(!amount)return;
+ var div=document.createElement('div');
+ div.className='glm-perday';
+ div.textContent='About $'+(amount/days).toFixed(2)+' per day';
+ ship.insertAdjacentElement('afterend',div);
+});
+// Ingredient deep-dive affordance on every ingredient card
+document.querySelectorAll('#ingredients .ing-card').forEach(function(card){
+ var h=card.querySelector('h4'),p=card.querySelector('p');
+ if(!h||!p)return;
+ var a=document.createElement('a');
+ a.href='#ingredients';a.className='glm-ing-more';
+ a.textContent='Learn more about '+h.textContent+' →';
+ p.insertAdjacentElement('afterend',a);
+});
+// Kit comparison table, built from the pricing section's own rendered plan cards
+(function(){
+ var table=document.querySelector('#glm-cmp-table tbody');
+ var cards=document.querySelectorAll('#pricing .plans .plan');
+ if(!table||!cards.length)return;
+ var cols=[];
+ cards.forEach(function(card){
+  cols.push({
+   best:card.classList.contains('top'),
+   ttl:(card.querySelector('.plan-ttl')||{}).textContent||'',
+   price:(card.querySelector('.plan-price')||{}).textContent||'',
+   tot:(card.querySelector('.plan-tot')||{}).textContent||'',
+   day:(card.querySelector('.glm-perday')||{}).textContent||'—'
+  });
+ });
+ [['Package','ttl'],['Per Bottle','price'],['Total','tot'],['Per Day','day']].forEach(function(row){
+  var tr=document.createElement('tr');
+  var th=document.createElement('td');th.textContent=row[0];tr.appendChild(th);
+  cols.forEach(function(c){
+   var td=document.createElement('td');td.textContent=c[row[1]];if(c.best)td.className='best';tr.appendChild(td);
+  });
+  table.appendChild(tr);
+ });
+})();
 if('IntersectionObserver' in window){
  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
